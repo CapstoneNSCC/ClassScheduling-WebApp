@@ -11,6 +11,7 @@ namespace userAuthentication.Controllers
 
     public IActionResult Index()
     {
+      HttpContext.Session.SetString("auth", "false");
       return View();
     }
 

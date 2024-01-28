@@ -35,7 +35,7 @@ CREATE TABLE `tblLogin` (
 --
 -- Dumping data for table `tblLogin`
 --
-
+-- for testing username: dylan password: password
 INSERT INTO `tblLogin` (`username`, `password`, `salt`) VALUES
 ('user', 'uLzOc9hqo47A75r1r9TE3ZctD3qmWEA4oQip4zfpgMg=', 'KUgMBBIZbPDsMiGUOc1UvQ=='),
 ('dylan', 'MW+BfrhyAC4mM7AxL65tQZedGdgehNmOYRr5Um563mo=','0w54NUgsGa53PfCmOt9Lhg==');
