@@ -16,19 +16,19 @@
 
       <div class="form-floating mb-4 text-black">
         <input type="text" name="myUsername" class="form-control" id="floatingInput" placeholder="username"
-          maxlength="20" />
+          maxlength="20" oninput="onLoginUsernameChange(this.value.length)" />
         <label for="floatingInput">Username</label>
       </div>
 
       <div class="form-floating mb-4 text-black">
         <input type="password" name="myPassword" class="form-control" id="floatingPassword"
-          placeholder="Password" maxlength="20" />
+          placeholder="Password" maxlength="20" oninput="onLoginPasswordChange(this.value.length)" />
         <label for="floatingPassword">Password</label>
       </div>
 
       <div>
-        <input type="submit" value="Login" style="font-size:1.25rem;"
-          class="btn-login btn btn-warning mb-3" />
+        <input type="submit" value="Login" style="font-size:1.25rem;" class="btn-login btn btn-warning mb-3"
+          id="loginBtn" disabled />
         <div>
           <span class="text-warning">@ViewData["feedback"]</span>
         </div>
