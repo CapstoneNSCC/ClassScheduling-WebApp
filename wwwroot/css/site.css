@@ -18,3 +18,8 @@ textarea {
   width: 402px;
   height: 55px;
 }
+
+.btn-login:disabled {
+  pointer-events: all;
+  cursor: not-allowed;
+}
