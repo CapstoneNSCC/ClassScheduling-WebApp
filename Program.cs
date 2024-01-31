@@ -2,6 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<ClassScheduling_WebApp.Models.ScheduleManager>();
 
 // add service for utilizing in-memory cache
 builder.Services.AddDistributedMemoryCache();

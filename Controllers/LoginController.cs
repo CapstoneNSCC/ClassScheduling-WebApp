@@ -30,7 +30,7 @@ namespace userAuthentication.Controllers
       else
       {
         //incorrect login - update feedback
-        ViewData["feedback"] = "Incorrect Login. Please try again...";
+        ViewData["feedback"] = "Incorrect Username and/or Password. Please try again...";
       }
 
       return View("Index");
