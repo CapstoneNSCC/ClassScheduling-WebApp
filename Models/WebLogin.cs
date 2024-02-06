@@ -74,8 +74,8 @@ namespace ClassScheduling_WebApp.Models
       {
         dbConnection = new MySqlConnection(connectionString);
         dbConnection.Open();
-        dbCommand = new MySqlCommand("SELECT password,salt FROM tblLogin WHERE username=?username", dbConnection);
-        dbCommand.Parameters.AddWithValue("?username", _username);
+        dbCommand = new MySqlCommand("SELECT Password,Salt FROM TblUser WHERE UserName=?UserName", dbConnection);
+        dbCommand.Parameters.AddWithValue("?UserName", _username);
         dbReader = dbCommand.ExecuteReader();
 
         // username doesn't exist
@@ -88,9 +88,9 @@ namespace ClassScheduling_WebApp.Models
         //move to the first (and only) record
         dbReader.Read();
 
-        string hashedPassword = getHashed(_password, dbReader["salt"].ToString());
+        string hashedPassword = getHashed(_password, dbReader["Salt"].ToString());
 
-        if (hashedPassword == dbReader["password"].ToString())
+        if (hashedPassword == dbReader["Password"].ToString())
         {
           _access = true;
 
