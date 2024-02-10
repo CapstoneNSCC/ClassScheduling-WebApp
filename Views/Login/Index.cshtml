@@ -1,27 +1,39 @@
-﻿<form asp-controller="Login" asp-action="Submit">
-  <div class="container">
-    <div class="row mt-2">
-      <div class="col text-white fs-4">
-        <h1>Login.</h1>
+﻿<div class="container vh-100 min-vh-100 d-flex align-items-center justify-content-center">
+  <form asp-controller="Login" asp-action="Submit">
+
+    <div class="mr-6">
+      <img src="\lib\images\nscc-logo.jpg" alt="nscc-logo" width="200px" />
+    </div>
+
+    <div class="mt-2">
+      <div class="text-white fs-5">
+        <h2>Login.</h2>
         Please enter your Username and Password...
       </div>
     </div>
 
-    <div class="row">
-      <div class="col mt-2 text-white">
-        <div class="mb-3">
-          <label for="txtUserName">Username:</label>
-          <input type="text" name="myUsername" class="form-control" maxlength="20" />
-        </div>
-        <div class="mb-3">
-          <label for="txtPassword">Password:</label>
-          <input type="password" name="myPassword" class="form-control" maxlength="20" />
-        </div>
-        <div class="mb-3">
-          <input type="submit" text="Submit" class="btn btn-warning" />
-          <span class="text-warning" style="margin-left:5px;">@ViewData["feedback"]</span>
+    <div class="mt-2 text-white">
+
+      <div class="form-floating mb-4 text-black">
+        <input type="text" name="myUsername" class="form-control" id="floatingInput" placeholder="username"
+          maxlength="20" oninput="onLoginUsernameChange(this.value.length)" />
+        <label for="floatingInput">Username</label>
+      </div>
+
+      <div class="form-floating mb-4 text-black">
+        <input type="password" name="myPassword" class="form-control" id="floatingPassword"
+          placeholder="Password" maxlength="20" oninput="onLoginPasswordChange(this.value.length)" />
+        <label for="floatingPassword">Password</label>
+      </div>
+
+      <div>
+        <input type="submit" value="Login" style="font-size:1.25rem;" class="btn-login btn btn-warning mb-3"
+          id="loginBtn" disabled />
+        <div>
+          <span class="text-warning">@ViewData["feedback"]</span>
         </div>
       </div>
+
     </div>
-  </div>
-</form>
+  </form>
+</div>
