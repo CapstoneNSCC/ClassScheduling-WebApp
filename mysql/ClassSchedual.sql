@@ -29,7 +29,7 @@ DROP TABLE IF EXISTS TblClassroom;
 DROP TABLE IF EXISTS TblCalendar;
 DROP TABLE IF EXISTS TblCourses;
 DROP TABLE IF EXISTS TblTechnology;
-DROP TABLE IF EXISTS TblProgram;
+DROP TABLE IF EXISTS TblEducationalProgram;
 DROP TABLE IF EXISTS TblUser;
 
 -- Create TblUser table
@@ -44,8 +44,8 @@ CREATE TABLE IF NOT EXISTS TblUser (
     PRIMARY KEY (Id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Create TblProgram table
-CREATE TABLE IF NOT EXISTS TblProgram (
+-- Create TblEducationalProgram table
+CREATE TABLE IF NOT EXISTS TblEducationalProgram (
     Id INT NOT NULL AUTO_INCREMENT,
     Name VARCHAR(30) NOT NULL,
     Year INT NOT NULL,
@@ -65,26 +65,26 @@ CREATE TABLE IF NOT EXISTS TblCourses (
     Cod VARCHAR(10) NOT NULL UNIQUE,
     Name VARCHAR(50) NOT NULL,
     Hours INT NOT NULL,
-    IdProfessor INT,
-    IdProgram INT,
+    IdProfessor INT NOT NULL, 
+    IdEducationalProgram INT NOT NULL,
+    PRIMARY KEY (Id),
     FOREIGN KEY (IdProfessor) 
-    REFERENCES TblUser(Id) 
-        ON DELETE NO ACTION 
-        ON UPDATE NO ACTION,
-    FOREIGN KEY (IdProgram) 
-    REFERENCES TblProgram(Id) 
-        ON DELETE NO ACTION 
-        ON UPDATE NO ACTION,
-    PRIMARY KEY (Id)
+        REFERENCES TblUser(Id)
+            ON DELETE NO ACTION 
+            ON UPDATE NO ACTION,
+    FOREIGN KEY (IdEducationalProgram) 
+        REFERENCES TblEducationalProgram(Id)
+            ON DELETE NO ACTION 
+            ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Create TblClassroom table
 CREATE TABLE IF NOT EXISTS TblClassroom (
     Id INT NOT NULL AUTO_INCREMENT,
     RoomNumber INT NOT NULL,
-    Building CHAR(5) NOT NULL,
+    BuildingAcronym CHAR(5) NOT NULL,
     PRIMARY KEY (Id),
-    UNIQUE (RoomNumber, Building)
+    UNIQUE (RoomNumber, BuildingAcronym)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Create TblCalendar table
@@ -146,8 +146,8 @@ CREATE TABLE IF NOT EXISTS TblTechRoom (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- INSERTS
--- Insert data into TblProgram
-INSERT INTO TblProgram (Name, Year) VALUES
+-- Insert data into TblEducationalProgram
+INSERT INTO TblEducationalProgram (Name, Year) VALUES
 ('IT Web Programming', 1),
 ('IT Web Programming', 2),
 ('IT Systems Management and Security', 1),
@@ -167,7 +167,7 @@ INSERT INTO TblTechnology (Description) VALUES
 ('High PCs');
 
 -- Insert data into TblClassroom
-INSERT INTO TblClassroom (RoomNumber, Building) VALUES
+INSERT INTO TblClassroom (RoomNumber, BuildingAcronym) VALUES
 (308, 'TRF'),
 (312, 'TRF'),
 (309, 'TRF'),
@@ -194,7 +194,7 @@ INSERT INTO TblCalendar (DayWeek, StartTime) VALUES
 ('Friday', '13:30:00');
 
 -- Insert data into TblCourses
-INSERT INTO TblCourses (Cod, Name, Hours, IdProfessor, IdProgram) VALUES
+INSERT INTO TblCourses (Cod, Name, Hours, IdProfessor, IdEducationalProgram) VALUES
 ('WBP101', 'Introduction to Web Technologies', 100, 2, 1),
 ('WBP102', 'Programming Fundamentals', 100, 3, 1),
 ('WBP103', 'Web Design Principles', 100, 4, 2),
