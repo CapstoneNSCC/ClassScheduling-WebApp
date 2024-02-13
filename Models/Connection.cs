@@ -1,7 +1,7 @@
 public class Connection
 {
     private static string Server = Environment.GetEnvironmentVariable("DB_SERVER") ?? "capstoneteam6db.mysql.database.azure.com";
-    private static string Database = Environment.GetEnvironmentVariable("DB_DATABASE") ?? "dbClassSchedule";
+    private static string Database = Environment.GetEnvironmentVariable("DB_DATABASE") ?? "dbclassschedule";
     private static string Uid = Environment.GetEnvironmentVariable("DB_UID") ?? "DylanMac";
     private static string Pwd = Environment.GetEnvironmentVariable("DB_PWD") ?? "Wer45Tgbvf";
     private static string Port = Environment.GetEnvironmentVariable("DB_PORT") ?? "3306";
