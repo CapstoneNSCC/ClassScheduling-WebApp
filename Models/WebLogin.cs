@@ -87,9 +87,7 @@ namespace ClassScheduling_WebApp.Models
 
         //move to the first (and only) record
         dbReader.Read();
-
         string hashedPassword = getHashed(_password, dbReader["Salt"].ToString());
-
         if (hashedPassword == dbReader["Password"].ToString())
         {
           _access = true;
@@ -138,6 +136,7 @@ namespace ClassScheduling_WebApp.Models
         iterationCount: 10000,
         numBytesRequested: 256 / 8));
       //Console.WriteLine(">>> Hashed: " + hashed);
+      //Console.WriteLine(">>> Salt: " + mySalt);
 
       return hashed;
     }

@@ -19,6 +19,7 @@ namespace userAuthentication.Controllers
       WebLogin webLogin = new WebLogin(Connection.CONNECTION_STRING, HttpContext);
 
       //update properties
+
       webLogin.username = myUsername;
       webLogin.password = myPassword;
 
