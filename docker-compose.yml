@@ -1,7 +1,6 @@
 version: '3.7'
 
 services:
-  
   db:
     build:
       context: ./mysql
@@ -11,7 +10,7 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     ports:
-      - 3306:3306
+      - "${DB_PORT}:${DB_PORT}"
     volumes:
       - data-volume:/var/lib/mysql
     environment:
@@ -32,10 +31,10 @@ services:
       - app-network
 
 networks:
-    app-network:
-        driver: bridge
+  app-network:
+    driver: bridge
 
 volumes:
-    data-volume:
-    web-root:
-      driver: local
+  data-volume:
+  web-root:
+    driver: local

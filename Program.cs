@@ -1,29 +1,41 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<ClassScheduling_WebApp.Models.ScheduleManager>();
+// Adds support for environment variables
+builder.Configuration.AddEnvironmentVariables();
 
-// add service for utilizing in-memory cache
+// Configures the database connection string fully from environment variables
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+                      $"Server={Environment.GetEnvironmentVariable("DB_SERVER") ?? "localhost"};" +
+                      $"Database={Environment.GetEnvironmentVariable("MYSQL_DATABASE")};Uid={Environment.GetEnvironmentVariable("MYSQL_USER")};" +
+                      $"Pwd={Environment.GetEnvironmentVariable("MYSQL_PASSWORD")};Port={Environment.GetEnvironmentVariable("DB_PORT") ?? "3306"};" +
+                      $"SslMode=Required;";
+
+// Adds services to the container.
+builder.Services.AddControllersWithViews();
+
+// Configures the EF Core DbContext
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+// Adds service for using in-memory cache
 builder.Services.AddDistributedMemoryCache();
 
-// add service for session
+// Adds service for session
 builder.Services.AddSession(options =>
 {
-  // Set a short timeout for easy testing.
-  options.IdleTimeout = TimeSpan.FromSeconds(1200);
-  // enable http-only cookie
-  options.Cookie.HttpOnly = true;
+    // Sets a short timeout for easy testing.
+    options.IdleTimeout = TimeSpan.FromSeconds(1200);
+    // Enables HTTP-only cookie
+    options.Cookie.HttpOnly = true;
 });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configures the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-  app.UseExceptionHandler("/Home/Error");
-  // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-  app.UseHsts();
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
 }
 
 app.UseHttpsRedirection();
@@ -33,10 +45,12 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+// Maps the default route to the Login controller
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Login}/{action=Index}/{id?}");
-// enables use of session in our app
+
+// Enables the use of session in our app
 app.UseSession();
 
 app.Run();
