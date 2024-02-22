@@ -1,0 +1,64 @@
+﻿<div class="container vh-100 min-vh-100 d-flex align-items-center justify-content-center">
+  <form asp-controller="Login" asp-action="Submit">
+
+    <div class="mr-6">
+      <img src="\lib\images\nscc-logo.jpg" alt="nscc-logo" width="200px" />
+    </div>
+
+    <div class="mt-2">
+      <div class="text-white fs-5">
+        <h2>Login.</h2>
+        Please enter your Username and Password...
+      </div>
+    </div>
+
+    <div class="mt-2 text-white">
+
+      <div class="form-floating mb-4 text-black">
+        <input type="text" name="myUsername" class="form-control" id="floatingInput" placeholder="username"
+          maxlength="20" oninput="onLoginUsernameChange(this.value.length)" />
+        <label for="floatingInput">Username</label>
+      </div>
+
+      <div class="form-floating mb-4 text-black">
+        <input type="password" name="myPassword" class="form-control" id="floatingPassword"
+          placeholder="Password" maxlength="20" oninput="onLoginPasswordChange(this.value.length)" />
+        <label for="floatingPassword">Password</label>
+      </div>
+
+      <div>
+        <input type="submit" value="Login" style="font-size:1.25rem;" class="btn-login btn btn-warning mb-3"
+          id="loginBtn" disabled />
+        <div>
+          <span class="text-warning">@ViewData["feedback"]</span>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>
+
+<script>
+  //-------------------------------------------------> login code functionality
+  let usernameLength = 0;
+  let passwordLength = 0;
+  let loginBtn = document.getElementById("loginBtn");
+
+  function onLoginUsernameChange(e) {
+    usernameLength = e;
+    checkLoginDisabled();
+  }
+
+  function onLoginPasswordChange(e) {
+    passwordLength = e;
+    checkLoginDisabled();
+  }
+
+  function checkLoginDisabled() {
+    if (usernameLength > 0 && passwordLength > 0) {
+      loginBtn.disabled = false;
+    } else {
+      loginBtn.disabled = true;
+    }
+  }
+</script>
