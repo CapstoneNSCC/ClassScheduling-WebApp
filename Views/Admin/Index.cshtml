@@ -1,9 +1,9 @@
 @model ScheduleManager;
-
+@*
 @{
-  // Retrieve the array from ViewData
-  string[] programs = ViewData["programs"] as string[];
-}
+// Retrieve the array from ViewData
+string[] programs = ViewData["programs"] as string[];
+} *@
 
 <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
@@ -35,24 +35,26 @@
   </form>
 
   <div class="border-top pt-2 mt-2">
-
-    <div class="ms-4">
-      @foreach (var program in programs)
-      {
-        <form method="post">
-          <div class="flex">
-            <button type="submit" class="btn p-1" asp-controller="Admin" asp-action="Delete" asp-route-id="">
-              <i class="fa fa-trash bg-warning p-2 rounded"></i>
-            </button>
-            <button type="submit" class="btn p-0" asp-controller="Admin" asp-action="Update" asp-route-id="">
-              <i class="fa fa-pencil bg-warning p-2 rounded"></i>
-            </button>
-            <span class="ms-4">@program</span>
-            <a href="admin/courses"><span> | Add Course </span></a>
-          </div>
-        </form>
-      }
-    </div>
+    @if (Model.Programs.Count > 0)
+    {
+      <div class="ms-4">
+        @foreach (var program in Model.Programs)
+        {
+          <form method="post">
+            <div class="flex">
+              <button type="submit" class="btn p-1" asp-controller="Admin" asp-action="Delete" asp-route-id="">
+                <i class="fa fa-trash bg-warning p-2 rounded"></i>
+              </button>
+              <button type="submit" class="btn p-0" asp-controller="Admin" asp-action="Update" asp-route-id="">
+                <i class="fa fa-pencil bg-warning p-2 rounded"></i>
+              </button>
+              <span class="ms-4">@program.Name</span>
+              <a href="admin/courses"><span> | Add Course </span></a>
+            </div>
+          </form>
+        }
+      </div>
+    }
   </div>
 
 

@@ -118,7 +118,7 @@ namespace ClassScheduling_WebApp.Models
       {
         rng.GetBytes(salt);
       }
-      Console.WriteLine(">>> Salt: " + Convert.ToBase64String(salt));
+      //Console.WriteLine(">>> Salt: " + Convert.ToBase64String(salt));
 
       return Convert.ToBase64String(salt);
     }
@@ -137,7 +137,7 @@ namespace ClassScheduling_WebApp.Models
         prf: KeyDerivationPrf.HMACSHA1,
         iterationCount: 10000,
         numBytesRequested: 256 / 8));
-      Console.WriteLine(">>> Hashed: " + hashed);
+      //Console.WriteLine(">>> Hashed: " + hashed);
 
       return hashed;
     }
