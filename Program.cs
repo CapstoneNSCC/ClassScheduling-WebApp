@@ -1,14 +1,25 @@
+using System;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using ClassScheduling_WebApp.Data;
+using dotenv.net;
+DotEnv.Load();
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Adds support for environment variables
 builder.Configuration.AddEnvironmentVariables();
 
-// Configures the database connection string fully from environment variables
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
-                      $"Server={Environment.GetEnvironmentVariable("DB_SERVER") ?? "localhost"};" +
-                      $"Database={Environment.GetEnvironmentVariable("MYSQL_DATABASE")};Uid={Environment.GetEnvironmentVariable("MYSQL_USER")};" +
-                      $"Pwd={Environment.GetEnvironmentVariable("MYSQL_PASSWORD")};Port={Environment.GetEnvironmentVariable("DB_PORT") ?? "3306"};" +
-                      $"SslMode=Required;";
+var connectionString = $"Server={builder.Configuration["DB_SERVER"]};" +
+                      $"Database={builder.Configuration["DB_DATABASE"]};" +
+                      $"Uid={builder.Configuration["DB_USER"]};" +
+                      $"Pwd={builder.Configuration["DB_PASSWORD"]};" +
+                      $"Port={builder.Configuration["DB_PORT"]};" +
+                      "SslMode=none;";
 
 // Adds services to the container.
 builder.Services.AddControllersWithViews();

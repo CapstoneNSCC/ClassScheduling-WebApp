@@ -1,4 +1,5 @@
-@model ScheduleManager;
+@model IEnumerable<ClassScheduling_WebApp.Models.ScheduleModel>
+
 
 <form method="post">
   <button type="submit" class="btn btn-warning p-1 m-3" asp-controller="Admin" asp-action="Logout"> Logout
@@ -7,3 +8,34 @@
 @section Scripts {
   <script>startAutoLogout();</script>
 }
+
+@* @model IEnumerable<ClassScheduling_WebApp.Models.ScheduleModel>
+
+@{
+    ViewData["Title"] = "Schedule List";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID do Calendário</th>
+            <th>ID do Curso</th>
+            <th>ID da Sala</th>
+            <!-- Add more table headers as needed -->
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var schedule in Model)
+    {
+        <tr>
+            <td>@schedule.IdCalendar</td>
+            <td>@schedule.IdCourse</td>
+            <td>@schedule.IdClassroom</td>
+            <!-- Add more table rows as needed -->
+            
+        </tr>
+    }
+    </tbody>
+</table> *@

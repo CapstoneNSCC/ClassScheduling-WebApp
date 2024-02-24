@@ -1,34 +1,35 @@
 using Microsoft.AspNetCore.Mvc;
-using ClassScheduling_WebApp.Models;
+using ClassScheduling_WebApp.Data;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
+using System.Diagnostics;
 
 namespace ClassScheduling_WebApp.Controllers
 {
-
-  public class AdminController : Controller
-  {
-    private ScheduleManager scheduleManager;
-
-    public AdminController(ScheduleManager myManager)
+    public class AdminController : Controller
     {
-      scheduleManager = myManager;
-    }
+        private readonly ApplicationDbContext _context;
 
-    public IActionResult Index()
-    {
-      // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
-      {
-        return RedirectToAction("Index", "Login");
-      }
+        public AdminController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
-      return View(scheduleManager);
-    }
+        public IActionResult Index()
+        {
+            if (HttpContext.Session.GetString("auth") != "true")
+            {
+                return RedirectToAction("Index", "Login");
+            }
 
-    public IActionResult Logout()
-    {
-      // Clear session data
-      HttpContext.Session.Clear();
-      return RedirectToAction("Index", "Login");
+            var schedules = _context.Schedules.ToList(); 
+            return View(schedules);
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Login");
+        }
     }
-  }
 }
