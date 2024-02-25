@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS TblUser (
 -- Create TblEducationalProgram table
 CREATE TABLE IF NOT EXISTS TblEducationalProgram (
     Id INT NOT NULL AUTO_INCREMENT,
-    Name VARCHAR(40) NOT NULL,
+    Name VARCHAR(60) NOT NULL,
     Year INT NOT NULL,
     PRIMARY KEY (Id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -65,16 +65,16 @@ CREATE TABLE IF NOT EXISTS TblCourses (
     Cod VARCHAR(10) NOT NULL UNIQUE,
     Name VARCHAR(50) NOT NULL,
     Hours INT NOT NULL,
-    IdProfessor INT NOT NULL, 
+    IdProfessor INT NOT NULL,
     IdEducationalProgram INT NOT NULL,
     PRIMARY KEY (Id),
-    FOREIGN KEY (IdProfessor) 
+    FOREIGN KEY (IdProfessor)
         REFERENCES TblUser(Id)
-            ON DELETE NO ACTION 
+            ON DELETE NO ACTION
             ON UPDATE NO ACTION,
-    FOREIGN KEY (IdEducationalProgram) 
+    FOREIGN KEY (IdEducationalProgram)
         REFERENCES TblEducationalProgram(Id)
-            ON DELETE NO ACTION 
+            ON DELETE NO ACTION
             ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -101,17 +101,17 @@ CREATE TABLE IF NOT EXISTS TblSchedule (
     IdCourse INT NOT NULL,
     IdClassroom INT NOT NULL,
     PRIMARY KEY (IdCalendar, IdCourse, IdClassroom),
-    FOREIGN KEY (IdCalendar) 
-    REFERENCES TblCalendar(Id) 
-        ON DELETE NO ACTION 
+    FOREIGN KEY (IdCalendar)
+    REFERENCES TblCalendar(Id)
+        ON DELETE NO ACTION
         ON UPDATE NO ACTION,
-    FOREIGN KEY (IdCourse) 
-    REFERENCES TblCourses(Id) 
-        ON DELETE NO ACTION 
+    FOREIGN KEY (IdCourse)
+    REFERENCES TblCourses(Id)
+        ON DELETE NO ACTION
         ON UPDATE NO ACTION,
-    FOREIGN KEY (IdClassroom) 
-    REFERENCES TblClassroom(Id) 
-        ON DELETE NO ACTION 
+    FOREIGN KEY (IdClassroom)
+    REFERENCES TblClassroom(Id)
+        ON DELETE NO ACTION
         ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -120,13 +120,13 @@ CREATE TABLE IF NOT EXISTS TblTechClass (
     IdCourse INT NOT NULL,
     IdTechnology INT NOT NULL,
     PRIMARY KEY (IdCourse, IdTechnology),
-    FOREIGN KEY (IdCourse) 
-    REFERENCES TblCourses(Id) 
-        ON DELETE NO ACTION 
+    FOREIGN KEY (IdCourse)
+    REFERENCES TblCourses(Id)
+        ON DELETE NO ACTION
         ON UPDATE NO ACTION,
-    FOREIGN KEY (IdTechnology) 
-    REFERENCES TblTechnology(Id) 
-        ON DELETE NO ACTION 
+    FOREIGN KEY (IdTechnology)
+    REFERENCES TblTechnology(Id)
+        ON DELETE NO ACTION
         ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -135,13 +135,13 @@ CREATE TABLE IF NOT EXISTS TblTechRoom (
     IdRoom INT NOT NULL,
     IdTechnology INT NOT NULL,
     PRIMARY KEY (IdRoom, IdTechnology),
-    FOREIGN KEY (IdRoom) 
-    REFERENCES TblClassroom(Id) 
-        ON DELETE NO ACTION 
+    FOREIGN KEY (IdRoom)
+    REFERENCES TblClassroom(Id)
+        ON DELETE NO ACTION
         ON UPDATE NO ACTION,
-    FOREIGN KEY (IdTechnology) 
-    REFERENCES TblTechnology(Id) 
-        ON DELETE NO ACTION 
+    FOREIGN KEY (IdTechnology)
+    REFERENCES TblTechnology(Id)
+        ON DELETE NO ACTION
         ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -197,7 +197,7 @@ INSERT INTO TblCalendar (DayWeek, StartTime) VALUES
 ('Friday', '13:30:00');
 
 -- Insert data into TblCourses
-INSERT INTO TblCourses (Cod, Name, Hours, IdProfessor, IdEducationalProgram) VALUES
+INSERT INTO TblCourses (Code, Name, Hours, IdProfessor, IdEducationalProgram) VALUES
 ('WBP101', 'Introduction to Web Technologies', 100, 2, 1),
 ('WBP102', 'Programming Fundamentals', 100, 3, 1),
 ('WBP103', 'Web Design Principles', 100, 4, 2),
