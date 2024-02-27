@@ -46,8 +46,25 @@ namespace ClassScheduling_WebApp.Controllers
       EducationalProgram program = new EducationalProgram
       {
         Name = "",
+        Year = 1,
       };
-      return View(scheduleManager);
+      //passing in program model to the view
+      return View(program);
+    }
+
+    public IActionResult AddSubmit(EducationalProgram program)
+    {
+      // if auth is not  = true, it re-directs to the login screen.
+      if (HttpContext.Session.GetString("auth") != "true")
+      {
+        return RedirectToAction("Index", "Login");
+      }
+
+      // add the program to the list of programs
+      scheduleManager.Add(program);
+      //save changes to the database
+      scheduleManager.SaveChanges();
+      return RedirectToAction("Index", "Admin");
     }
 
     [Route("/Admin/AddCourse/{programID:int}")]
