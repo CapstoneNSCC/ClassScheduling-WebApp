@@ -1,9 +1,5 @@
-@model ScheduleManager;
-@*
-@{
-// Retrieve the array from ViewData
-string[] programs = ViewData["programs"] as string[];
-} *@
+@model EducationalProgram;
+
 
 
 <nav class="navbar bg-body-tertiary">
@@ -27,28 +23,22 @@ string[] programs = ViewData["programs"] as string[];
   <h1>Add Program.</h1>
   <div style="margin-bottom:10px" class="fs-5">Enter the new Program data below:</div>
 
-  <form method="post">
-
-    <div class="mb-4">
-      <label class="pb-2">Program Code:</label>
-      <input type="text" class="form-control" maxlength="10" />
-    </div>
-
+  <form asp-controller="Admin" method="post">
     <div class="mb-4">
       <label class="pb-2">Program Name:</label>
-      <input type="text" class="form-control" maxlength="60" />
+      <input type="text" asp-for="@Model.Name" class="form-control" maxlength="60" />
+      <span asp-validation-for="@Model.Name" class="text-danger" />
     </div>
 
     <div class="mb-4">
       <label class="pb-2">Program Year:</label>
-      <input type="text" class="form-control" maxlength="1" />
+      <input type="text" asp-for="@Model.Year" class="form-control" maxlength="1" />
+      <span asp-validation-for="@Model.Year" class="text-danger" />
     </div>
 
     <div class="mb-4">
-      <input type="submit" asp-controller="Admin" asp-action="AddSubmit" class="btn btn-warning"
-        value="Add" />
-      <a asp-controller="Admin" asp-action="Index"><input type="button" class="btn btn-warning"
-          value="Cancel" /></a>
+      <input type="submit" asp-controller="Admin" asp-action="AddSubmit" class="btn btn-warning" value="Add" />
+      <a asp-controller="Admin" asp-action="Index"><input type="button" class="btn btn-warning" value="Cancel" /></a>
     </div>
 
   </form>
