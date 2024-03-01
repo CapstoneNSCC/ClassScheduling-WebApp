@@ -9,11 +9,6 @@
   <link rel="stylesheet" href="~/css/site.css" />
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-
-<body>
-
-  @RenderBody()
 
   <script src="~/lib/jquery/dist/jquery.min.js"></script>
   @* ----------------- added for form validation with data annotations *@
@@ -21,8 +16,37 @@
   <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
   @* ----------------------------------------------------------------- *@
   <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+
+  @RenderBody()
+  @* created modal to warn the user 2 minutes before the auto logout. using tabindex with a neagtive number
+  will make the modal focusable but not reachable also using fade effect to make it fancy*@
+  <!-- Modal -->
+  <div class="modal fade text-black" id="myModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class=" modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modaTitle">Warning!</h5>
+          <button type="button" class="close">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          You are about to be logged out due to inactivity. Please click the close button below to continue
+          your session.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="~/js/site.js" asp-append-version="true"></script>
   @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 
 </html>

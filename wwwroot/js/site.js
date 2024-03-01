@@ -1,37 +1,38 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
-// Write your JavaScript code.
-//login code functionality
+// A $( document ).ready() block.
+$(document).ready(function () {
+
+  // -----------------------------------------------------------> Modal
+  $('#myModal').modal({ show: false });
+
+  // warning time (2 minutes before logout - 18 minutes) current times are for testing
+  let warningTime = 1 * 10 * 1000;
+
+  // timeout to make the model appear
+  let modalAppear = setTimeout(openModal, warningTime);
+
+  // auto close the modal after 5 seconds - testing
+  let modalDisappear = setTimeout(closeModal, warningTime + 10000);
+
+  // using this to pop up a modal for warning the user their session is about to expire and they are about to be logged out.
+  // function to open the modal
+  function openModal() {
+    $('#myModal').modal('show')
+  }
+
+  // function to close the modal
+  function closeModal() {
+    clearTimeout(modalAppear);
+    clearTimeout(modalDisappear);
+
+    $('#myModal').modal('hide')
 
 
-let usernameLength = 0;
-let passwordLength = 0;
-let loginBtn = document.getElementById("loginBtn");
-
-function onLoginUsernameChange(e) {
-    usernameLength = e;
-    checkLoginDisabled();
-}
-
-function onLoginPasswordChange(e) {
-    passwordLength = e;
-    checkLoginDisabled();
-}
-
-function checkLoginDisabled() {
-    if (usernameLength > 0 && passwordLength > 0) {
-        loginBtn.disabled = false;
-    } else {
-        loginBtn.disabled = true;
-    }
-}
-
-function startAutoLogout() {
-    // setup timeout that will occur when session has expired (20 minutes = 60000 * 20 milliseconds)
-    window.setTimeout(() => document.location = "/Login", 450000);
-    // setup timeout that will occur when session about to expire to warn user (18 minutes = 60000 * 18 milliseconds)
-    window.setTimeout(() => document.getElementById("lblExpire").innerHTML = "WARNING : Session is about to expire!", 300000);
-    context.Session.SetString("auth", "false");
-    context.Session.SetString("user", _username);
-}
+    // let modal = document.getElementById("myModal");
+    // modal.style.display = "none";
+    // // redirect to the login page after closing the modal
+    // window.location.href = '/Login/Index';
+  }
+});
