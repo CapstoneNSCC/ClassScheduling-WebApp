@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS TblUser (
 -- Create TblProgram table
 CREATE TABLE IF NOT EXISTS TblProgram (
     Id INT NOT NULL AUTO_INCREMENT,
-    Name VARCHAR(30) NOT NULL,
+    Name VARCHAR(60) NOT NULL,
     Year INT NOT NULL,
     PRIMARY KEY (Id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -62,17 +62,17 @@ CREATE TABLE IF NOT EXISTS TblTechnology (
 -- Create TblCourse table
 CREATE TABLE IF NOT EXISTS TblCourse (
     Id INT NOT NULL AUTO_INCREMENT,
-    Cod VARCHAR(10) NOT NULL UNIQUE,
+    Code VARCHAR(10) NOT NULL UNIQUE,
     Name VARCHAR(50) NOT NULL,
     Hours INT NOT NULL,
-    IdProfessor INT NOT NULL, 
-    IdEducationalProgram INT NOT NULL,
+    IdProfessor INT NOT NULL,
+    IdProgram INT NOT NULL,
     PRIMARY KEY (Id),
-    FOREIGN KEY (IdProfessor) 
+    FOREIGN KEY (IdProfessor)
         REFERENCES TblUser(Id)
-            ON DELETE NO ACTION 
+            ON DELETE NO ACTION
             ON UPDATE NO ACTION,
-    FOREIGN KEY (IdEducationalProgram) 
+    FOREIGN KEY (IdProgram) 
         REFERENCES TblProgram(Id)
             ON DELETE NO ACTION 
             ON UPDATE NO ACTION
@@ -101,17 +101,17 @@ CREATE TABLE IF NOT EXISTS TblSchedule (
     IdCourse INT NOT NULL,
     IdClassroom INT NOT NULL,
     PRIMARY KEY (IdCalendar, IdCourse, IdClassroom),
-    FOREIGN KEY (IdCalendar) 
-    REFERENCES TblCalendar(Id) 
-        ON DELETE NO ACTION 
+    FOREIGN KEY (IdCalendar)
+    REFERENCES TblCalendar(Id)
+        ON DELETE NO ACTION
         ON UPDATE NO ACTION,
     FOREIGN KEY (IdCourse) 
     REFERENCES TblCourse(Id) 
         ON DELETE NO ACTION 
         ON UPDATE NO ACTION,
-    FOREIGN KEY (IdClassroom) 
-    REFERENCES TblClassroom(Id) 
-        ON DELETE NO ACTION 
+    FOREIGN KEY (IdClassroom)
+    REFERENCES TblClassroom(Id)
+        ON DELETE NO ACTION
         ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -124,9 +124,9 @@ CREATE TABLE IF NOT EXISTS TblTechClass (
     REFERENCES TblCourse(Id) 
         ON DELETE NO ACTION 
         ON UPDATE NO ACTION,
-    FOREIGN KEY (IdTechnology) 
-    REFERENCES TblTechnology(Id) 
-        ON DELETE NO ACTION 
+    FOREIGN KEY (IdTechnology)
+    REFERENCES TblTechnology(Id)
+        ON DELETE NO ACTION
         ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -135,13 +135,13 @@ CREATE TABLE IF NOT EXISTS TblTechRoom (
     IdRoom INT NOT NULL,
     IdTechnology INT NOT NULL,
     PRIMARY KEY (IdRoom, IdTechnology),
-    FOREIGN KEY (IdRoom) 
-    REFERENCES TblClassroom(Id) 
-        ON DELETE NO ACTION 
+    FOREIGN KEY (IdRoom)
+    REFERENCES TblClassroom(Id)
+        ON DELETE NO ACTION
         ON UPDATE NO ACTION,
-    FOREIGN KEY (IdTechnology) 
-    REFERENCES TblTechnology(Id) 
-        ON DELETE NO ACTION 
+    FOREIGN KEY (IdTechnology)
+    REFERENCES TblTechnology(Id)
+        ON DELETE NO ACTION
         ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -155,11 +155,11 @@ INSERT INTO TblProgram (Name, Year) VALUES
 
 -- Insert data into TblUser
 INSERT INTO TblUser (FirstName, LastName, SetAsAdmin, UserName, Password, Salt) VALUES
-('user', 'admin', TRUE, 'user', 'uLzOc9hqo47A75r1r9TE3ZctD3qmWEA4oQip4zfpgMg=', 'KUgMBBIZbPDsMiGUOc1UvQ=='),
+('user', 'admin', TRUE, 'user', 'jSANqsAHN3BKj2onm6KPStvO5O5taYzxBxDQydzgLTM=', '0w54NUgsGa53PfCmOt9Lhg=='),
 ('pablo', 'admin', TRUE, 'pablo', 'GWftrhCl31KH54HIo5pDKBOZCRDdjxtLxq571rJuycA=', '0w54NUgsGa53PfCmOt9Lhg=='),
 ('kayla', 'gillam', TRUE, 'kayla', 'TS2OQQ7XOGnvq9C/aS4WNiiGAdMz8osde8xBQl6JvsU=', '0w54NUgsGa53PfCmOt9Lhg=='),
 ('sean', 'morrow', TRUE, 'sean', 'nNKacirUadrGD9npbzM3FpdqobbNucxXwq9TDPHaG7Q=', '0w54NUgsGa53PfCmOt9Lhg=='),
-('dylan', 'admin', TRUE, 'dylan', 'MW+BfrhyAC4mM7AxL65tQZedGdgehNmOYRr5Um563mo=','0w54NUgsGa53PfCmOt9Lhg==');
+('dylan', 'admin', TRUE, 'dylan', 'HCYHoaYJWGyduzsHuU6+s+dsAofaGClontE/t5blwak=','0w54NUgsGa53PfCmOt9Lhg==');
 
 -- Insert data into TblTechnology
 INSERT INTO TblTechnology (Description) VALUES
@@ -197,7 +197,7 @@ INSERT INTO TblCalendar (DayWeek, StartTime) VALUES
 ('Friday', '13:30:00');
 
 -- Insert data into TblCourse
-INSERT INTO TblCourse (Cod, Name, Hours, IdProfessor, IdEducationalProgram) VALUES
+INSERT INTO TblCourse (Code, Name, Hours, IdProfessor, IdProgram) VALUES
 ('WBP101', 'Introduction to Web Technologies', 100, 2, 1),
 ('WBP102', 'Programming Fundamentals', 100, 3, 1),
 ('WBP103', 'Web Design Principles', 100, 4, 2),

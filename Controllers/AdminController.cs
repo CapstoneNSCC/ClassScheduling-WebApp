@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using ClassScheduling_WebApp.Data;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using System.Diagnostics;
+using ClassScheduling_WebApp.Models;
+using System.Collections.Immutable;
 
 namespace ClassScheduling_WebApp.Controllers
 {
@@ -26,10 +24,71 @@ namespace ClassScheduling_WebApp.Controllers
             return View(schedules);
         }
 
-        public IActionResult Logout()
-        {
-            HttpContext.Session.Clear();
-            return RedirectToAction("Index", "Login");
-        }
+    public IActionResult Logout()
+    {
+      // Clear session data
+      HttpContext.Session.Clear();
+      return RedirectToAction("Index", "Login");
     }
+
+
+    [Route("/Admin/AddProgram")]
+    public IActionResult AddProgram()
+    {
+      // if auth is not  = true, it re-directs to the login screen.
+      if (HttpContext.Session.GetString("auth") != "true")
+      {
+        return RedirectToAction("Index", "Login");
+      }
+
+      // construct course object that will be used to add a new course.
+      EducationalProgram program = new EducationalProgram
+      {
+        Name = "",
+        Year = 1,
+      };
+      //passing in program model to the view
+      return View(program);
+    }
+
+    public IActionResult AddSubmit(EducationalProgram program)
+    {
+      // if auth is not  = true, it re-directs to the login screen.
+      if (HttpContext.Session.GetString("auth") != "true")
+      {
+        return RedirectToAction("Index", "Login");
+      }
+
+      // add the program to the list of programs
+      scheduleManager.Add(program);
+      //save changes to the database
+      scheduleManager.SaveChanges();
+      return RedirectToAction("Index", "Admin");
+    }
+
+    [Route("/Admin/AddCourse/{programID:int}")]
+    public IActionResult AddCourse(int programID)
+    {
+      // if auth is not  = true, it re-directs to the login screen.
+      if (HttpContext.Session.GetString("auth") != "true")
+      {
+        return RedirectToAction("Index", "Login");
+      }
+
+      // construct course object that will be used to add a new course.
+      Courses course = new Courses
+      {
+        Code = "",
+        Name = "",
+        Professor = new User(),
+        EducationalProgram = scheduleManager.getProgramByID(programID)
+      };
+
+      //storing SelectList object in ViewBag
+      ViewBag.EducationalProgram = scheduleManager.getProgramByID(programID);
+      course.IdEducationalProgram = programID;
+      // pass it into the view for populating
+      return View(scheduleManager);
+    }
+  }
 }

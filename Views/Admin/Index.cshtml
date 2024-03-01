@@ -28,7 +28,7 @@ string[] programs = ViewData["programs"] as string[];
     <div class="flex ms-4">
       <span class="fs-2">Programs</span>
 
-      <button type="submit" class="btn p-0" asp-controller="Admin" asp-action="Add">
+      <button type="submit" class="btn p-0" asp-controller="Admin" asp-action="AddProgram">
         <i class="fa fa-plus bg-warning p-2 rounded ms-1 mb-2"></i>
       </button>
     </div>
@@ -48,8 +48,12 @@ string[] programs = ViewData["programs"] as string[];
               <button type="submit" class="btn p-0" asp-controller="Admin" asp-action="Update" asp-route-id="">
                 <i class="fa fa-pencil bg-warning p-2 rounded"></i>
               </button>
-              <span class="ms-4">@program.Name</span>
-              <a href="admin/courses"><span> | Add Course </span></a>
+              <span class="ms-4">@program.Name, year @program.Year | Add Course</span>
+
+              <button type="submit" class="btn p-0" asp-controller="Admin" asp-route-id="@program.Id"
+                asp-action="AddCourse">
+                <i class="fa fa-plus bg-warning p-1 rounded"></i>
+              </button>
             </div>
           </form>
         }
