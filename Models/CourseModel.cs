@@ -12,7 +12,7 @@ namespace ClassScheduling_WebApp.Models
 
         [Required(ErrorMessage = "Course code is required.")]
         [StringLength(10, ErrorMessage = "Course code cannot exceed 10 characters.")]
-        public string Cod { get; set; }
+        public string Code { get; set; }
 
         [Required(ErrorMessage = "Course name is required.")]
         [StringLength(50, ErrorMessage = "Course name cannot exceed 50 characters.")]

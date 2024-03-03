@@ -15,11 +15,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
 
 var connectionString = $"Server={builder.Configuration["DB_SERVER"]};" +
-                      $"Database={builder.Configuration["DB_DATABASE"]};" +
-                      $"Uid={builder.Configuration["DB_USER"]};" +
-                      $"Pwd={builder.Configuration["DB_PASSWORD"]};" +
-                      $"Port={builder.Configuration["DB_PORT"]};" +
-                      "SslMode=none;";
+                    $"Database={builder.Configuration["DB_DATABASE"]};" +
+                    $"Uid={builder.Configuration["DB_USER"]};" +
+                    $"Pwd={builder.Configuration["DB_PASSWORD"]};" +
+                    $"Port={builder.Configuration["DB_PORT"]};" +
+                    "SslMode=none;";
 
 // Adds services to the container.
 builder.Services.AddControllersWithViews();
