@@ -1,10 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClassScheduling_WebApp.Models
 {
     [Table("TblProgram")]
-    public class ProgramModel
+    public class ProgramModel : DbContext
     {
         [Key]
         public int Id { get; set; }
@@ -19,6 +20,18 @@ namespace ClassScheduling_WebApp.Models
 
         // Collection navigation properties
         public virtual ICollection<CourseModel> Courses { get; set; } = new List<CourseModel>();
+
+        public List<ProgramModel> Programs
+        {
+            get
+            {
+                return TblProgram.OrderByDescending(p => p.Name).ToList();
+            }
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseMySql(Connection.CONNECTION_STRING, new MySqlServerVersion(new Version(8, 2, 0)));
+        }
     }
 
 }

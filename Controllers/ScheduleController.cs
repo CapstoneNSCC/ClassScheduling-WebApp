@@ -19,6 +19,10 @@ namespace ClassScheduling_WebApp.Controllers
         // Handles GET requests for the schedule index page by fetching all schedules and passing them to the view
         public async Task<IActionResult> Index()
         {
+            if (HttpContext.Session.GetString("auth") != "true")
+            {
+                return RedirectToAction("Index", "Login");
+            }
             var schedules = await _context.Schedules
                 .Include(s => s.Calendar)
                 .Include(s => s.Course)
