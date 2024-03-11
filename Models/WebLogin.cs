@@ -25,8 +25,33 @@ namespace ClassScheduling_WebApp.Models
             Access = false;
         }
 
+        public string username
+        {
+            set
+            {
+                Username = (value == null ? "" : value);
+            }
+        }
+
+        public string password
+        {
+            set
+            {
+                Password = (value == null ? "" : value);
+            }
+        }
+
+        public bool access
+        {
+            get { return Access; }
+        }
+
         public bool Unlock()
         {
+
+            //trim to 10 characters in case front end maxLength compromised
+            Username = truncate(Username, 10);
+            Password = truncate(Password, 10);
 
             var user = _context.Users.SingleOrDefault(u => u.UserName == Username);
             if (user != null)

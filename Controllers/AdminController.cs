@@ -8,12 +8,12 @@ namespace ClassScheduling_WebApp.Controllers
 {
     public class AdminController : Controller
     {
-        // private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        // public AdminController(ApplicationDbContext context)
-        // {
-        //     _context = context;
-        // }
+        public AdminController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         public IActionResult Index()
         {
@@ -22,8 +22,8 @@ namespace ClassScheduling_WebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-            //var schedules = _context.Schedules.ToList();
-            return View();
+            var programs = _context.Programs.ToList();
+            return View(programs);
         }
 
         public IActionResult Logout()
