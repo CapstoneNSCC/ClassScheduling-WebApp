@@ -27,6 +27,7 @@ namespace ClassScheduling_WebApp.Models
 
         public bool Unlock()
         {
+
             var user = _context.Users.SingleOrDefault(u => u.UserName == Username);
             if (user != null)
             {
@@ -52,6 +53,10 @@ namespace ClassScheduling_WebApp.Models
                 iterationCount: 10000,
                 numBytesRequested: 256 / 8));
             return hashed;
+        }
+        private string truncate(string value, int maxLength)
+        {
+            return value.Length <= maxLength ? value : value.Substring(0, maxLength);
         }
     }
 }
