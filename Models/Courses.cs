@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-//added name space to be used with the schedule manager.
 namespace ClassScheduling_WebApp.Models
 {
   [Table("TblCourses")]

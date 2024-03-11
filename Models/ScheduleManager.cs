@@ -1,51 +1,66 @@
-using System;
 using Microsoft.EntityFrameworkCore;
+using ClassScheduling_WebApp.Models;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ClassScheduling_WebApp.Models
 {
-
   public class ScheduleManager : DbContext
   {
+    // Define DbSet properties for your entities
+    public DbSet<EducationalProgram>? EducationalPrograms { get; set; }
+    public DbSet<Courses>? Courses { get; set; }
 
     // ----------------------------------- gets and set
-    //using schedule manager to get the data from the programs table to provide a list object to be used on the index page and elsewhere.
-    private DbSet<EducationalProgram> TblEducationalPrograms { get; set; } = null;
-
-    private DbSet<Courses> TblCourses { get; set; }
+    // Using schedule manager to get the data from the programs table to provide a list object to be used on the index page and elsewhere.
+    private DbSet<EducationalProgram>? TblEducationalPrograms { get; set; }
+    private DbSet<Courses>? TblCourses { get; set; }
 
     public List<EducationalProgram> Programs
     {
       get
       {
-        return TblEducationalPrograms.OrderByDescending(p => p.Name).ToList();
+        if (TblEducationalPrograms != null)
+        {
+          // Ensure that TblEducationalPrograms is not null before performing LINQ operations
+          return TblEducationalPrograms.OrderByDescending(p => p.Name).ToList();
+        }
+        else
+        {
+          // Handle the case when TblEducationalPrograms is null
+          return new List<EducationalProgram>();
+        }
       }
     }
 
-    // get all links sorted by name
-    public List<Courses> allCourses
+    // Get all courses sorted by name
+    public List<Courses> GetAllCourses()
     {
-      get
+      if (Courses != null)
       {
-        return TblCourses.OrderBy(c => c.Name).ToList();
+        // making sure courses isn't null - LINQ operations
+        return Courses.OrderBy(c => c.Name).ToList();
+      }
+      else
+      {
+        // handle when null
+        return new List<Courses>();
       }
     }
 
-
-    // get a program by its ID
-    public EducationalProgram getProgramByID(int programID)
+    public EducationalProgram? GetProgramByID(int programID)
     {
-      //using LINQ method to query data and return as list
-      //.Single is used to get a single element from the filtered collection. (it assumes there is only 1 in the collection that satisfies the condition if more then on, or none that match it throws an exception. - but i don't need to worry about duplicates in this case as its based off the id which is the primary key)
-      return TblEducationalPrograms.Where(p => p.Id == programID).Single();
+      // making sure educationalprograms isn't null - before LINQ operations
+      if (EducationalPrograms != null)
+      {
+        // Retrieve the program from the database
+        return EducationalPrograms.FirstOrDefault(p => p.Id == programID);
+      }
+      else
+      {
+        // handle when null
+        return null;
+      }
     }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-      optionsBuilder.UseMySql(Connection.CONNECTION_STRING, new MySqlServerVersion(new Version(8, 2, 0)));
-    }
-
   }
 }

@@ -1,7 +1,5 @@
 @model EducationalProgram;
 
-
-
 <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="top">
@@ -31,25 +29,11 @@
     </div>
 
     <div class="mb-4">
-      <label class="pb-2">Program Year: switch this to a drop down to select 1 or 2 for the program
-        year</label>
-      <asp:dropdownlist runat="server" id="ddlTest">
-        <asp:listitem text="Red" value="1"></asp:listitem>
-        <asp:listitem text="Black" value="2"></asp:listitem>
-        <asp:listitem text="Blue" value="3"></asp:listitem>
-        <asp:listitem text="Green" value="4"></asp:listitem>
-        <asp:listitem text="Yellow" value="5"></asp:listitem>
-      </asp:dropdownlist>
-    </div>
-
-    <div class="mb-4">
-      <input type="submit" asp-controller="Admin" asp-action="AddProgramSubmit" class="btn btn-warning"
-        value="Add" />
-      <a asp-controller="Admin" asp-action="Index"><input type="button" class="btn btn-warning"
-          value="Cancel" /></a>
       <label class="pb-2">Program Year:</label>
-      <input type="text" asp-for="@Model.Year" class="form-control" maxlength="1" />
-      <span asp-validation-for="@Model.Year" class="text-danger" />
+      <select class="yearSelect mb-4 form-select">
+        <option value="1">1</option>
+        <option value="2">2</option>
+      </select>
     </div>
 
     <div class="mb-4">
@@ -58,6 +42,5 @@
       <a asp-controller="Admin" asp-action="Index"><input type="button" class="btn btn-warning"
           value="Cancel" /></a>
     </div>
-
   </form>
 </div>
