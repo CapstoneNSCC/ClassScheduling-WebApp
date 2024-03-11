@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ClassScheduling_WebApp.Models
 {
     [Table("TblProgram")]
-    public class ProgramModel : DbContext
+    public class ProgramModel
     {
         [Key]
         public int Id { get; set; }

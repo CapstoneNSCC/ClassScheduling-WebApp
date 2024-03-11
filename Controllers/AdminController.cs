@@ -3,6 +3,7 @@ using ClassScheduling_WebApp.Models;
 using System.Collections.Immutable;
 using ClassScheduling_WebApp.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace ClassScheduling_WebApp.Controllers
 {
@@ -22,8 +23,16 @@ namespace ClassScheduling_WebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-
-            var programs = _context.Programs.ToList();
+            var programs = _context.Programs
+    .Select(p => new ProgramModel
+    {
+        Id = p.Id,
+        Name = p.Name,
+        Year = p.Year,
+        // Include other properties as needed
+    })
+    .OrderByDescending(p => p.Name)
+    .ToList();
             return View(programs);
         }
 

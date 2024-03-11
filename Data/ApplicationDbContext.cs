@@ -29,6 +29,7 @@ namespace ClassScheduling_WebApp.Data
             modelBuilder.Entity<ScheduleModel>().HasKey(s => new { s.IdCalendar, s.IdCourse, s.IdClassroom });
             modelBuilder.Entity<TechClassModel>().HasKey(tc => new { tc.IdCourse, tc.IdTechnology });
             modelBuilder.Entity<TechRoomModel>().HasKey(tr => new { tr.IdRoom, tr.IdTechnology });
+            modelBuilder.Entity<ProgramModel>().HasKey(p => p.Id);
 
         }
     }
