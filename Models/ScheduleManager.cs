@@ -62,5 +62,10 @@ namespace ClassScheduling_WebApp.Models
         return null;
       }
     }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+      optionsBuilder.UseMySql(Connection.CONNECTION_STRING, new MySqlServerVersion(new Version(8, 2, 0)));
+    }
   }
 }
