@@ -2,14 +2,14 @@ using System;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Http;
-using ClassScheduling_WebApp.Data; 
-using System.Linq; 
+using ClassScheduling_WebApp.Data;
+using System.Linq;
 
 namespace ClassScheduling_WebApp.Models
 {
     public class WebLogin
     {
-        private readonly ApplicationDbContext _context; 
+        private readonly ApplicationDbContext _context;
         private readonly HttpContext _httpContext;
         public string Username { get; set; }
         public string Password { get; set; }
@@ -30,7 +30,7 @@ namespace ClassScheduling_WebApp.Models
             var user = _context.Users.SingleOrDefault(u => u.UserName == Username);
             if (user != null)
             {
-                var hashedPassword = GetHashed(Password, user.Salt);
+                var hashedPassword = GetHashed(Password, user.Salt.ToString());
                 if (hashedPassword == user.Password)
                 {
                     Access = true;
