@@ -25,13 +25,10 @@ namespace ClassScheduling_WebApp.Models
         {
             get
             {
-                return TblProgram.OrderByDescending(p => p.Name).ToList();
+                return Programs.OrderByDescending(p => p.Name).ToList();
             }
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseMySql(Connection.CONNECTION_STRING, new MySqlServerVersion(new Version(8, 2, 0)));
-        }
+
     }
 
 }
