@@ -14,13 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Adds support for environment variables
 builder.Configuration.AddEnvironmentVariables();
 
-var connectionString = $"Server={"capstoneteam6db.mysql.database.azure.com"};" +
-                    $"Database={"dbclassschedule"};" +
-                    $"Uid={"DylanMac"};" +
-                    $"Pwd={"Wer45Tgbvf"};" +
-                    $"Port={"3306"};" +
-                    $"SslMode=Required;" +
-                    $"SslCa={"ssl/DigiCertGlobalRootCA.crt.pem"};";
+var connectionString = "Server=capstoneteam6db.mysql.database.azure.com;Database=dbclassschedule;Uid=DylanMac;Pwd=Wer45Tgbvf;Port=3306;SslMode=Required;SslCa=ssl/DigiCertGlobalRootCA.crt.pem;";
 
 // Adds services to the container.
 builder.Services.AddControllersWithViews();
