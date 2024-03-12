@@ -7,7 +7,6 @@ namespace ClassScheduling_WebApp.Models
 {
   public class ScheduleManager : DbContext
   {
-    // Define DbSet properties for your entities
     public DbSet<EducationalProgram>? EducationalPrograms { get; set; }
     public DbSet<Courses>? Courses { get; set; }
 
@@ -22,12 +21,12 @@ namespace ClassScheduling_WebApp.Models
       {
         if (TblEducationalPrograms != null)
         {
-          // Ensure that TblEducationalPrograms is not null before performing LINQ operations
+          // making sure that educationalPrograms isn't null
           return TblEducationalPrograms.OrderByDescending(p => p.Name).ToList();
         }
         else
         {
-          // Handle the case when TblEducationalPrograms is null
+          // Handle when null
           return new List<EducationalProgram>();
         }
       }
@@ -38,7 +37,7 @@ namespace ClassScheduling_WebApp.Models
     {
       if (Courses != null)
       {
-        // making sure courses isn't null - LINQ operations
+        // making sure courses isn't null
         return Courses.OrderBy(c => c.Name).ToList();
       }
       else
@@ -50,10 +49,10 @@ namespace ClassScheduling_WebApp.Models
 
     public EducationalProgram? GetProgramByID(int programID)
     {
-      // making sure educationalprograms isn't null - before LINQ operations
+      // making sure educationalprograms isn't null
       if (EducationalPrograms != null)
       {
-        // Retrieve the program from the database
+        // retrieve the program from the database
         return EducationalPrograms.FirstOrDefault(p => p.Id == programID);
       }
       else
