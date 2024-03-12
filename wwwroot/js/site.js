@@ -8,7 +8,7 @@ $(document).ready(function () {
   $('#myModal').modal({ show: false });
 
   // warning time (2 minutes before logout - 18 minutes) current times are for testing
-  let warningTime = 1 * 10 * 1000;
+  let warningTime = 1 * 100 * 1000;
 
   // timeout to make the model appear
   let modalAppear = setTimeout(openModal, warningTime);

@@ -1,6 +1,5 @@
-@model ScheduleManager;
 @*
-@{
+@
 // Retrieve the array from ViewData
 string[] programs = ViewData["programs"] as string[];
 } *@
@@ -28,28 +27,33 @@ string[] programs = ViewData["programs"] as string[];
     <div class="flex ms-4">
       <span class="fs-2">Programs</span>
 
-      <button type="submit" class="btn p-0" asp-controller="Admin" asp-action="Add">
+      <button type="submit" class="btn p-0" asp-controller="Programs" asp-action="AddProgram">
         <i class="fa fa-plus bg-warning p-2 rounded ms-1 mb-2"></i>
       </button>
     </div>
   </form>
-
   <div class="border-top pt-2 mt-2">
-    @if (Model.Programs.Count > 0)
+    @if (@Model.Count > 0)
     {
       <div class="ms-4">
-        @foreach (var program in Model.Programs)
+        @foreach (var program in Model)
         {
           <form method="post">
             <div class="flex">
-              <button type="submit" class="btn p-1" asp-controller="Admin" asp-action="Delete" asp-route-id="">
+              <button type="submit" class="btn p-1" asp-controller="Programs" asp-action="Delete"
+                asp-route-id="@program.Id">
                 <i class="fa fa-trash bg-warning p-2 rounded"></i>
               </button>
-              <button type="submit" class="btn p-0" asp-controller="Admin" asp-action="Update" asp-route-id="">
+              <button type="submit" class="btn p-0" asp-controller="Programs" asp-action="Update"
+                asp-route-id="@program.Id">
                 <i class="fa fa-pencil bg-warning p-2 rounded"></i>
               </button>
-              <span class="ms-4">@program.Name</span>
-              <a href="admin/courses"><span> | Add Course </span></a>
+              <span class="ms-4">@program.Name, year @program.Year | Add Course</span>
+
+              <button disabled type="submit" class="btn p-0" asp-controller="Admin" asp-action="AddCourse"
+                asp-route-id="@program.Id">
+                <i class="fa fa-plus bg-warning p-1 rounded"></i>
+              </button>
             </div>
           </form>
         }
