@@ -19,7 +19,8 @@ var connectionString = $"Server={builder.Configuration["DB_SERVER"]};" +
                     $"Uid={builder.Configuration["DB_USER"]};" +
                     $"Pwd={builder.Configuration["DB_PASSWORD"]};" +
                     $"Port={builder.Configuration["DB_PORT"]};" +
-                    "SslMode=none;";
+                    "SslMode=Required;" +
+                    $"SslCa={builder.Configuration["DB_SSL_CA"]};";
 
 // Adds services to the container.
 builder.Services.AddControllersWithViews();
