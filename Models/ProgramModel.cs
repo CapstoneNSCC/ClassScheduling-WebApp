@@ -21,15 +21,7 @@ namespace ClassScheduling_WebApp.Models
         // Collection navigation properties
         public virtual ICollection<CourseModel> Courses { get; set; } = new List<CourseModel>();
 
-        private DbSet<ProgramModel> TblPrograms { get; set; } = null;
 
-        public List<ProgramModel> Programs
-        {
-            get
-            {
-                return TblPrograms.OrderByDescending(p => p.Name).ToList();
-            }
-        }
 
     }
 
