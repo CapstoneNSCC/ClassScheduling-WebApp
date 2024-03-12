@@ -21,13 +21,16 @@
   <h1>Delete Program.</h1>
 
   <form asp-controller="Admin" method="post">
-    <div style="margin-bottom:10px" class="fs-5">Are you sure you want to delete?</div>
-    <span>@Model.Name, Year @Model.Year</span>
+    <div style="mb-4" class="fs-5">Are you sure you want to delete?
+      <span>@Model.Name, Year @Model.Year</span>
+    </div>
 
     <div class="mb-4">
       <input type="hidden" asp-for="@Model.Id" />
-      <input type="submit" asp-controller="Programs" asp-action="DeleteSubmit" class="btn btn-warning" value="Delete" />
-      <a asp-controller="Admin" asp-action="Index"><input type="button" class="btn btn-warning" value="Cancel" /></a>
+      <input type="submit" asp-controller="Programs" asp-action="DeleteSubmit" class="btn btn-warning"
+        value="Delete" />
+      <a asp-controller="Admin" asp-action="Index"><input type="button" class="btn btn-warning"
+          value="Cancel" /></a>
     </div>
   </form>
 </div>
