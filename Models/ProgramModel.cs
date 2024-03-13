@@ -11,7 +11,7 @@ namespace ClassScheduling_WebApp.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Program name is required.")]
-        [StringLength(30, ErrorMessage = "Program name cannot exceed 30 characters.")]
+        [StringLength(60, ErrorMessage = "Program name cannot exceed 60 characters.")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Year is required.")]
