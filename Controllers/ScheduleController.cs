@@ -146,14 +146,14 @@ namespace ClassScheduling_WebApp.Controllers
         public async Task<IActionResult> ListPrograms()
         {
             var programs = await _context.Programs.OrderByDescending(p => p.Name).ToListAsync();
-            return View("ListPrograms", programs); // Assumes a corresponding view exists
+            return View("ListPrograms", programs); 
         }
 
         // Fetches and displays a list of all courses, ordered by name
         public async Task<IActionResult> ListAllCourses()
         {
             var courses = await _context.Courses.OrderBy(c => c.Name).ToListAsync();
-            return View("ListAllCourses", courses); // Assumes a corresponding view exists
+            return View("ListAllCourses", courses); 
         }
 
         // Fetches and displays details of a specific program by ID
@@ -164,7 +164,7 @@ namespace ClassScheduling_WebApp.Controllers
             {
                 return NotFound();
             }
-            return View("GetProgramById", program); // Assumes a corresponding view exists
+            return View("GetProgramById", program);
         }
     }
 }

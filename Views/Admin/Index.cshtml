@@ -35,10 +35,10 @@ string[] programs = ViewData["programs"] as string[];
   </form>
 
   <div class="border-top pt-2 mt-2">
-    @if (Model.Programs.Count > 0)
+    @if (Model.Name.Length > 0)
     {
       <div class="ms-4">
-        @foreach (var program in Model.Programs)
+        @foreach (var program in Model.Name)
         {
           <form method="post">
             <div class="flex">
