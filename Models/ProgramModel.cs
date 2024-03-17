@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClassScheduling_WebApp.Models
 {
@@ -19,6 +20,9 @@ namespace ClassScheduling_WebApp.Models
 
         // Collection navigation properties
         public virtual ICollection<CourseModel> Courses { get; set; } = new List<CourseModel>();
+
+
+
     }
 
 }

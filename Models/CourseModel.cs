@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClassScheduling_WebApp.Models
 {
-    
+
     [Table("TblCourse")]
     public class CourseModel
     {
@@ -27,7 +27,7 @@ namespace ClassScheduling_WebApp.Models
 
         [ForeignKey("IdProgram"), Required(ErrorMessage = "Program is required.")]
         public int IdProgram { get; set; }
-        public virtual ProgramModel Program { get; set; }
+        //public virtual ProgramModel Programs { get; set; }
 
         // Collection navigation properties
         public virtual ICollection<TechClassModel> TechClasses { get; set; } = new List<TechClassModel>();
