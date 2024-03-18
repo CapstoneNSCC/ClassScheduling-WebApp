@@ -1,0 +1,105 @@
+@model Tuple<ClassScheduling_WebApp.Models.EducationalProgram, List<ClassScheduling_WebApp.Models.Courses>>
+
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="top">
+      <img src="\lib\images\nscc-logo.jpg" alt="nscc-logo" width="200px" class="d-inline-block ms-3">
+    </a>
+    <form method="post">
+      <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Logout">
+        Logout
+      </button>
+    </form>
+  </div>
+</nav>
+
+<div class="p-5 text-white">
+  <h1>Edit Course</h1>
+  <div style="margin-bottom:10px" class="fs-5">Edit the Course data below:</div>
+
+  @if (Model != null)
+  {
+    @* -------------------------------------------------------------------- displaying the name of the porgram
+  they are adding a course to.*@
+    <div class="mb-4">
+      <label class="pb-2">Program:</label>
+      <input type="text" id="programName" class="form-control"
+        value="@($"{Model.Item1.Name} (Year {Model.Item1.Year})")" readonly />
+      <input type="hidden" id="programId" name="programId" value="@Model.Item1.Id" />
+    </div>
+  }
+
+  @* -------------------------------------------------------------------- Input field for course code *@
+  <div class="mb-4">
+    <label class="pb-2">Course Code:</label>
+    <input type="text" class="form-control" name="course.Code" />
+  </div>
+
+  @* -------------------------------------------------------------------- Input field for course name *@
+  <div class="mb-4">
+    <label class="pb-2">Course Name:</label>
+    <input type="text" class="form-control" name="course.Name" />
+  </div>
+
+
+  @* -------------------------------------------------------------------- Select for the course hours*@
+  <div class="mb-4">
+    <label class="pb-2">Course Hours:</label>
+    <div>
+      <select class="mb-4 form-select">
+        <option value="" selected disabled>Select Total Course Hours</option>
+        <option value="1">60</option>
+        <option value="2">90</option>
+      </select>
+    </div>
+  </div>
+
+  @* -------------------------------------------------------------------- Select for the Professor *@
+  <div class="mb-4">
+    <label class="pb-2">Professor:</label>
+    <div>
+      <select class="mb-4 form-select">
+        <option value="" selected disabled>Select a professor</option>
+        <option value="1">Ryan McLaren</option>
+        <option value="2">Sean Morrow</option>
+        <option value="1">Matt Redmond</option>
+        <option value="2">Gordon Larusic</option>
+        <option value="1">Matt Craig</option>
+        <option value="2">Nesser Jallel</option>
+      </select>
+    </div>
+  </div>
+
+  @* -------------------------------------------------------------------- Select for the Technology needed for
+  the course*@
+
+  <div class="mb-4">
+    <label class="pb-2">Computer Level:</label>
+    <div>
+      <select class="mb-4 form-select">
+        <option value="" selected disabled>Select a Computer Level</option>
+        <option value="1">High</option>
+        <option value="2">Moderate</option>
+        <option value="3">Low</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="p-2">Projector</label>
+      <input type="checkbox">
+    </div>
+
+    <div>
+      <label class="p-2">Touch Screen</label>
+      <input type="checkbox">
+    </div>
+  </div>
+
+  @* -------------------------------------------------------------------- Buttons*@
+  <div class="mb-4">
+    <input type="submit" class="btn btn-warning" value="Update" />
+    <a asp-controller="Admin" asp-action="AddCourse"><input type="button" class="btn btn-warning"
+        value="Cancel" /></a>
+  </div>
+
+</div>
