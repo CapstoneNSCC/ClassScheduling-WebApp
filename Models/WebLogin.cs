@@ -71,12 +71,14 @@ namespace ClassScheduling_WebApp.Models
         private string GetHashed(string password, string salt)
         {
             byte[] saltBytes = Convert.FromBase64String(salt);
+            Console.WriteLine("----- teste ----- ");
             string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                 password: password,
                 salt: saltBytes,
                 prf: KeyDerivationPrf.HMACSHA1,
                 iterationCount: 10000,
                 numBytesRequested: 256 / 8));
+                Console.WriteLine("hashed: " + hashed);
             return hashed;
         }
         private string truncate(string value, int maxLength)

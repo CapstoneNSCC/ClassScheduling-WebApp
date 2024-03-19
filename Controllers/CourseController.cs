@@ -71,7 +71,8 @@ namespace ClassScheduling_WebApp.Controllers
 
         
         // Shows the form to add a new course for a specific program
-        public IActionResult AddCourse(int? programId)
+        [Route("/Course/AddCourse/{programID:int}")]
+        public IActionResult AddCourse(int programId)
         {
             if (HttpContext.Session.GetString("auth") != "true")
             {
@@ -82,10 +83,9 @@ namespace ClassScheduling_WebApp.Controllers
             PopulateProgramsDropDownList(programId); // Pass the programId to pre-select the program in the dropdown
             
             var courseModel = new CourseModel();
-            if (programId.HasValue)
-            {
-                courseModel.IdProgram = programId.Value; // Pre-select the program if an ID was provided
-            }
+            
+            courseModel.IdProgram = programId; // Pre-select the program if an ID was provided
+            
             
             return View("~/Views/Course/AddCourse.cshtml", courseModel); // Use the same Add view, but pass in the pre-selected program
         }
@@ -234,10 +234,28 @@ namespace ClassScheduling_WebApp.Controllers
 
         private void PopulateProgramsDropDownList(object selectedProgram = null)
         {
+            int? programId = selectedProgram as int?;
             var programsQuery = from p in _context.Programs
-                                orderby p.Name
+                                where p.Id == programId
                                 select p;
             ViewBag.IdProgram = new SelectList(programsQuery.AsNoTracking(), "Id", "Name", selectedProgram);
         }
+    
+        public IActionResult AddSubmit(CourseModel course)
+        {
+            // if auth is not  = true, it re-directs to the login screen.
+            if (HttpContext.Session.GetString("auth") != "true")
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            // add the course to the list of courses
+            _context.Courses.Add(course);
+            //save changes to the database
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Admin");
+        }
+    
     }
+    
 }

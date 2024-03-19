@@ -156,10 +156,11 @@ INSERT INTO TblProgram (Name, Year) VALUES
 -- Insert data into TblUser
 INSERT INTO TblUser (FirstName, LastName, SetAsAdmin, UserName, Password, Salt) VALUES
 ('user', 'admin', TRUE, 'user', 'jSANqsAHN3BKj2onm6KPStvO5O5taYzxBxDQydzgLTM=', '0w54NUgsGa53PfCmOt9Lhg=='),
-('pablo', 'admin', TRUE, 'pablo', 'GWftrhCl31KH54HIo5pDKBOZCRDdjxtLxq571rJuycA=', '0w54NUgsGa53PfCmOt9Lhg=='),
+('pablo', 'santos', TRUE, 'pablo', 'GWftrhCl31KH54HIo5pDKBOZCRDdjxtLxq571rJuycA=', '0w54NUgsGa53PfCmOt9Lhg=='),
 ('kayla', 'gillam', TRUE, 'kayla', 'TS2OQQ7XOGnvq9C/aS4WNiiGAdMz8osde8xBQl6JvsU=', '0w54NUgsGa53PfCmOt9Lhg=='),
-('sean', 'morrow', TRUE, 'sean', 'nNKacirUadrGD9npbzM3FpdqobbNucxXwq9TDPHaG7Q=', '0w54NUgsGa53PfCmOt9Lhg=='),
+('Sean', 'Morrow', FALSE, 'sean', 'nNKacirUadrGD9npbzM3FpdqobbNucxXwq9TDPHaG7Q=', '0w54NUgsGa53PfCmOt9Lhg=='),
 ('dylan', 'admin', TRUE, 'dylan', 'HCYHoaYJWGyduzsHuU6+s+dsAofaGClontE/t5blwak=','0w54NUgsGa53PfCmOt9Lhg==');
+
 
 -- Insert data into TblTechnology
 INSERT INTO TblTechnology (Description) VALUES

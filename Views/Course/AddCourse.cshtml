@@ -1,4 +1,4 @@
-@model ClassScheduling_WebApp.Models.CourseModel
+@model CourseModel
 
 @{
     ViewData["Title"] = "Add Course";
@@ -19,40 +19,49 @@
     <h2 class="mb-4">Add New Course</h2>
 
     <form asp-action="Add" method="post">
-        <div class="form-group">
+        <div class="mb-4">
             <label asp-for="Code" class="control-label">Course Code</label>
             <input asp-for="Code" class="form-control" />
             <span asp-validation-for="Code" class="text-danger"></span>
         </div>
 
-        <div class="form-group">
+        <div class="mb-4">
             <label asp-for="Name" class="control-label">Course Name</label>
             <input asp-for="Name" class="form-control" />
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>
 
-        <div class="form-group">
+        <div class="mb-4">
             <label asp-for="Hours" class="control-label">Hours</label>
-            <input asp-for="Hours" class="form-control" />
+            <label>
+                <input asp-for="Hours" type="radio" value="60" checked /> 60h
+            </label>
+            <label>
+                <input asp-for="Hours" type="radio" value="90" /> 90h
+            </label>
             <span asp-validation-for="Hours" class="text-danger"></span>
         </div>
 
-        <div class="form-group">
+        <div class="mb-4">
             <label asp-for="IdProfessor" class="control-label">Professor</label>
             <select asp-for="IdProfessor" class="form-control" asp-items="ViewBag.IdProfessor">
                 <option value="">Please select a professor</option>
             </select>
         </div>
 
-        <div class="form-group">
+        <div class="mb-4">
             <label asp-for="IdProgram" class="control-label">Program</label>
-            <select asp-for="IdProgram" class="form-control" asp-items="ViewBag.IdProgram">
-                <option value="">Please select a program</option>
+            <select asp-for="IdProgram" class="form-control" asp-items="ViewBag.IdProgram"> 
             </select>
         </div>
 
+        @* <div class="mb-4">
+            <label class="pb-2">Program Name:</label>
+            <input type="text" asp-for="@Model.Name" class="form-control" value="@Model.Name" />
+        </div> *@
+
         <div class="mb-4">
-            <input type="submit" asp-controller="Courses" asp-action="AddSubmit" class="btn btn-warning" value="Add" />
+            <input type="submit" asp-controller="Course" asp-action="AddSubmit" class="btn btn-warning" value="Add" />
             <a asp-controller="Admin" asp-action="Index"><input type="button" class="btn btn-warning" value="Cancel" /></a>
         </div>
     </form>
