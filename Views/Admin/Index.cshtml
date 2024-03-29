@@ -1,8 +1,4 @@
-@*
-@
-// Retrieve the array from ViewData
-string[] programs = ViewData["programs"] as string[];
-} *@
+@model IndexViewModel
 
 <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
@@ -33,10 +29,10 @@ string[] programs = ViewData["programs"] as string[];
     </div>
   </form>
   <div class="border-top pt-2 mt-2">
-    @if (@Model.Count > 0)
+    @if (@Model.Programs.Count > 0)
     {
       <div class="ms-4">
-        @foreach (var program in Model)
+        @foreach (var program in Model.Programs)
         {
           <form method="post">
             <div class="flex">
@@ -57,6 +53,46 @@ string[] programs = ViewData["programs"] as string[];
             </div>
           </form>
         }
+      </div>
+    }
+    else
+    {
+      <div class="ms-4">
+        <span>No programs found</span>
+      </div>
+    }
+    <form method="post">
+      <div class="flex ms-4">
+        <span class="fs-2">Technology</span>
+
+        <button type="submit" class="btn p-0" asp-controller="Technology" asp-action="AddTech">
+          <i class="fa fa-plus bg-warning p-2 rounded ms-1 mb-2"></i>
+        </button>
+      </div>
+    </form>
+    @if (@Model.Technologies.Count > 0)
+    {
+      <div class="ms-4">
+        @foreach (var tech in Model.Technologies)
+        {
+          <form method="post">
+            <div class="flex">
+              <button type="submit" class="btn p-1" asp-controller="Technology" asp-action="Delete" asp-route-id="@tech.Id">
+                <i class="fa fa-trash bg-warning p-2 rounded"></i>
+              </button>
+              <button type="submit" class="btn p-0" asp-controller="Technology" asp-action="Update" asp-route-id="@tech.Id">
+                <i class="fa fa-pencil bg-warning p-2 rounded"></i>
+              </button>
+              <span class="ms-4">@tech.Description</span>
+            </div>
+          </form>
+        }
+      </div>
+    }
+    else
+    {
+      <div class="ms-4">
+        <span>No Technologies found</span>
       </div>
     }
   </div>

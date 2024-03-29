@@ -33,7 +33,24 @@ namespace ClassScheduling_WebApp.Controllers
             })
             .OrderByDescending(p => p.Name)
             .ToList();
-            return View(programs);
+
+            var technologies = _context.Technologies
+            .Select(t => new TechnologyModel
+            {
+                Id = t.Id,
+                Description = t.Description,
+                // Include other properties as needed
+            })
+            .OrderByDescending(t => t.Description)
+            .ToList();
+
+            var viewModel = new IndexViewModel
+            {
+                Programs = programs,
+                Technologies = technologies
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult Logout()
