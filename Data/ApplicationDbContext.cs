@@ -1,7 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using ClassScheduling_WebApp.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 
 namespace ClassScheduling_WebApp.Data
 {
@@ -25,12 +23,56 @@ namespace ClassScheduling_WebApp.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure composite key for ScheduleModel
+            // Composite Keys
             modelBuilder.Entity<ScheduleModel>().HasKey(s => new { s.IdCalendar, s.IdCourse, s.IdClassroom });
             modelBuilder.Entity<TechClassModel>().HasKey(tc => new { tc.IdCourse, tc.IdTechnology });
             modelBuilder.Entity<TechRoomModel>().HasKey(tr => new { tr.IdRoom, tr.IdTechnology });
-            modelBuilder.Entity<ProgramModel>().HasKey(p => p.Id);
 
+            // Foreign Key Relationships
+            modelBuilder.Entity<CourseModel>()
+                .HasOne(c => c.Professor)
+                .WithMany(u => u.Courses)
+                .HasForeignKey(c => c.IdProfessor);
+
+            modelBuilder.Entity<CourseModel>()
+                .HasOne(c => c.Programs)
+                .WithMany(p => p.Courses)
+                .HasForeignKey(c => c.IdProgram);
+
+            modelBuilder.Entity<TechClassModel>()
+                .HasOne(tc => tc.Course)
+                .WithMany(c => c.TechClasses)
+                .HasForeignKey(tc => tc.IdCourse);
+
+            modelBuilder.Entity<TechClassModel>()
+                .HasOne(tc => tc.Technology)
+                .WithMany(t => t.TechClasses)
+                .HasForeignKey(tc => tc.IdTechnology);
+
+            modelBuilder.Entity<TechRoomModel>()
+                .HasOne(tr => tr.Room)
+                .WithMany()
+                .HasForeignKey(tr => tr.IdRoom);
+
+            modelBuilder.Entity<TechRoomModel>()
+                .HasOne(tr => tr.Technology)
+                .WithMany()
+                .HasForeignKey(tr => tr.IdTechnology);
+
+            modelBuilder.Entity<ScheduleModel>()
+                .HasOne(s => s.Calendar)
+                .WithMany()
+                .HasForeignKey(s => s.IdCalendar);
+
+            modelBuilder.Entity<ScheduleModel>()
+                .HasOne(s => s.Course)
+                .WithMany(c => c.Schedules)
+                .HasForeignKey(s => s.IdCourse);
+
+            modelBuilder.Entity<ScheduleModel>()
+                .HasOne(s => s.Classroom)
+                .WithMany()
+                .HasForeignKey(s => s.IdClassroom);
         }
     }
 }
