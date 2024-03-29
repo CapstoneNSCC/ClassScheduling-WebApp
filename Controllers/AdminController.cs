@@ -44,10 +44,28 @@ namespace ClassScheduling_WebApp.Controllers
             .OrderByDescending(t => t.Description)
             .ToList();
 
+            var users = _context.Users
+            .Select(u => new UserModel
+            {
+                Id = u.Id,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                SetAsAdmin = u.SetAsAdmin,
+                UserName = u.UserName,
+                Password = u.Password,
+                Salt = u.Salt,
+                // Include other properties as needed
+            })
+            .OrderByDescending(u => u.UserName)
+            .ToList();
+
+
+
             var viewModel = new IndexViewModel
             {
                 Programs = programs,
-                Technologies = technologies
+                Technologies = technologies,
+                Users = users
             };
 
             return View(viewModel);

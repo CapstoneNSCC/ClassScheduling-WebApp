@@ -68,6 +68,16 @@ namespace ClassScheduling_WebApp.Models
             return false;
         }
 
+        public string GetSalt()
+        {
+            return getSalt();
+        }
+
+        public string getHashed(string password, string salt)
+        {
+            return GetHashed(password, salt);
+        }
+
         private string GetHashed(string password, string salt)
         {
             byte[] saltBytes = Convert.FromBase64String(salt);
@@ -79,6 +89,21 @@ namespace ClassScheduling_WebApp.Models
                 numBytesRequested: 256 / 8));
             return hashed;
         }
+
+        private string getSalt()
+        {
+            // generate a 128-bit salt using a secure PRNG (pseudo-random number generator)
+            // 128 / 8 = 16 bytes = 128 bits
+            byte[] salt = new byte[128 / 8];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(salt);
+            }
+            //Console.WriteLine(">>> Salt: " + Convert.ToBase64String(salt));
+
+            return Convert.ToBase64String(salt);
+        }
+
         private string truncate(string value, int maxLength)
         {
             return value.Length <= maxLength ? value : value.Substring(0, maxLength);
