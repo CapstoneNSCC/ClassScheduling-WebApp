@@ -1,51 +1,22 @@
 using Microsoft.AspNetCore.Mvc;
 using ClassScheduling_WebApp.Models;
-using Microsoft.AspNetCore.Http;
+using System.Collections.Immutable;
 using ClassScheduling_WebApp.Data;
-using System.Security.Cryptography.X509Certificates;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace ClassScheduling_WebApp.Controllers
 {
-    public class LoginController : Controller
+    public class TechnologyController : Controller
     {
+
         private readonly ApplicationDbContext _context;
 
-        public LoginController(ApplicationDbContext context)
+        public TechnologyController(ApplicationDbContext context)
         {
             _context = context;
         }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Submit(string myUsername, string myPassword)
-        {
-            WebLogin webLogin = new WebLogin(_context, HttpContext)
-            {
-                //update properties
-                Username = myUsername,
-                Password = myPassword
-            };
-
-            if (webLogin.Unlock())
-            {
-                return RedirectToAction("Index", "Admin");
-            }
-            else
-            {
-                ViewData["feedback"] = "Incorrect Username and/or Password. Please try again...";
-                return View("Index");
-            }
-        }
-
-        public IActionResult AddUser()
-        {
-            return View();
-        }
-
-        public IActionResult AddSubmit(UserModel user)
+        public IActionResult AddTech()
         {
             // if auth is not  = true, it re-directs to the login screen.
             if (HttpContext.Session.GetString("auth") != "true")
@@ -53,25 +24,33 @@ namespace ClassScheduling_WebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-            //var webLogin = new WebLogin(_context, HttpContext);
+            // construct course object that will be used to add a new course.
+            TechnologyModel tech = new TechnologyModel
+            {
+                Description = "",
+            };
+            //passing in technology model to the view
+            return View(tech);
+        }
 
-            var salt = user.getSalt();
-            user.Salt = salt;
+        public IActionResult AddSubmit(TechnologyModel tech)
+        {
+            // if auth is not  = true, it re-directs to the login screen.
+            if (HttpContext.Session.GetString("auth") != "true")
+            {
+                return RedirectToAction("Index", "Login");
+            }
 
-            var hashedPassword = user.GetHashed(user.Password, salt);
-            user.Password = hashedPassword;
-
-            // add the program to the list of programs
-            _context.Users.Add(user);
+            // add the technology to the list of technologies
+            _context.Technologies.Add(tech);
             //save changes to the database
             _context.SaveChanges();
-            //HttpContext.Session.SetString("auth", "true");
-
             return RedirectToAction("Index", "Admin");
         }
 
-        [Route("/Login/Update/{UserID:int}")]
-        public IActionResult Update(int UserID)
+
+        [Route("/Technology/Update/{technologyID:int}")]
+        public IActionResult Update(int technologyID)
         {
             // if auth is not  = true, it re-directs to the login screen.
             if (HttpContext.Session.GetString("auth") != "true")
@@ -80,34 +59,29 @@ namespace ClassScheduling_WebApp.Controllers
             }
 
             // find the technology by the technologyID
-            UserModel user = _context.Users.Find(UserID);
+            TechnologyModel tech = _context.Technologies.Find(technologyID);
             //passing in technology model to the view
-            return View("EditUser", user);
+            return View("EditTech", tech);
         }
 
-        public IActionResult UpdateSubmit(UserModel user)
+
+        public IActionResult UpdateSubmit(TechnologyModel tech)
         {
             // if auth is not  = true, it re-directs to the login screen.
             if (HttpContext.Session.GetString("auth") != "true")
             {
                 return RedirectToAction("Index", "Login");
             }
-
-            var salt = user.getSalt();
-            user.Salt = salt;
-
-            var hashedPassword = user.GetHashed(user.Password, salt);
-            user.Password = hashedPassword;
 
             // update the program in the list of programs
-            _context.Users.Update(user);
+            _context.Technologies.Update(tech);
             //save changes to the database
             _context.SaveChanges();
             return RedirectToAction("Index", "Admin");
         }
 
-        [Route("/Login/Delete/{UserID:int}")]
-        public IActionResult Delete(int UserID)
+        [Route("/Technology/Delete/{TechnologyID:int}")]
+        public IActionResult Delete(int technologyID)
         {
             // if auth is not  = true, it re-directs to the login screen.
             if (HttpContext.Session.GetString("auth") != "true")
@@ -116,13 +90,13 @@ namespace ClassScheduling_WebApp.Controllers
             }
 
             // find the technology by the technologyID
-            UserModel user = _context.Users.Find(UserID);
+            TechnologyModel tech = _context.Technologies.Find(technologyID);
 
-            return View("DeleteUser", user);
+            return View("DeleteTech", tech);
 
         }
 
-        public IActionResult DeleteSubmit(UserModel user)
+        public IActionResult DeleteSubmit(TechnologyModel tech)
         {
             // if auth is not  = true, it re-directs to the login screen.
             if (HttpContext.Session.GetString("auth") != "true")
@@ -130,18 +104,20 @@ namespace ClassScheduling_WebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-            var existingTech = _context.Users.Find(user.Id);
+            var existingTech = _context.Technologies.Find(tech.Id);
             if (existingTech == null)
             {
                 return RedirectToAction("Index", "Admin");
             }
 
             // remove the program from the list of programs
-            _context.Users.Remove(existingTech);
+            _context.Technologies.Remove(existingTech);
             //save changes to the database
             _context.SaveChanges();
             return RedirectToAction("Index", "Admin");
 
         }
+
+
     }
 }
