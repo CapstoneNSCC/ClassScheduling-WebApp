@@ -62,20 +62,14 @@ namespace ClassScheduling_WebApp.Models
                     Access = true;
                     _httpContext.Session.SetString("auth", "true");
                     _httpContext.Session.SetString("user", Username);
+                    if (user.SetAsAdmin)
+                    {
+                        _httpContext.Session.SetString("admin", "true");
+                    }
                     return true;
                 }
             }
             return false;
-        }
-
-        public string GetSalt()
-        {
-            return getSalt();
-        }
-
-        public string getHashed(string password, string salt)
-        {
-            return GetHashed(password, salt);
         }
 
         private string GetHashed(string password, string salt)
