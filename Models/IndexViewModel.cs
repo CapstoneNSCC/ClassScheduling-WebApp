@@ -11,5 +11,7 @@ namespace ClassScheduling_WebApp.Models
         public List<ProgramModel> Programs { get; set; }
         public List<TechnologyModel> Technologies { get; set; }
         public List<UserModel> Users { get; set; }
+
+        public List<ClassroomModel> Classrooms { get; set; }
     }
 }

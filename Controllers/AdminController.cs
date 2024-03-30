@@ -59,13 +59,25 @@ namespace ClassScheduling_WebApp.Controllers
             .OrderByDescending(u => u.UserName)
             .ToList();
 
+            var classrooms = _context.Classrooms
+            .Select(c => new ClassroomModel
+            {
+                Id = c.Id,
+                RoomNumber = c.RoomNumber,
+                BuildingAcronym = c.BuildingAcronym,
+                // Include other properties as needed
+            })
+            .OrderByDescending(c => c.RoomNumber)
+            .ToList();
+
 
 
             var viewModel = new IndexViewModel
             {
                 Programs = programs,
                 Technologies = technologies,
-                Users = users
+                Users = users,
+                Classrooms = classrooms,
             };
 
             return View(viewModel);
