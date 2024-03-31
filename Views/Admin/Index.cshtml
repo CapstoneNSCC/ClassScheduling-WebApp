@@ -45,9 +45,9 @@
                   asp-route-id="@program.Id">
                   <i class="fa fa-pencil bg-warning p-2 rounded"></i>
                 </button>
-                <span class="ms-4"><a asp-controller="Course" asp-action="AddCourse" asp-route-id="@program.Id"
-                    asp-route-programName="@program.Name" asp-route-programYear="@program.Year"
-                    style="text-decoration: none" class="text-white">@program.Name, year @program.Year</a></span>
+                <span class="ms-4"><a asp-controller="Programs" asp-action="SingleProgram"
+                    asp-route-id="@program.Id" style="text-decoration: none" class="text-white">@program.Name,
+                    year @program.Year</a></span>
               </div>
             </form>
           }
