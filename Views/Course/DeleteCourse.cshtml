@@ -1,4 +1,4 @@
-@model ClassScheduling_WebApp.Models.Courses;
+@model CourseModel;
 
 <nav class="navbar bg-body-tertiary">
     <div class="container-fluid">
@@ -25,8 +25,8 @@
         <span>@Model.Name, @Model.Code</span>
 
         <div class="mb-4">
-            <inpt type="submit" asp-controller="Admin" asp-action="DeleteCourse" class="btn btn-warning" value="Delete" />
-            <a asp-controller="Admin" asp-action="AddCourse><input type=" button" class="btn btn-warning" value="Cancel" /></a>
+            <input type="submit" asp-controller="Course" asp-action="DeleteSubmit" class="btn btn-warning" asp-route-id="@Model.Id" value="Delete" />
+            <a asp-controller="Admin" asp-action="Index" class="btn btn-warning">Cancel</a>
         </div>
     </form>
 </div>

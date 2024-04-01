@@ -41,7 +41,7 @@
               <button type="submit" class="btn p-1" asp-controller="Course" asp-action="Delete" asp-route-id="@course.Id">
                 <i class="fa fa-trash bg-warning p-2 rounded"></i>
               </button>
-              <button type="submit" class="btn p-0" asp-controller="Course" asp-action="Update" asp-route-id="@course.Id">
+              <button type="submit" class="btn p-0" asp-controller="Course" asp-action="Edit" asp-route-id="@course.Id">
                 <i class="fa fa-pencil bg-warning p-2 rounded"></i>
               </button>
               <span> @course.Name, code: @course.Code </span>
