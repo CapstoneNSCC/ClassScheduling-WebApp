@@ -67,11 +67,12 @@ namespace ClassScheduling_WebApp.Controllers
 
             PopulateProfessorsDropDownList();
             PopulateProgramsDropDownList(programId);
-            ViewBag.Technologies = _context.Technologies.ToList(); // Add this line
+            ViewBag.Technologies = _context.Technologies.ToList();
+            
 
             var courseModel = new CourseModel
             {
-                IdProgram = programId // Pre-select the program if an ID was provided
+                IdProgram = programId // Pre-select the program
             };
 
             return View("~/Views/Course/AddCourse.cshtml", courseModel);
@@ -80,13 +81,13 @@ namespace ClassScheduling_WebApp.Controllers
         // POST: Adds a new course to the database
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Add([Bind("Id,Code,Name,Hours,IdProfessor,IdProgram, SelectedTechnologyIds")] CourseModel course, List<int> SelectedTechnologyIds)
+        public async Task<IActionResult> AddSubmit([Bind("Id,Code,Name,Hours,IdProfessor,IdProgram, SelectedTechnologyIds")] CourseModel course, List<int> SelectedTechnologyIds)
         {
             if (HttpContext.Session.GetString("auth") != "true")
             {
                 return RedirectToAction("Index", "Login");
             }
-
+            // Console.WriteLine("ModelState.IsValid " + ModelState.IsValid);
             if (ModelState.IsValid)
             {
                 _context.Add(course);

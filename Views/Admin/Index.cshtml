@@ -46,8 +46,8 @@
               </button>
               <span class="ms-4">@program.Name, year @program.Year | Add Course</span>
 
-              <button type="submit" class="btn p-0" asp-controller="Course" asp-action="AddCourse"
-                asp-route-id="@program.Id">
+              
+              <button type="submit" class="btn p-0" asp-controller="Course" asp-action="AddCourse" asp-route-programId="@program.Id">
                 <i class="fa fa-plus bg-warning p-1 rounded"></i>
               </button>
             </div>
