@@ -121,6 +121,8 @@ namespace ClassScheduling_WebApp.Controllers
     {
       ProgramModel program = _context.Programs
       .Include(p => p.Courses) 
+      .ThenInclude(tc => tc.TechClasses)
+      .ThenInclude(tcc => tcc.Technology)
       .FirstOrDefault(p => p.Id == programID);
       return View("SingleProgram", program);
     }
