@@ -123,7 +123,10 @@ namespace ClassScheduling_WebApp.Controllers
         }
         await _context.SaveChangesAsync();
 
-        return RedirectToAction(nameof(Index));
+        ProgramModel program = _context.Programs
+          .Include(p => p.Courses) 
+          .FirstOrDefault(p => p.Id == course.IdProgram);
+        return View("~/Views/Programs/SingleProgram.cshtml", program);
       }
 
       PopulateProfessorsDropDownList(course.IdProfessor);
@@ -230,13 +233,13 @@ namespace ClassScheduling_WebApp.Controllers
         return NotFound();
       }
 
-      return View(course);
+      return View("~/Views/Course/DeleteCourse.cshtml", course);
     }
 
     // POST: Deletes a course from the database
-    [HttpPost, ActionName("Delete")]
+    [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int id)
+    public async Task<IActionResult> DeleteSubmit(int id)
     {
       if (HttpContext.Session.GetString("auth") != "true")
       {
@@ -249,7 +252,10 @@ namespace ClassScheduling_WebApp.Controllers
       var course = await _context.Courses.FindAsync(id);
       _context.Courses.Remove(course);
       await _context.SaveChangesAsync();
-      return RedirectToAction(nameof(Index));
+      ProgramModel program = _context.Programs
+          .Include(p => p.Courses) 
+          .FirstOrDefault(p => p.Id == course.IdProgram);
+      return View("~/Views/Programs/SingleProgram.cshtml", program);
     }
 
     private bool CourseExists(int id)

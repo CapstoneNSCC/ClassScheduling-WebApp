@@ -119,7 +119,9 @@ namespace ClassScheduling_WebApp.Controllers
     [Route("/Program/ProgramDetails/{programID:int}")]
     public IActionResult ProgramDetails(int programID)
     {
-      ProgramModel program = _context.Programs.Find(programID);
+      ProgramModel program = _context.Programs
+      .Include(p => p.Courses) 
+      .FirstOrDefault(p => p.Id == programID);
       return View("SingleProgram", program);
     }
   }
