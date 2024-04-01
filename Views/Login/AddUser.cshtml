@@ -20,7 +20,7 @@
 </nav>
 
 <div class="p-5 text-white">
-  <h1>Add User.</h1>
+  <h1>Add Faculty.</h1>
   <div style="margin-bottom:10px" class="fs-5">Enter the new faculty members data below:</div>
 
   <form asp-controller="Admin" method="post">
@@ -49,11 +49,9 @@
     </div>
 
     <div class="mb-4">
-      <label class="pb-2">Admin Status:</label><br>
-      <label class="pb-2">Yes</label>
-      <input type="radio" asp-for="@Model.SetAsAdmin" name="admin" class="form-control" value="true" />
-      <label class="pb-2">No</label>
-      <input type="radio" asp-for="@Model.SetAsAdmin" name="admin" class="form-control" value="false" />
+      <label class="pb-2">Admin Status:</label>
+      <div><input asp-for="@Model.SetAsAdmin" type="radio" value="true" checked /> yes </div>
+      <div><input asp-for="@Model.SetAsAdmin" type="radio" value="false" /> no </div>
       <span asp-validation-for="@Model.SetAsAdmin" class="text-danger" />
     </div>
 

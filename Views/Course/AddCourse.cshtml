@@ -36,25 +36,25 @@
 
 
     <div class="mb-4">
-      <label asp-for="IdProgram" class="control-label">Program</label>
+      <label asp-for="IdProgram" class="control-label mb-2">Program</label>
       <select asp-for="IdProgram" class="form-control" asp-items="ViewBag.IdProgram">
       </select>
     </div>
 
     <div class="mb-4">
-      <label asp-for="Code" class="control-label">Course Code</label>
+      <label asp-for="Code" class="control-label mb-2">Course Code</label>
       <input asp-for="Code" class="form-control" />
       <span asp-validation-for="Code" class="text-danger"></span>
     </div>
 
     <div class="mb-4">
-      <label asp-for="Name" class="control-label">Course Name</label>
+      <label asp-for="Name" class="control-label mb-2">Course Name</label>
       <input asp-for="Name" class="form-control" />
       <span asp-validation-for="Name" class="text-danger"></span>
     </div>
 
     <div class="mb-4">
-      <label asp-for="IdProfessor" class="control-label">Professor</label>
+      <label asp-for="IdProfessor" class="control-label mb-2">Professor</label>
       <div class="d-flex flex-row pr-3">
         <select asp-for=" IdProfessor" class="form-control" asp-items="ViewBag.IdProfessor">
           <option value="">Please select a professor</option>
@@ -70,14 +70,14 @@
     </div>
 
     <div class=" mb-4">
-      <label asp-for="Hours" class="control-label">Hours</label>
-      <input asp-for="Hours" type="radio" value="60" checked /> 60 hours
-      <input asp-for="Hours" type="radio" value="90" /> 90 hours
+      <label asp-for="Hours" class="control-label mb-2">Hours</label>
+      <div><input asp-for="Hours" type="radio" value="60" checked /> 60 hours </div>
+      <div><input asp-for="Hours" type="radio" value="90" /> 90 hours </div>
       @* <span asp-validation-for="Hours" class="text-danger"></span> *@
     </div>
 
       <div class="mb-4">
-          <label>Tecnologias</label>
+          <label class="control-label mb-2">Technology</label>
           @foreach(var tech in ViewBag.Technologies as List<TechnologyModel>)
           {
               <div class="form-check">
