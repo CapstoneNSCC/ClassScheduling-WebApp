@@ -4,7 +4,7 @@
 
 <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="top">
+    <a class="navbar-brand" href="/">
       <img src="\lib\images\nscc-logo.jpg" alt="nscc-logo" width="200px" class="d-inline-block ms-3">
     </a>
     @* <div>
@@ -56,9 +56,9 @@
     </div>
 
     <div class="mb-4">
-      <input type="submit" asp-controller="Login" asp-action="AddSubmit" class="btn btn-warning"
+      <input type="submit" asp-controller="Course" asp-action="AddCourse" class="btn btn-warning"
         value="Add" />
-      <a asp-controller="Admin" asp-action="Index"><input type="button" class="btn btn-warning"
+      <a asp-controller="Course" asp-action="AddCourse"><input type="button" class="btn btn-warning"
           value="Cancel" /></a>
     </div>
 

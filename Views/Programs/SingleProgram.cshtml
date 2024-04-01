@@ -2,7 +2,7 @@
 
 <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="top">
+    <a class="navbar-brand" href="/">
       <img src="\lib\images\nscc-logo.jpg" alt="nscc-logo" width="200px" class="d-inline-block ms-3">
     </a>
     @* <div>
@@ -19,13 +19,13 @@
 
 <div class="col text-white">
   <div class="flex ms-4">
-    <span class="fs-2">PROGRAM NAME FOR SELECTED PROGRAM</span>
+    <span class="fs-2">@Model.Name, year @Model.Year</span>
   </div>
 
   <div class="border-top pt-2 mt-2 ms-4">
     <form method="post">
       <div class="mt-2">
-        <button type="submit" class="btn p-0 text-white" asp-controller="Courses" asp-action="AddCourse">
+        <button type="submit" class="btn p-0 text-white" asp-controller="Course" asp-action="AddCourse">
           <i class="fa fa-plus bg-warning p-2 rounded ms-1 mb-2"></i> Add Course
         </button>
       </div>
@@ -38,11 +38,11 @@
         {
           <form method="post">
             <div class="flex">
-              <button type="submit" class="btn p-1" asp-controller="Courses" asp-action="Delete"
+              <button type="submit" class="btn p-1" asp-controller="Course" asp-action="Delete"
                 asp-route-id="@course.Id">
                 <i class="fa fa-trash bg-warning p-2 rounded"></i>
               </button>
-              <button type="submit" class="btn p-0" asp-controller="Courses" asp-action="Update"
+              <button type="submit" class="btn p-0" asp-controller="Course" asp-action="Update"
                 asp-route-id="@course.Id">
                 <i class="fa fa-pencil bg-warning p-2 rounded"></i>
               </button>
