@@ -13,7 +13,6 @@ namespace ClassScheduling_WebApp.Models
     [Required(ErrorMessage = "Technology description is required.")]
     [StringLength(20, ErrorMessage = "Technology description cannot exceed 20 characters.")]
     public string Description { get; set; }
-    public List<TechnologyModel> Technologies { get; set; }
 
     // Propriedades de navegação para relações muitos-para-muitos
     public virtual ICollection<TechClassModel> TechClasses { get; set; } = new List<TechClassModel>();

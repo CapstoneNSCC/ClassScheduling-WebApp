@@ -65,33 +65,56 @@ namespace ClassScheduling_WebApp.Controllers
         return RedirectToAction("Index", "Login");
       }
 
-            PopulateProfessorsDropDownList();
-            PopulateProgramsDropDownList(programId);
-            ViewBag.Technologies = _context.Technologies.ToList();
-            
+      PopulateProfessorsDropDownList();
+      PopulateProgramsDropDownList(programId);
+      ViewBag.Technologies = _context.Technologies.ToList();
 
-            var courseModel = new CourseModel
-            {
-                IdProgram = programId // Pre-select the program
-            };
+
+      var courseModel = new CourseModel
+      {
+        IdProgram = programId // Pre-select the program
+      };
 
       return View("~/Views/Course/AddCourse.cshtml", courseModel);
     }
 
-        // POST: Adds a new course to the database
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddSubmit([Bind("Id,Code,Name,Hours,IdProfessor,IdProgram, SelectedTechnologyIds")] CourseModel course, List<int> SelectedTechnologyIds)
-        {
-            if (HttpContext.Session.GetString("auth") != "true")
-            {
-                return RedirectToAction("Index", "Login");
-            }
-            // Console.WriteLine("ModelState.IsValid " + ModelState.IsValid);
-            if (ModelState.IsValid)
-            {
-                _context.Add(course);
-                await _context.SaveChangesAsync();
+    // POST: Adds a new course to the database
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddSubmit([Bind("Id,Code,Name,Hours,IdProfessor,IdProgram, SelectedTechnologyIds")] CourseModel course, List<int> SelectedTechnologyIds)
+    {
+      if (HttpContext.Session.GetString("auth") != "true")
+      {
+        return RedirectToAction("Index", "Login");
+      }
+
+      // if (!ModelState.IsValid)
+      // {
+      //     foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+      //     {
+      //         string errorMessage = error.ErrorMessage;
+      //         // Se você quiser exibir mensagens de erro das validações baseadas em atributos, como Required, etc.
+      //         string exceptionMessage = error.Exception?.Message;
+
+      //         // Escreve as mensagens de erro no terminal
+      //         Console.WriteLine("Erro de validação: " + errorMessage);
+      //         if (!string.IsNullOrEmpty(exceptionMessage))
+      //         {
+      //             Console.WriteLine("Erro de validação: " + exceptionMessage);
+      //         }
+      //     }
+      // }
+
+
+
+      // if (ModelState.IsValid)
+      ModelState.Remove("Professor");
+      ModelState.Remove("Programs");
+
+      if (!TryValidateModel(course))
+      {
+        _context.Add(course);
+        await _context.SaveChangesAsync();
 
         foreach (var techId in SelectedTechnologyIds)
         {
