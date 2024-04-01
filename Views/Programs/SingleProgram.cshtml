@@ -26,42 +26,43 @@
       </a>
     </div>
     <span class="fs-2 me-3">@Model.Name, year @Model.Year</span>
-  </div>
 
-  <div class="border-top pt-2 mt-2 ms-4">
-    <div class="my-3">
-      <a href="/Course/AddCourse?programId=@Model.Id" class="bg-warning p-2 rounded text-black me-3"
-        style="text-decoration:none">
-        <i class="fa fa-plus me-1 text-black"></i>Add Course
-      </a>
+
+    <div class="border-top pt-2 mt-2">
+      <div class="my-3">
+        <a href="/Course/AddCourse?programId=@Model.Id" class="bg-warning p-2 rounded text-black me-3"
+          style="text-decoration:none">
+          <i class="fa fa-plus me-1 text-black"></i>Add Course
+        </a>
+      </div>
+
+      @if (@Model.Courses.Count > 0)
+      {
+        <div>
+          @foreach (var course in Model.Courses)
+          {
+            <form method="post">
+              <div class="flex">
+                <button type="submit" class="btn p-1" asp-controller="Course" asp-action="Delete"
+                  asp-route-id="@course.Id">
+                  <i class="fa fa-trash bg-warning p-2 rounded"></i>
+                </button>
+                <button type="submit" class="btn p-0" asp-controller="Course" asp-action="Edit"
+                  asp-route-id="@course.Id">
+                  <i class="fa fa-pencil bg-warning p-2 rounded"></i>
+                </button>
+                <span class="ms-4"> @course.Code, @course.Name </span>
+              </div>
+            </form>
+          }
+        </div>
+      }
+      else
+      {
+        <div class="ms-4">
+          <span>No programs found</span>
+        </div>
+      }
     </div>
-
-    @if (@Model.Courses.Count > 0)
-    {
-      <div>
-        @foreach (var course in Model.Courses)
-        {
-          <form method="post">
-            <div class="flex">
-              <button type="submit" class="btn p-1" asp-controller="Course" asp-action="Delete"
-                asp-route-id="@course.Id">
-                <i class="fa fa-trash bg-warning p-2 rounded"></i>
-              </button>
-              <button type="submit" class="btn p-0" asp-controller="Course" asp-action="Edit"
-                asp-route-id="@course.Id">
-                <i class="fa fa-pencil bg-warning p-2 rounded"></i>
-              </button>
-              <span> @course.Code, @course.Name </span>
-            </div>
-          </form>
-        }
-      </div>
-    }
-    else
-    {
-      <div class="ms-4">
-        <span>No programs found</span>
-      </div>
-    }
   </div>
 </div>
