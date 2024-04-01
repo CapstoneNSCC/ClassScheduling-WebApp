@@ -67,11 +67,12 @@ namespace ClassScheduling_WebApp.Controllers
 
       PopulateProfessorsDropDownList();
       PopulateProgramsDropDownList(programId);
-      ViewBag.Technologies = _context.Technologies.ToList(); // Add this line
+      ViewBag.Technologies = _context.Technologies.ToList();
+
 
       var courseModel = new CourseModel
       {
-        IdProgram = programId // Pre-select the program if an ID was provided
+        IdProgram = programId // Pre-select the program
       };
 
       return View("~/Views/Course/AddCourse.cshtml", courseModel);
@@ -80,14 +81,37 @@ namespace ClassScheduling_WebApp.Controllers
     // POST: Adds a new course to the database
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Add([Bind("Id,Code,Name,Hours,IdProfessor,IdProgram, SelectedTechnologyIds")] CourseModel course, List<int> SelectedTechnologyIds)
+    public async Task<IActionResult> AddSubmit([Bind("Id,Code,Name,Hours,IdProfessor,IdProgram, SelectedTechnologyIds")] CourseModel course, List<int> SelectedTechnologyIds)
     {
       if (HttpContext.Session.GetString("auth") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
 
-      if (ModelState.IsValid)
+      // if (!ModelState.IsValid)
+      // {
+      //     foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+      //     {
+      //         string errorMessage = error.ErrorMessage;
+      //         // Se você quiser exibir mensagens de erro das validações baseadas em atributos, como Required, etc.
+      //         string exceptionMessage = error.Exception?.Message;
+
+      //         // Escreve as mensagens de erro no terminal
+      //         Console.WriteLine("Erro de validação: " + errorMessage);
+      //         if (!string.IsNullOrEmpty(exceptionMessage))
+      //         {
+      //             Console.WriteLine("Erro de validação: " + exceptionMessage);
+      //         }
+      //     }
+      // }
+
+
+
+      // if (ModelState.IsValid)
+      ModelState.Remove("Professor");
+      ModelState.Remove("Programs");
+
+      if (!TryValidateModel(course))
       {
         _context.Add(course);
         await _context.SaveChangesAsync();
