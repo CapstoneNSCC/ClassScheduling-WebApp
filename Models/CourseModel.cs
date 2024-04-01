@@ -27,11 +27,15 @@ namespace ClassScheduling_WebApp.Models
 
         [ForeignKey("IdProgram"), Required(ErrorMessage = "Program is required.")]
         public int IdProgram { get; set; }
-        //public virtual ProgramModel Programs { get; set; }
+        public virtual ProgramModel Programs { get; set; }
 
         // Collection navigation properties
         public virtual ICollection<TechClassModel> TechClasses { get; set; } = new List<TechClassModel>();
         public virtual ICollection<ScheduleModel> Schedules { get; set; } = new List<ScheduleModel>();
+
+        // Used for handling selected technology IDs in forms
+        [NotMapped] // Ensures this property is not mapped to the database
+        public List<int> SelectedTechnologyIds { get; set; } = new List<int>();
     }
 
 }
