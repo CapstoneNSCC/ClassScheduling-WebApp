@@ -17,6 +17,60 @@ namespace ClassScheduling_WebApp.Controllers
       _context = context;
     }
 
+    public IActionResult Index()
+    {
+      if (HttpContext.Session.GetString("auth") != "true")
+      {
+        return RedirectToAction("Index", "Login");
+      }
+
+      var programs = _context.Programs
+      .Select(p => new ProgramModel
+      {
+        Id = p.Id,
+        Name = p.Name,
+        Year = p.Year,
+        // Include other properties as needed
+      })
+      .OrderByDescending(p => p.Name)
+      .ToList();
+
+      // var technologies = _context.Technologies
+      // .Select(t => new TechnologyModel
+      // {
+      //   Id = t.Id,
+      //   Description = t.Description,
+      //   // Include other properties as needed
+      // })
+      // .OrderByDescending(t => t.Description)
+      // .ToList();
+
+      // var users = _context.Users
+      // .Select(u => new UserModel
+      // {
+      //   Id = u.Id,
+      //   FirstName = u.FirstName,
+      //   LastName = u.LastName,
+      //   SetAsAdmin = u.SetAsAdmin,
+      //   UserName = u.UserName,
+      //   Password = u.Password,
+      //   Salt = u.Salt,
+      //   // Include other properties as needed
+      // })
+      // .OrderByDescending(u => u.UserName)
+      // .ToList();
+
+      var viewModel = new IndexViewModel
+      {
+        Programs = programs,
+        // Technologies = technologies,
+        // Users = users
+      };
+
+      return View(viewModel);
+    }
+
+
     public IActionResult AddProgram()
     {
       // if auth is not  = true, it re-directs to the login screen.
@@ -120,7 +174,7 @@ namespace ClassScheduling_WebApp.Controllers
     public IActionResult ProgramDetails(int programID)
     {
       ProgramModel program = _context.Programs
-      .Include(p => p.Courses) 
+      .Include(p => p.Courses)
       .ThenInclude(tc => tc.TechClasses)
       .ThenInclude(tcc => tcc.Technology)
       .FirstOrDefault(p => p.Id == programID);

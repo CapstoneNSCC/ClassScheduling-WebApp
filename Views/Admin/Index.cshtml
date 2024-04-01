@@ -1,4 +1,6 @@
-@model IndexViewModel
+@model List<ClassScheduling_WebApp.Models.ProgramModel>
+
+
 
 <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
@@ -17,132 +19,12 @@
   </div>
 </nav>
 
-<div class="col text-white">
+<div class="p-5 text-white">
+  <h1>Admin Dashboard.</h1>
+  <div class="fs-5">message here.</div>
 
-  <form method="post">
-    <div class="flex ms-4">
-      <span class="fs-2">Programs</span>
-
-      <button type="submit" class="btn p-0" asp-controller="Programs" asp-action="AddProgram">
-        <i class="fa fa-plus bg-warning p-2 rounded ms-1 mb-2"></i>
-      </button>
-    </div>
-  </form>
-  <div class="border-top pt-2 mt-2">
-    @if (@Model.Programs.Count > 0)
-    {
-      <div class="ms-4">
-        @foreach (var program in Model.Programs)
-        {
-          <form method="post">
-            <div class="flex">
-              <button type="submit" class="btn p-1" asp-controller="Programs" asp-action="Delete"
-                asp-route-id="@program.Id">
-                <i class="fa fa-trash bg-warning p-2 rounded"></i>
-              </button>
-              <button type="submit" class="btn p-0" asp-controller="Programs" asp-action="Update"
-                asp-route-id="@program.Id">
-                <i class="fa fa-pencil bg-warning p-2 rounded"></i>
-              </button>
-              <a asp-controller="Program" asp-action="ProgramDetails" asp-route-id="@program.Id"
-                class="ms-4 text-white" style="text-decoration: none">@program.Name, year @program.Year</a>
-            </div>
-          </form>
-        }
-      </div>
-    }
-    else
-    {
-      <div class="ms-4">
-        <span>No programs found</span>
-      </div>
-    }
+  <div class="mt-2">
+    <a asp-controller="Programs" asp-action="Index" asp-route-programs="@Model" class="btn btn-warning">Manage
+      Programs</a>
   </div>
-
-  @* ---------------------------------------------------------------------------------Technology
-  @* <div class="col text-white">
-  <form method="post">
-  <div class="flex ms-4">
-  <span class="fs-2">Technology</span>
-
-  <button type="submit" class="btn p-0" asp-controller="Technology" asp-action="AddTech">
-  <i class="fa fa-plus bg-warning p-2 rounded ms-1 mb-2"></i>
-  </button>
-  </div>
-  </form>
-  <div class="border-top pt-2 mt-2"></div>
-  @if (@Model.Technologies.Count > 0)
-  {
-  <div class="ms-4">
-  @foreach (var tech in Model.Technologies)
-  {
-  <form method="post">
-  <div class="flex">
-  <button type="submit" class="btn p-1" asp-controller="Technology" asp-action="Delete"
-  asp-route-id="@tech.Id">
-  <i class="fa fa-trash bg-warning p-2 rounded"></i>
-  </button>
-  <button type="submit" class="btn p-0" asp-controller="Technology" asp-action="Update"
-  asp-route-id="@tech.Id">
-  <i class="fa fa-pencil bg-warning p-2 rounded"></i>
-  </button>
-  <span class="ms-4">@tech.Description</span>
-  </div>
-  </form>
-  }
-  </div>
-  }
-  else
-  {
-  <div class="ms-4">
-  <span>No Technologies found</span>
-  </div>
-  }
-  </div> *@
-
-  @* ----------------------------------------------------------------------------------AddUser
-  <div class="col text-white">
-  <form method="post">
-  <div class="flex ms-4">
-  <span class="fs-2">Users</span>
-
-  <button type="submit" class="btn p-0" asp-controller="Login" asp-action="AddUser">
-  <i class="fa fa-plus bg-warning p-2 rounded ms-1 mb-2"></i>
-  </button>
-  </div>
-  </form>
-  <div class="border-top pt-2 mt-2"></div>
-  @if (@Model.Users.Count > 0)
-  {
-  <div class="ms-4">
-  @foreach (var user in Model.Users)
-  {
-  <form method="post">
-  <div class="flex">
-  <button type="submit" class="btn p-1" asp-controller="Login" asp-action="Delete"
-  asp-route-id="@user.Id">
-  <i class="fa fa-trash bg-warning p-2 rounded"></i>
-  </button>
-  <button type="submit" class="btn p-0" asp-controller="Login" asp-action="Update"
-  asp-route-id="@user.Id">
-  <i class="fa fa-pencil bg-warning p-2 rounded"></i>
-  </button>
-  <span class="ms-4">@user.FirstName @user.LastName</span>
-  </div>
-  </form>
-  }
-  </div>
-  }
-  else
-  {
-  <div class="ms-4">
-  <span>No Users found</span>
-  </div>
-  }
-  </div> *@
-
-
-
-  @section scripts {
-    <script src="~/js/app.js"></script>
-  }
+</div>

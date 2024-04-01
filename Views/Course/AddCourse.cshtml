@@ -59,13 +59,6 @@
         <select asp-for=" IdProfessor" class="form-control" asp-items="ViewBag.IdProfessor">
           <option value="">Please select a professor</option>
         </select>
-        <div>
-          <a asp-controller="Login" asp-action="AddUser" class="text-white add-professor"
-            style="text-decoration: none">
-            <i class="fa fa-plus bg-warning p-2 rounded"></i>
-          </a>Add New
-          Faculty Member
-        </div>
       </div>
     </div>
 
@@ -90,8 +83,8 @@
 
 
     <div class="mb-4">
-      <input type="submit" asp-controller="Course" asp-action="AddSubmit" class="btn btn-warning" value="Add" />
-      <a asp-controller="Admin" asp-action="Index" class="btn btn-warning">Cancel</a>
+      <input type="submit" class="btn btn-warning" value="Add" />
+      <a href="/Program/ProgramDetails/@Model.IdProgram" class="btn btn-warning">Cancel</a>
     </div>
   </form>
 </div>
