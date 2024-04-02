@@ -1,34 +1,42 @@
 @model ClassroomModel;
 
 <nav class="navbar bg-body-tertiary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="top">
-            <img src="\lib\images\nscc-logo.jpg" alt="nscc-logo" width="200px" class="d-inline-block ms-3">
-        </a>
-        @* <div>
-        <span id="lblExpire" class="text-warning" style="margin-left:10px">WARNING: You're session is about
-        to expire</span>
-        </div> *@
-        <form method="post">
-            <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Logout">
-                Logout
-            </button>
-        </form>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img src="\lib\images\nscc-logo.jpg" alt="nscc-logo" width="200px" class="d-inline-block ms-3">
+    </a>
+    @* <div>
+    <span id="lblExpire" class="text-warning" style="margin-left:10px">WARNING: You're session is about
+    to expire</span>
+    </div> *@
+    <div class="d-flex flex-row">
+      <form method="post">
+        <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Index">
+          Dashboard
+        </button>
+      </form>
+
+      <form method="post">
+        <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Logout">
+          Logout
+        </button>
+      </form>
     </div>
+  </div>
 </nav>
 
 <div class="p-5 text-white">
-    <h1>Delete Classroom.</h1>
-    <form asp-controller="Login" method="post">
-        <div style="margin-bottom:10px" class="fs-5">Are you sure you want to delete?</div>
-        <span>Room: @Model.RoomNumber, Building @Model.BuildingAcronym</span>
+  <h1>Delete Classroom.</h1>
 
-        <div class="mb-4">
-            <input type="hidden" asp-for="@Model.Id" />
-            <input type="submit" asp-controller="Classroom" asp-action="DeleteSubmit" class="btn btn-warning"
-                value="Delete" />
-            <a asp-controller="Admin" asp-action="Index"><input type="button" class="btn btn-warning"
-                    value="Cancel" /></a>
-        </div>
-    </form>
+  <form asp-asp-controller="Classroom" asp-action="DeleteSubmit" method="post">
+    <div style="margin-bottom:10px" class="fs-5">Are you sure you want to delete?</div>
+    <span>Room: @Model.RoomNumber, Building @Model.BuildingAcronym</span>
+
+    <div class="mt-4">
+      <input type="hidden" asp-for="@Model.Id" />
+      <input type="submit" asp-controller="Classroom" asp-action="DeleteSubmit" class="btn btn-warning"
+        value="Delete" />
+      <a href="/Classroom/Index" class="btn btn-warning">Cancel</a>
+    </div>
+  </form>
 </div>

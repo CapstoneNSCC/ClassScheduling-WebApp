@@ -9,9 +9,23 @@
     <a class="navbar-brand" href="/">
       <img src="\lib\images\nscc-logo.jpg" alt="nscc-logo" width="200px" class="d-inline-block ms-3">
     </a>
-    <form method="post" asp-controller="Admin" asp-action="Logout">
-      <button type="submit" class="btn btn-warning me-3">Logout</button>
-    </form>
+    @* <div>
+    <span id="lblExpire" class="text-warning" style="margin-left:10px">WARNING: You're session is about
+    to expire</span>
+    </div> *@
+    <div class="d-flex flex-row">
+      <form method="post">
+        <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Index">
+          Dashboard
+        </button>
+      </form>
+
+      <form method="post">
+        <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Logout">
+          Logout
+        </button>
+      </form>
+    </div>
   </div>
 </nav>
 
@@ -47,13 +61,6 @@
         <select asp-for=" IdProfessor" class="form-control" asp-items="ViewBag.IdProfessor">
           <option value="">Please select a professor</option>
         </select>
-        <div>
-          <a asp-controller="Login" asp-action="AddUser" class="text-white add-professor"
-            style="text-decoration: none">
-            <i class="fa fa-plus bg-warning p-2 rounded"></i>
-          </a>Add New
-          Faculty Member
-        </div>
       </div>
     </div>
 
@@ -81,7 +88,7 @@
       <input type="hidden" asp-for="@Model.Id" />
       <input type="submit" asp-controller="Course" asp-action="EditSubmit" class="btn btn-warning"
         asp-route-id="@Model.Id" value="Update" />
-      <a asp-controller="Admin" asp-action="Index" class="btn btn-warning">Cancel</a>
+      <a href="/Program/ProgramDetails/@Model.IdProgram" class="btn btn-warning">Cancel</a>
     </div>
   </form>
 </div>

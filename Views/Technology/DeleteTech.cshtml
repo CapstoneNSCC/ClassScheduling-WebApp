@@ -9,26 +9,34 @@
     <span id="lblExpire" class="text-warning" style="margin-left:10px">WARNING: You're session is about
     to expire</span>
     </div> *@
-    <form method="post">
-      <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Logout">
-        Logout
-      </button>
-    </form>
+    <div class="d-flex flex-row">
+      <form method="post">
+        <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Index">
+          Dashboard
+        </button>
+      </form>
+
+      <form method="post">
+        <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Logout">
+          Logout
+        </button>
+      </form>
+    </div>
   </div>
 </nav>
 
 <div class="p-5 text-white">
   <h1>Delete Technology</h1>
 
-  <form asp-controller="Technology" asp-action="DeleteSubmit" method="post">
+  <form method="post">
     <div style="margin-bottom:10px" class="fs-5">Are you sure you want to delete?</div>
     <span>@Model.Description</span>
 
     <div class="mt-4">
       <input type="hidden" asp-for="@Model.Id" />
-      <input type="submit" class="btn btn-warning" value="Delete" />
-      <a asp-controller="Admin" asp-action="Index"><input type="button" class="btn btn-warning"
-          value="Cancel" /></a>
+      <input type="submit" asp-controller="Technology" asp-action="DeleteSubmit" class="btn btn-warning"
+        value="Delete" />
+      <a href="/Technology/Index" class="btn btn-warning">Cancel</a>
     </div>
   </form>
 </div>

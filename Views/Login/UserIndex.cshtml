@@ -9,111 +9,24 @@
     <span id="lblExpire" class="text-warning" style="margin-left:10px">WARNING: You're session is about
     to expire</span>
     </div> *@
-    <form method="post">
-      <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Logout">
-        Logout
-      </button>
-    </form>
+    <div class="d-flex flex-row">
+      <form method="post">
+        <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Index">
+          Dashboard
+        </button>
+      </form>
+
+      <form method="post">
+        <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Logout">
+          Logout
+        </button>
+      </form>
+    </div>
   </div>
 </nav>
 
-@* <div class="col text-white me-4">
-<div class="flex ms-4">
-<div class="mb-2">
-<a href="/Admin" class="me-3 text-white" style="text-decoration:none"><i class="fa fa-angle-left"></i>
-Back to Dashboard
-</a>
-</div>
-<span class="fs-2">Programs</span>
-
-<div class="border-top pt-2 mt-2">
-<div class="my-3">
-<a asp-controller="Programs" asp-action="AddProgram" class="bg-warning p-2 rounded text-black me-3"
-style="text-decoration:none">
-<i class="fa fa-plus me-1 text-black"></i>Add Program
-</a>
-</div>
-
-@if (@Model.Programs.Count > 0)
-{
-<div>
-@foreach (var program in Model.Programs)
-{
-<form method="post">
-<div class="flex">
-<button type="submit" class="btn p-1" asp-controller="Programs" asp-action="Delete"
-asp-route-id="@program.Id">
-<i class="fa fa-trash bg-warning p-2 rounded"></i>
-</button>
-<button type="submit" class="btn p-0" asp-controller="Programs" asp-action="Update"
-asp-route-id="@program.Id">
-<i class="fa fa-pencil bg-warning p-2 rounded"></i>
-</button>
-<a asp-controller="Program" asp-action="ProgramDetails" asp-route-id="@program.Id"
-class="ms-4 text-white" style="text-decoration: none">@program.Name, year @program.Year</a>
-</div>
-</form>
-}
-</div>
-}
-else
-{
-<div class="ms-4">
-<span>No programs found</span>
-</div>
-}
-</div> *@
-
-@* ---------------------------------------------------------------------------------Technology
-@* <div class="col text-white">
-<form method="post">
-<div class="flex ms-4">
-<span class="fs-2">Technology</span>
-
-<button type="submit" class="btn p-0" asp-controller="Technology" asp-action="AddTech">
-<i class="fa fa-plus bg-warning p-2 rounded ms-1 mb-2"></i>
-</button>
-</div>
-</form>
-<div class="border-top pt-2 mt-2"></div>
-@if (@Model.Technologies.Count > 0)
-{
-<div class="ms-4">
-@foreach (var tech in Model.Technologies)
-{
-<form method="post">
-<div class="flex">
-<button type="submit" class="btn p-1" asp-controller="Technology" asp-action="Delete"
-asp-route-id="@tech.Id">
-<i class="fa fa-trash bg-warning p-2 rounded"></i>
-</button>
-<button type="submit" class="btn p-0" asp-controller="Technology" asp-action="Update"
-asp-route-id="@tech.Id">
-<i class="fa fa-pencil bg-warning p-2 rounded"></i>
-</button>
-<span class="ms-4">@tech.Description</span>
-</div>
-</form>
-}
-</div>
-}
-else
-{
-<div class="ms-4">
-<span>No Technologies found</span>
-</div>
-}
-</div> *@
-
-@* ----------------------------------------------------------------------------------AddUser *@
-
 <div class="col text-white me-4">
   <div class="flex ms-4">
-    <div class="mb-2">
-      <a href="/Admin" class="me-3 text-white" style="text-decoration:none"><i class="fa fa-angle-left"></i>
-        Back to Dashboard
-      </a>
-    </div>
     <span class="fs-2">Users</span>
 
     <div class="border-top pt-2 mt-2"></div>
