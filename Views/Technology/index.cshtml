@@ -24,33 +24,32 @@
         Back to Dashboard
       </a>
     </div>
-    <span class="fs-2">Programs for Information Technology</span>
+    <span class="fs-2">Technology</span>
 
     <div class="border-top pt-2 mt-2">
       <div class="my-3">
-        <a asp-controller="Programs" asp-action="AddProgram" class="bg-warning p-2 rounded text-black me-3"
+        <a asp-controller="Technology" asp-action="AddTech" class="bg-warning p-2 rounded text-black me-3"
           style="text-decoration:none">
-          <i class="fa fa-plus me-1 text-black"></i>Add Program
+          <i class="fa fa-plus me-1 text-black"></i>Add Technology
         </a>
       </div>
 
-      @if (@Model.Programs.Count > 0)
+      @if (@Model.Technologies.Count > 0)
       {
         <div>
-          @foreach (var program in Model.Programs)
+          @foreach (var tech in Model.Technologies)
           {
             <form method="post">
               <div class="flex">
-                <button type="submit" class="btn p-1" asp-controller="Programs" asp-action="Delete"
-                  asp-route-id="@program.Id">
+                <button type="submit" class="btn p-1" asp-controller="Technology" asp-action="Delete"
+                  asp-route-id="@tech.Id">
                   <i class="fa fa-trash bg-warning p-2 rounded"></i>
                 </button>
-                <button type="submit" class="btn p-0" asp-controller="Programs" asp-action="Update"
-                  asp-route-id="@program.Id">
+                <button type="submit" class="btn p-0" asp-controller="Technology" asp-action="Update"
+                  asp-route-id="@tech.Id">
                   <i class="fa fa-pencil bg-warning p-2 rounded"></i>
                 </button>
-                <a asp-controller="Program" asp-action="ProgramDetails" asp-route-id="@program.Id"
-                  class="ms-4 text-white" style="text-decoration: none">@program.Name, year @program.Year</a>
+                <span class="ms-4">@tech.Description</span>
               </div>
             </form>
           }
@@ -59,7 +58,7 @@
       else
       {
         <div class="ms-4">
-          <span>No programs found</span>
+          <span>No Technologies found</span>
         </div>
       }
     </div>
