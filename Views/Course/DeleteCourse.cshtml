@@ -20,13 +20,13 @@
 <div class="p-5 text-white">
   <h1>Delete Course.</h1>
 
-  <form asp-controller="Admin" method="post">
+  <form asp-controller="Course" asp-action="DeleteSubmit" method="post">
     <div style="margin-bottom:10px" class="fs-5">Are you sure you want to delete?</div>
     <span>@Model.Name, @Model.Code</span>
 
     <div class="mt-4">
-      <input type="submit" asp-controller="Course" asp-action="DeleteSubmit" class="btn btn-warning"
-        asp-route-id="@Model.Id" value="Delete" />
+      <input type="hidden" asp-for="@Model.Id" />
+      <input type="submit" class="btn btn-warning" value="Delete" />
       <a href="/Program/ProgramDetails/@Model.IdProgram" class="btn btn-warning">Cancel</a>
     </div>
   </form>

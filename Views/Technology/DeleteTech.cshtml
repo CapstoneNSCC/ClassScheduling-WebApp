@@ -20,14 +20,13 @@
 <div class="p-5 text-white">
   <h1>Delete Technology</h1>
 
-  <form asp-controller="Admin" method="post">
+  <form asp-controller="Technology" asp-action="DeleteSubmit" method="post">
     <div style="margin-bottom:10px" class="fs-5">Are you sure you want to delete?</div>
     <span>@Model.Description</span>
 
-    <div class="mb-4">
+    <div class="mt-4">
       <input type="hidden" asp-for="@Model.Id" />
-      <input type="submit" asp-controller="Technology" asp-action="DeleteSubmit" class="btn btn-warning"
-        value="Delete" />
+      <input type="submit" class="btn btn-warning" value="Delete" />
       <a asp-controller="Admin" asp-action="Index"><input type="button" class="btn btn-warning"
           value="Cancel" /></a>
     </div>

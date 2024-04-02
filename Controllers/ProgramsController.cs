@@ -101,7 +101,7 @@ namespace ClassScheduling_WebApp.Controllers
       _context.Programs.Add(program);
       //save changes to the database
       _context.SaveChanges();
-      return RedirectToAction("Index", "Admin");
+      return RedirectToAction("Index", program);
     }
 
     [Route("/Programs/Update/{programID:int}")]
@@ -131,7 +131,7 @@ namespace ClassScheduling_WebApp.Controllers
       _context.Programs.Update(program);
       //save changes to the database
       _context.SaveChanges();
-      return RedirectToAction("Index", "Admin");
+      return RedirectToAction("Index", program);
     }
 
     [Route("/Programs/Delete/{programID:int}")]
@@ -166,7 +166,7 @@ namespace ClassScheduling_WebApp.Controllers
       _context.Programs.Remove(existingProgram);
       //save changes to the database
       _context.SaveChanges();
-      return RedirectToAction("Index", "Admin");
+      return RedirectToAction("Index", program);
 
     }
 

@@ -78,7 +78,7 @@ namespace ClassScheduling_WebApp.Controllers
       // if auth is not  = true, it re-directs to the login screen.
       if (HttpContext.Session.GetString("auth") != "true")
       {
-        return RedirectToAction("Index", "Login");
+        return RedirectToAction("Index", "Admin");
       }
 
       //var webLogin = new WebLogin(_context, HttpContext);
@@ -95,7 +95,7 @@ namespace ClassScheduling_WebApp.Controllers
       _context.SaveChanges();
       //HttpContext.Session.SetString("auth", "true");
 
-      return RedirectToAction("Index", "Admin");
+      return RedirectToAction("UserIndex", user);
     }
 
     [Route("/Login/Update/{UserID:int}")]
@@ -131,7 +131,7 @@ namespace ClassScheduling_WebApp.Controllers
       _context.Users.Update(user);
       //save changes to the database
       _context.SaveChanges();
-      return RedirectToAction("Index", "Admin");
+      return RedirectToAction("UserIndex", user);
     }
 
     [Route("/Login/Delete/{UserID:int}")]
@@ -168,7 +168,7 @@ namespace ClassScheduling_WebApp.Controllers
       _context.Users.Remove(existingTech);
       //save changes to the database
       _context.SaveChanges();
-      return RedirectToAction("Index", "Admin");
+      return RedirectToAction("UserIndex", user);
 
     }
   }

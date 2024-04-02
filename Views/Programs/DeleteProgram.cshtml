@@ -20,14 +20,13 @@
 <div class="p-5 text-white">
   <h1>Delete Program.</h1>
 
-  <form asp-controller="Admin" method="post">
+  <form asp-controller="Programs" asp-action="DeleteSubmit" method="post">
     <div style="margin-bottom:10px" class="fs-5">Are you sure you want to delete?</div>
     <span>@Model.Name, Year @Model.Year</span>
 
     <div class="mt-4">
       <input type="hidden" asp-for="@Model.Id" />
-      <input type="submit" asp-controller="Programs" asp-action="DeleteSubmit" class="btn btn-warning"
-        value="Delete" />
+      <input type="submit" class="btn btn-warning" value="Delete" />
       <a href="/Programs" class="btn btn-warning">Cancel</a>
     </div>
   </form>
