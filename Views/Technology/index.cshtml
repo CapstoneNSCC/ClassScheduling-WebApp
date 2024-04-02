@@ -1,0 +1,64 @@
+@model IndexViewModel
+
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img src="\lib\images\nscc-logo.jpg" alt="nscc-logo" width="200px" class="d-inline-block ms-3">
+    </a>
+    @* <div>
+    <span id="lblExpire" class="text-warning" style="margin-left:10px">WARNING: You're session is about
+    to expire</span>
+    </div> *@
+    <form method="post">
+      <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Logout">
+        Logout
+      </button>
+    </form>
+  </div>
+</nav>
+
+@* -----------------------------------------------------------------------------Technology *@
+
+<div class="col text-white">
+  <form method="post">
+    <div class="flex ms-4">
+      <span class="fs-2">Technology</span>
+
+      <button type="submit" class="btn p-0" asp-controller="Technology" asp-action="AddTech">
+        <i class="fa fa-plus bg-warning p-2 rounded ms-1 mb-2"></i>
+      </button>
+    </div>
+  </form>
+  <div class="border-top pt-2 mt-2"></div>
+  @if (@Model.Technologies.Count > 0)
+  {
+    <div class="ms-4">
+      @foreach (var tech in Model.Technologies)
+      {
+        <form method="post">
+          <div class="flex">
+            <button type="submit" class="btn p-1" asp-controller="Technology" asp-action="Delete"
+              asp-route-id="@tech.Id">
+              <i class="fa fa-trash bg-warning p-2 rounded"></i>
+            </button>
+            <button type="submit" class="btn p-0" asp-controller="Technology" asp-action="Update"
+              asp-route-id="@tech.Id">
+              <i class="fa fa-pencil bg-warning p-2 rounded"></i>
+            </button>
+            <span class="ms-4">@tech.Description</span>
+          </div>
+        </form>
+      }
+    </div>
+  }
+  else
+  {
+    <div class="ms-4">
+      <span>No Technologies found</span>
+    </div>
+  }
+</div>
+
+@section scripts {
+  <script src="~/js/app.js"></script>
+}

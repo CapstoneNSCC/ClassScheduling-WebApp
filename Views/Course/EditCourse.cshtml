@@ -22,7 +22,7 @@
 
   <form asp-controller="Course" asp-action="EditSubmit" method="post">
 
-    
+
     <div class="mb-4">
       <label asp-for="IdProgram" class="control-label mb-2">Program</label>
       <select asp-for="IdProgram" class="form-control" asp-items="ViewBag.IdProgram">
@@ -47,13 +47,6 @@
         <select asp-for=" IdProfessor" class="form-control" asp-items="ViewBag.IdProfessor">
           <option value="">Please select a professor</option>
         </select>
-        <div>
-          <a asp-controller="Login" asp-action="AddUser" class="text-white add-professor"
-            style="text-decoration: none">
-            <i class="fa fa-plus bg-warning p-2 rounded"></i>
-          </a>Add New
-          Faculty Member
-        </div>
       </div>
     </div>
 
@@ -78,8 +71,9 @@
 
 
     <div class="mb-4">
-      <input type="submit" asp-controller="Course" asp-action="EditSubmit" class="btn btn-warning" asp-route-id="@Model.Id" value="Edit" />
-      <a asp-controller="Admin" asp-action="Index" class="btn btn-warning">Cancel</a>
+      <input type="submit" asp-controller="Course" asp-action="EditSubmit" class="btn btn-warning"
+        asp-route-id="@Model.Id" value="Edit" />
+      <a href="/Program/ProgramDetails/@Model.IdProgram" class="btn btn-warning">Cancel</a>
     </div>
   </form>
 </div>
