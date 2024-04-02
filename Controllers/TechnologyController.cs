@@ -72,7 +72,7 @@ namespace ClassScheduling_WebApp.Controllers
       _context.Technologies.Add(tech);
       //save changes to the database
       _context.SaveChanges();
-      return RedirectToAction("Index", "Admin");
+      return RedirectToAction("Index", tech);
     }
 
 
@@ -104,7 +104,7 @@ namespace ClassScheduling_WebApp.Controllers
       _context.Technologies.Update(tech);
       //save changes to the database
       _context.SaveChanges();
-      return RedirectToAction("Index", "Admin");
+      return RedirectToAction("Index", tech);
     }
 
     [Route("/Technology/Delete/{TechnologyID:int}")]
@@ -141,7 +141,7 @@ namespace ClassScheduling_WebApp.Controllers
       _context.Technologies.Remove(existingTech);
       //save changes to the database
       _context.SaveChanges();
-      return RedirectToAction("Index", "Admin");
+      return RedirectToAction("Index", tech);
 
     }
 

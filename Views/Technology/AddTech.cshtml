@@ -21,7 +21,7 @@
   <h1>Add Technology.</h1>
   <div style="margin-bottom:10px" class="fs-5">Enter the new Technology below:</div>
 
-  <form asp-controller="Admin" method="post">
+  <form asp-controller="Technology" asp-action="AddSubmit" method="post">
     <div class="mb-4">
       <label class="pb-2">Technology Name:</label>
       <input type="text" asp-for="@Model.Description" class="form-control" maxlength="20" />
@@ -29,41 +29,9 @@
     </div>
 
     <div class="mb-4">
-      <input type="submit" asp-controller="Technology" asp-action="AddSubmit" class="btn btn-warning" value="Add" />
-      <a asp-controller="Admin" asp-action="Index"><input type="button" class="btn btn-warning" value="Cancel" /></a>
+      <input type="submit" class="btn btn-warning" value="Add" />
+      <a asp-controller="Admin" asp-action="Index"><input type="button" class="btn btn-warning"
+          value="Cancel" /></a>
     </div>
   </form>
-</div>
-<div class="col text-white">
-  <div class="flex ms-4">
-    <span class="fs-2">Technology</span>
-  </div>
-  <div class="border-top pt-2 mt-2"></div>
-  @* @if (@Model.Technologies.Count > 0)
-  {
-  <div class="ms-4">
-  @foreach (var tech in Model.Technologies)
-  {
-  <form method="post">
-  <div class="flex">
-  <button type="submit" class="btn p-1" asp-controller="Technology" asp-action="Delete"
-  asp-route-id="@tech.Id">
-  <i class="fa fa-trash bg-warning p-2 rounded"></i>
-  </button>
-  <button type="submit" class="btn p-0" asp-controller="Technology" asp-action="Update"
-  asp-route-id="@tech.Id">
-  <i class="fa fa-pencil bg-warning p-2 rounded"></i>
-  </button>
-  <span class="ms-4">@tech.Description</span>
-  </div>
-  </form>
-  }
-  </div>
-  }
-  else
-  {
-  <div class="ms-4">
-  <span>No Technologies found</span>
-  </div>
-  } *@
 </div>
