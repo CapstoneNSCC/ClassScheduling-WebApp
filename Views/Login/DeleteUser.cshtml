@@ -24,7 +24,7 @@
     <div style="margin-bottom:10px" class="fs-5">Are you sure you want to delete?</div>
     <span>@Model.FirstName, Year @Model.LastName</span>
 
-    <div class="mb-4">
+    <div class="mt-4">
       <input type="hidden" asp-for="@Model.Id" />
       <input type="submit" asp-controller="Login" asp-action="DeleteSubmit" class="btn btn-warning"
         value="Delete" />

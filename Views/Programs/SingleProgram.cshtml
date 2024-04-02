@@ -6,55 +6,63 @@
       <img src="\lib\images\nscc-logo.jpg" alt="nscc-logo" width="200px" class="d-inline-block ms-3">
     </a>
     @* <div>
-    <span id="lblExpire" class="text-warning" style="margin-left:10px">WARNING: You're session is about
+    <span id="lblExpire" class="text-warning" style="me-3margin-left:10px">WARNING: You're session is about
     to expire</span>
     </div> *@
     <form method="post">
-      <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Logout">
+      <button type="submit" class="btn btn-warning " asp-controller="Admin" asp-action="Logout">
         Logout
       </button>
     </form>
   </div>
 </nav>
 
-<div class="col text-white">
+<div class="col text-white me-4">
   <div class="flex ms-4">
-    <span class="fs-2">@Model.Name, year @Model.Year</span>
-  </div>
+    <div class="mb-2">
+      <a href="/Programs" class="me-3 text-white" style="text-decoration:none"><i
+          class="fa fa-angle-left"></i>
+        Back to Programs
+      </a>
+    </div>
+    <span class="fs-2 me-3">Courses for @Model.Name, year @Model.Year</span>
 
-  <div class="border-top pt-2 mt-2 ms-4">
-    <form method="post">
-      <div class="mt-2">
-        <button type="submit" class="btn p-0 text-white" asp-controller="Course" asp-action="AddCourse" asp-route-programId="@Model.Id">
-          <i class="fa fa-plus bg-warning p-2 rounded ms-1 mb-2"></i> Add Course
-        </button>
-      </div>
-    </form>
 
-    @if (@Model.Courses.Count > 0)
-    {
-      <div class="ms-4">
-        @foreach (var course in Model.Courses)
-        {
-          <form method="post">
-            <div class="flex">
-              <button type="submit" class="btn p-1" asp-controller="Course" asp-action="Delete" asp-route-id="@course.Id">
-                <i class="fa fa-trash bg-warning p-2 rounded"></i>
-              </button>
-              <button type="submit" class="btn p-0" asp-controller="Course" asp-action="Edit" asp-route-id="@course.Id">
-                <i class="fa fa-pencil bg-warning p-2 rounded"></i>
-              </button>
-              <span> @course.Name, code: @course.Code </span>
-            </div>
-          </form>
-        }
+    <div class="border-top pt-2 mt-2">
+      <div class="my-3">
+        <a href="/Course/AddCourse?programId=@Model.Id" class="bg-warning p-2 rounded text-black me-3"
+          style="text-decoration:none">
+          <i class="fa fa-plus me-1 text-black"></i>Add Course
+        </a>
       </div>
-    }
-    else
-    {
-      <div class="ms-4">
-        <span>No programs found</span>
-      </div>
-    }
+
+      @if (@Model.Courses.Count > 0)
+      {
+        <div>
+          @foreach (var course in Model.Courses)
+          {
+            <form method="post">
+              <div class="flex">
+                <button type="submit" class="btn p-1" asp-controller="Course" asp-action="Delete"
+                  asp-route-id="@course.Id">
+                  <i class="fa fa-trash bg-warning p-2 rounded"></i>
+                </button>
+                <button type="submit" class="btn p-0" asp-controller="Course" asp-action="Edit"
+                  asp-route-id="@course.Id">
+                  <i class="fa fa-pencil bg-warning p-2 rounded"></i>
+                </button>
+                <span class="ms-4">@course.Code, @course.Name </span>
+              </div>
+            </form>
+          }
+        </div>
+      }
+      else
+      {
+        <div class="ms-4">
+          <span>No courses found</span>
+        </div>
+      }
+    </div>
   </div>
 </div>
