@@ -45,12 +45,18 @@
                   asp-route-id="@program.Id">
                   <i class="fa fa-trash bg-warning p-2 rounded"></i>
                 </button>
-                <button type="submit" class="btn p-0" asp-controller="Programs" asp-action="Update"
+                <button type="submit" class="btn p-1" asp-controller="Programs" asp-action="Update"
                   asp-route-id="@program.Id">
                   <i class="fa fa-pencil bg-warning p-2 rounded"></i>
                 </button>
-                <a asp-controller="Program" asp-action="ProgramDetails" asp-route-id="@program.Id"
-                  class="ms-4 text-white" style="text-decoration: none">@program.Name, year @program.Year</a>
+
+                <button type="submit" class="btn p-1" asp-controller="Program" asp-action="ProgramDetails"
+                  asp-route-id="@program.Id">
+                  <i class="fa fa-info bg-light p-2 rounded"></i>
+                </button>
+
+
+                <span class="ms-4 text-white">@program.Name, year @program.Year</span>
               </div>
             </form>
           }
