@@ -28,45 +28,6 @@
       class="dashboard-button btn btn-warning">Manage
       Programs</a>
   </div>
-  <div class="col text-white">
-    <form method="post">
-      <div class="flex ms-4">
-        <span class="fs-2">Classrooms</span>
-
-        <button type="submit" class="btn p-0" asp-controller="CLassroom" asp-action="AddRoom">
-          <i class="fa fa-plus bg-warning p-2 rounded ms-1 mb-2"></i>
-        </button>
-      </div>
-    </form>
-    <div class="border-top pt-2 mt-2"></div>
-    @if (@Model.Classrooms.Count > 0)
-    {
-      <div class="ms-4">
-        @foreach (var classroom in Model.Classrooms)
-        {
-          <form method="post">
-            <div class="flex">
-              <button type="submit" class="btn p-1" asp-controller="Classroom" asp-action="Delete"
-                asp-route-id="@classroom.Id">
-                <i class="fa fa-trash bg-warning p-2 rounded"></i>
-              </button>
-              <button type="submit" class="btn p-0" asp-controller="Classroom" asp-action="Update"
-                asp-route-id="@classroom.Id">
-                <i class="fa fa-pencil bg-warning p-2 rounded"></i>
-              </button>
-              <span class="ms-4">Room: @classroom.RoomNumber Building: @classroom.BuildingAcronym</span>
-            </div>
-          </form>
-        }
-      </div>
-    }
-    else
-    {
-      <div class="ms-4">
-        <span>No Classrooms found</span>
-      </div>
-    }
-  </div>
 
   <div class="mt-3">
     <a asp-controller="Login" asp-action="UserIndex" asp-route-programs="@Model"
