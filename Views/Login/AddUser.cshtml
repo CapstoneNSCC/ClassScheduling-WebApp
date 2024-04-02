@@ -9,11 +9,19 @@
     <span id="lblExpire" class="text-warning" style="margin-left:10px">WARNING: You're session is about
     to expire</span>
     </div> *@
-    <form method="post">
-      <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Logout">
-        Logout
-      </button>
-    </form>
+    <div class="d-flex flex-row">
+      <form method="post">
+        <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Index">
+          Dashboard
+        </button>
+      </form>
+
+      <form method="post">
+        <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Logout">
+          Logout
+        </button>
+      </form>
+    </div>
   </div>
 </nav>
 
@@ -52,7 +60,7 @@
       <div><input asp-for="@Model.SetAsAdmin" type="radio" value="false" /> no </div>
       <span asp-validation-for="@Model.SetAsAdmin" class="text-danger" />
     </div>
-    
+
     <div class="mt-4">
       <input type="submit" asp-controller="Login" asp-action="AddSubmit" class="btn btn-warning"
         value="Add" />

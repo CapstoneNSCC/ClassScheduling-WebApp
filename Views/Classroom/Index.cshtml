@@ -9,21 +9,24 @@
     <span id="lblExpire" class="text-warning" style="margin-left:10px">WARNING: You're session is about
     to expire</span>
     </div> *@
-    <form method="post">
-      <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Logout">
-        Logout
-      </button>
-    </form>
+    <div class="d-flex flex-row">
+      <form method="post">
+        <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Index">
+          Dashboard
+        </button>
+      </form>
+
+      <form method="post">
+        <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Logout">
+          Logout
+        </button>
+      </form>
+    </div>
   </div>
 </nav>
 
 <div class="col text-white me-4">
   <div class="flex ms-4">
-    <div class="mb-2">
-      <a href="/Admin" class="me-3 text-white" style="text-decoration:none"><i class="fa fa-angle-left"></i>
-        Back to Dashboard
-      </a>
-    </div>
     <span class="fs-2">Classrooms</span>
 
     <div class="border-top pt-2 mt-2">

@@ -2,21 +2,28 @@
 
 <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="top">
+    <a class="navbar-brand" href="/">
       <img src="\lib\images\nscc-logo.jpg" alt="nscc-logo" width="200px" class="d-inline-block ms-3">
     </a>
     @* <div>
     <span id="lblExpire" class="text-warning" style="margin-left:10px">WARNING: You're session is about
     to expire</span>
     </div> *@
-    <form asp-controller="Classroom" asp-action="UpdateSubmit" method="post">
-      <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Logout">
-        Logout
-      </button>
-    </form>
+    <div class="d-flex flex-row">
+      <form method="post">
+        <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Index">
+          Dashboard
+        </button>
+      </form>
+
+      <form method="post">
+        <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Logout">
+          Logout
+        </button>
+      </form>
+    </div>
   </div>
 </nav>
-
 <div class="p-5 text-white">
   <h1>Edit Classroom.</h1>
   <div style="margin-bottom:10px" class="fs-5">Edit the Classroom below:</div>
