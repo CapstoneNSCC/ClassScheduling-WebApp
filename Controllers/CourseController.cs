@@ -124,7 +124,7 @@ namespace ClassScheduling_WebApp.Controllers
         await _context.SaveChangesAsync();
 
         ProgramModel program = _context.Programs
-          .Include(p => p.Courses) 
+          .Include(p => p.Courses)
           .FirstOrDefault(p => p.Id == course.IdProgram);
         return View("~/Views/Programs/SingleProgram.cshtml", program);
       }
@@ -158,7 +158,7 @@ namespace ClassScheduling_WebApp.Controllers
       PopulateProgramsDropDownList(course.IdProgram);
       ViewBag.Technologies = _context.Technologies.ToList(); // Add this line
 
-      course.SelectedTechnologyIds =  _context.TechClasses
+      course.SelectedTechnologyIds = _context.TechClasses
           .Where(tc => tc.IdCourse == id)
           .Select(tc => tc.IdTechnology)
           .ToList();
@@ -213,9 +213,9 @@ namespace ClassScheduling_WebApp.Controllers
           }
         }
         ProgramModel program = _context.Programs
-          .Include(p => p.Courses) 
+          .Include(p => p.Courses)
           .FirstOrDefault(p => p.Id == course.IdProgram);
-          
+
         return View("~/Views/Programs/SingleProgram.cshtml", program);
       }
 
@@ -265,7 +265,7 @@ namespace ClassScheduling_WebApp.Controllers
       _context.Courses.Remove(course);
       await _context.SaveChangesAsync();
       ProgramModel program = _context.Programs
-          .Include(p => p.Courses) 
+          .Include(p => p.Courses)
           .FirstOrDefault(p => p.Id == course.IdProgram);
       return View("~/Views/Programs/SingleProgram.cshtml", program);
     }

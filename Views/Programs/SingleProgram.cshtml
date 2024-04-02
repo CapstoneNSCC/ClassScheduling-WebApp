@@ -25,7 +25,7 @@
         Back to Programs
       </a>
     </div>
-    <span class="fs-2 me-3">@Model.Name, year @Model.Year</span>
+    <span class="fs-2 me-3">Courses for @Model.Name, year @Model.Year</span>
 
 
     <div class="border-top pt-2 mt-2">
@@ -51,7 +51,7 @@
                   asp-route-id="@course.Id">
                   <i class="fa fa-pencil bg-warning p-2 rounded"></i>
                 </button>
-                <span class="ms-4"> @course.Code, @course.Name </span>
+                <span class="ms-4">@course.Code, @course.Name </span>
               </div>
             </form>
           }
@@ -60,7 +60,7 @@
       else
       {
         <div class="ms-4">
-          <span>No programs found</span>
+          <span>No courses found</span>
         </div>
       }
     </div>

@@ -1,7 +1,5 @@
 @model UserModel;
 
-
-
 <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">
@@ -23,7 +21,7 @@
   <h1>Edit User.</h1>
   <div style="margin-bottom:10px" class="fs-5">Enter the new User data below:</div>
 
-  <form asp-controller="Admin" method="post">
+  <form method="post">
     <div class="mb-4">
       <label class="pb-2">First Name:</label>
       <input type="text" asp-for="@Model.FirstName" class="form-control" maxlength="60" />
@@ -49,18 +47,17 @@
     </div>
 
     <div class="mb-4">
-      <label class="pb-2">Admin Status:</label><br>
-      <label class="pb-2">Yes</label>
-      <input type="radio" asp-for="@Model.SetAsAdmin" name="admin" class="form-control" value="true" />
-      <label class="pb-2">No</label>
-      <input type="radio" asp-for="@Model.SetAsAdmin" name="admin" class="form-control" value="false" />
+      <label class="pb-2">Admin Status:</label>
+      <div><input asp-for="@Model.SetAsAdmin" type="radio" value="true" checked /> yes </div>
+      <div><input asp-for="@Model.SetAsAdmin" type="radio" value="false" /> no </div>
       <span asp-validation-for="@Model.SetAsAdmin" class="text-danger" />
     </div>
 
     <div class="mb-4">
-      <input type="submit" asp-controller="Login" asp-action=" UpdateSubmit" class="btn btn-warning" value="Edit" />
-      <a asp-controller="Admin" asp-action="Index"><input type="button" class="btn btn-warning" value="Cancel" /></a>
+      <input type="hidden" asp-for="@Model.Id" />
+      <input type="submit" asp-controller="Login" asp-action="UpdateSubmit" class="btn btn-warning"
+        value="Update" />
+      <a href="/Login/UserIndex" class="btn btn-warning">Cancel</a>
     </div>
-
   </form>
 </div>

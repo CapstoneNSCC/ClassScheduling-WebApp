@@ -22,7 +22,7 @@
 
   <form asp-controller="Course" asp-action="EditSubmit" method="post">
 
-    
+
     <div class="mb-4">
       <label asp-for="IdProgram" class="control-label mb-2">Program</label>
       <select asp-for="IdProgram" class="form-control" asp-items="ViewBag.IdProgram">
@@ -78,7 +78,9 @@
 
 
     <div class="mb-4">
-      <input type="submit" asp-controller="Course" asp-action="EditSubmit" class="btn btn-warning" asp-route-id="@Model.Id" value="Edit" />
+      <input type="hidden" asp-for="@Model.Id" />
+      <input type="submit" asp-controller="Course" asp-action="EditSubmit" class="btn btn-warning"
+        asp-route-id="@Model.Id" value="Update" />
       <a asp-controller="Admin" asp-action="Index" class="btn btn-warning">Cancel</a>
     </div>
   </form>

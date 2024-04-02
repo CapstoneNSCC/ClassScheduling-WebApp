@@ -1,7 +1,5 @@
 @model ProgramModel;
 
-
-
 <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">
@@ -23,7 +21,8 @@
   <h1>Add Program.</h1>
   <div style="margin-bottom:10px" class="fs-5">Enter the new Program data below:</div>
 
-  <form asp-controller="Programs" method="post">
+  <form asp-controller="Programs" asp-action="AddSubmit" method="post">
+
     <div class="mb-4">
       <label class="pb-2">Program Name:</label>
       <input type="text" asp-for="@Model.Name" class="form-control" maxlength="60" />
@@ -37,10 +36,8 @@
     </div>
 
     <div class="mb-4">
-      <input type="submit" asp-controller="Programs" asp-action="AddSubmit" class="btn btn-warning"
-        value="Add" />
+      <input type="submit" class="btn btn-warning" value="Add" />
       <a href="/Programs" class="btn btn-warning">Cancel</a>
     </div>
-
   </form>
 </div>
