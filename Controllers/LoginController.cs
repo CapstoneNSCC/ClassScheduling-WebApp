@@ -31,7 +31,11 @@ namespace ClassScheduling_WebApp.Controllers
 
       if (webLogin.Unlock())
       {
-        return RedirectToAction("Index", "Admin");
+        if (HttpContext.Session.GetString("admin") == "true")
+        {
+          return RedirectToAction("Index", "Admin");
+        }
+        return RedirectToAction("Index", "Home");
       }
       else
       {
