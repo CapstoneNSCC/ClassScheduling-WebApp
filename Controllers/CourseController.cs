@@ -275,7 +275,7 @@ namespace ClassScheduling_WebApp.Controllers
       return _context.Courses.Any(e => e.Id == id);
     }
 
-    private void PopulateProfessorsDropDownList(object selectedProfessor = null)
+    public void PopulateProfessorsDropDownList(object selectedProfessor = null)
     {
       var professorsQuery = from d in _context.Users
                             where d.SetAsAdmin == false
