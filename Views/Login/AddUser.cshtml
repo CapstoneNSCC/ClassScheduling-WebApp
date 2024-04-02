@@ -1,7 +1,5 @@
 @model UserModel;
 
-
-
 <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">
@@ -54,12 +52,11 @@
       <div><input asp-for="@Model.SetAsAdmin" type="radio" value="false" /> no </div>
       <span asp-validation-for="@Model.SetAsAdmin" class="text-danger" />
     </div>
-
+    
     <div class="mt-4">
       <input type="submit" asp-controller="Login" asp-action="AddSubmit" class="btn btn-warning"
         value="Add" />
       <a href="/Login/UserIndex" class="btn btn-warning">Cancel</a>
     </div>
-
   </form>
 </div>
