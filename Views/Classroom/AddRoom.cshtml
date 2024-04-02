@@ -1,0 +1,43 @@
+@model ClassroomModel;
+
+<nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="top">
+            <img src="\lib\images\nscc-logo.jpg" alt="nscc-logo" width="200px" class="d-inline-block ms-3">
+        </a>
+        @* <div>
+        <span id="lblExpire" class="text-warning" style="margin-left:10px">WARNING: You're session is about
+        to expire</span>
+        </div> *@
+        <form method="post">
+            <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Logout">
+                Logout
+            </button>
+        </form>
+    </div>
+</nav>
+
+<div class="p-5 text-white">
+    <h1>Add Classroom.</h1>
+    <div style="margin-bottom:10px" class="fs-5">Enter the new Classroom below:</div>
+
+    <form asp-controler="Classroom" method="post">
+        <div class="mb-4">
+            <label class="pb-2">Classroom Number:</label>
+            <input type="text" asp-for="@Model.RoomNumber" class="form-control" maxlength="3" />
+            <span asp-validation-for="@Model.RoomNumber" class="text-danger" />
+        </div>
+        <div class="mb-4">
+            <label class="pb-2">Building Acronym:</label>
+            <input type="text" asp-for="@Model.BuildingAcronym" class="form-control" maxlength="3" />
+            <span asp-validation-for="@Model.BuildingAcronym" class="text-danger" />
+        </div>
+        <div class="mb-4">
+            <input type="submit" asp-controller="Classroom" asp-action="AddSubmit" class="btn btn-warning"
+                value="Add" />
+            <a asp-controller="Admin" asp-action="Index"><input type="button" class="btn btn-warning"
+                    value="Cancel" /></a>
+        </div>
+
+    </form>
+</div>
