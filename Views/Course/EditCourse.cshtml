@@ -74,7 +74,7 @@
       <input type="hidden" asp-for="@Model.Id" />
       <input type="submit" asp-controller="Course" asp-action="EditSubmit" class="btn btn-warning"
         asp-route-id="@Model.Id" value="Update" />
-      <a asp-controller="Admin" asp-action="Index" class="btn btn-warning">Cancel</a>
+      <a href="/Program/ProgramDetails/@Model.IdProgram" class="btn btn-warning">Cancel</a>
     </div>
   </form>
 </div>
