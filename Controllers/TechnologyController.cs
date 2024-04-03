@@ -144,7 +144,5 @@ namespace ClassScheduling_WebApp.Controllers
       return RedirectToAction("Index", tech);
 
     }
-
-
   }
 }
