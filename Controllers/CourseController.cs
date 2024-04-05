@@ -131,7 +131,8 @@ namespace ClassScheduling_WebApp.Controllers
 
       PopulateProfessorsDropDownList(course.IdProfessor);
       PopulateProgramsDropDownList(course.IdProgram);
-      ViewBag.Technologies = _context.Technologies.ToList(); // Add this line again for model validation fail scenario
+      ViewBag.Technologies = _context.Technologies.ToList();
+
       return View("~/Views/Course/AddCourse.cshtml", course);
     }
 
@@ -156,7 +157,7 @@ namespace ClassScheduling_WebApp.Controllers
 
       PopulateProfessorsDropDownList(course.IdProfessor);
       PopulateProgramsDropDownList(course.IdProgram);
-      ViewBag.Technologies = _context.Technologies.ToList(); // Add this line
+      ViewBag.Technologies = _context.Technologies.ToList();
 
       course.SelectedTechnologyIds = _context.TechClasses
           .Where(tc => tc.IdCourse == id)

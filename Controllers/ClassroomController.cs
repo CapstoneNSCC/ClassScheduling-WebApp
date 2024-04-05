@@ -49,17 +49,23 @@ namespace ClassScheduling_WebApp.Controllers
         return RedirectToAction("Index", "Login");
       }
 
+      ViewBag.Technologies = _context.Technologies.ToList();
+
+
       // construct course object that will be used to add a new course.
       ClassroomModel classroom = new ClassroomModel
       {
         RoomNumber = 0,
         BuildingAcronym = "",
       };
+
       //passing in technology model to the view
       return View(classroom);
     }
 
-    public IActionResult AddSubmit(ClassroomModel classroom)
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddSubmit(ClassroomModel classroom, List<int> SelectedTechnologyIds)
     {
       // if auth is not  = true, it re-directs to the login screen.
       if (HttpContext.Session.GetString("auth") != "true")
@@ -67,11 +73,21 @@ namespace ClassScheduling_WebApp.Controllers
         return RedirectToAction("Index", "Login");
       }
 
-      // add the technology to the list of technologies
+      // add the classroom to db
       _context.Classrooms.Add(classroom);
       //save changes to the database
-      _context.SaveChanges();
-      return RedirectToAction("Index", classroom);
+      await _context.SaveChangesAsync();
+
+      foreach (var techId in SelectedTechnologyIds)
+      {
+        var techRoom = new TechRoomModel { IdRoom = classroom.Id, IdTechnology = techId };
+        _context.TechRooms.Add(techRoom);
+      }
+
+      //save changes to the database
+      await _context.SaveChangesAsync();
+
+      return View("Index");
     }
 
 
@@ -86,6 +102,14 @@ namespace ClassScheduling_WebApp.Controllers
 
       // find the technology by the technologyID
       ClassroomModel classroom = _context.Classrooms.Find(ClassroomID);
+
+      ViewBag.Technologies = _context.Technologies.ToList();
+
+      classroom.SelectedTechnologyIds = _context.TechRooms
+          .Where(tr => tr.IdRoom == ClassroomID)
+          .Select(tr => tr.IdTechnology)
+          .ToList();
+
       //passing in technology model to the view
       return View("EditRoom", classroom);
     }
