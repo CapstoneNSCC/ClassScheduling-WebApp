@@ -65,7 +65,7 @@ namespace ClassScheduling_WebApp.Controllers
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> AddSubmit(ClassroomModel classroom, List<int> SelectedTechnologyIds)
+    public async Task<IActionResult> AddSubmit([Bind("Id, RoomNumber, BuildingAcronym, SelectedTechnologyIds")] ClassroomModel classroom, List<int> SelectedTechnologyIds)
     {
       // if auth is not  = true, it re-directs to the login screen.
       if (HttpContext.Session.GetString("auth") != "true")

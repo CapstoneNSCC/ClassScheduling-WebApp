@@ -29,16 +29,17 @@
   <h1>Add Classroom.</h1>
   <div style="margin-bottom:10px" class="fs-5">Enter the new Classroom below:</div>
 
-  <form method="post">
+  <form asp-controller="Classroom" asp-action="AddSubmit" method="post">
     <div class="mb-4">
       <label class="pb-2">Classroom Number:</label>
-      <input type="text" asp-for="@Model.RoomNumber" class="form-control" maxlength="3" />
-      <span asp-validation-for="@Model.RoomNumber" class="text-danger" />
+
+      <input type="text" asp-for="RoomNumber" class="form-control" maxlength="3" />
+      <span asp-validation-for="RoomNumber" class="text-danger" />
     </div>
     <div class="mb-4">
       <label class="pb-2">Building Acronym:</label>
-      <input type="text" asp-for="@Model.BuildingAcronym" class="form-control" maxlength="3" />
-      <span asp-validation-for="@Model.BuildingAcronym" class="text-danger" />
+      <input type="text" asp-for="BuildingAcronym" class="form-control" maxlength="3" />
+      <span asp-validation-for="BuildingAcronym" class="text-danger" />
     </div>
 
     <div class="mb-4">
