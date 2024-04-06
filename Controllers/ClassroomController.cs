@@ -133,7 +133,7 @@ namespace ClassScheduling_WebApp.Controllers
     }
 
 
-    public IActionResult UpdateSubmit(ClassroomModel classroom)
+    public async Task<IActionResult> UpdateSubmit(int id, [Bind("Id, RoomNumber, BuildingAcronym, SelectedTechnologyIds")] ClassroomModel classroom, List<int> SelectedTechnologyIds)
     {
       // if auth is not  = true, it re-directs to the login screen.
       if (HttpContext.Session.GetString("auth") != "true")
@@ -141,11 +141,44 @@ namespace ClassScheduling_WebApp.Controllers
         return RedirectToAction("Index", "Login");
       }
 
-      // update the program in the list of programs
-      _context.Classrooms.Update(classroom);
-      //save changes to the database
-      _context.SaveChanges();
-      return RedirectToAction("Index", classroom);
+      if (id != classroom.Id)
+      {
+        return NotFound();
+      }
+
+      if (ModelState.IsValid){
+        try
+        {
+          _context.Update(classroom);
+
+          var existingTechRooms = _context.TechRooms.Where(tr => tr.IdClassroom == classroom.Id);
+          _context.TechRooms.RemoveRange(existingTechRooms);
+
+          foreach (var techId in SelectedTechnologyIds)
+          {
+            var techRoom = new TechRoomModel { IdClassroom = classroom.Id, IdTechnology = techId };
+            _context.TechRooms.Add(techRoom);
+          }
+
+          await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+          if (!(_context.Classrooms.Any(e => e.Id == classroom.Id)))
+          {
+            return NotFound();
+          }
+          else
+          {
+            throw;
+          }
+        }
+
+        return RedirectToAction("Index", classroom);
+      }
+
+      ViewBag.Technologies = _context.Technologies.ToList(); // Add this line again for model validation fail scenario
+      return View(classroom);
     }
 
     [Route("/Classroom/Delete/{ClassroomID:int}")]
@@ -164,7 +197,11 @@ namespace ClassScheduling_WebApp.Controllers
 
     }
 
-    public IActionResult DeleteSubmit(ClassroomModel classroom)
+
+     // POST: Deletes a course from the database
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteSubmit(int id)
     {
       // if auth is not  = true, it re-directs to the login screen.
       if (HttpContext.Session.GetString("auth") != "true")
@@ -172,18 +209,15 @@ namespace ClassScheduling_WebApp.Controllers
         return RedirectToAction("Index", "Login");
       }
 
-      var existingRoom = _context.Classrooms.Find(classroom.Id);
-      if (existingRoom == null)
-      {
-        return RedirectToAction("Index", "Admin");
-      }
+      var techRooms = _context.TechRooms.Where(tr => tr.IdClassroom == id);
+      _context.TechRooms.RemoveRange(techRooms);
 
-      // remove the program from the list of programs
-      _context.Classrooms.Remove(existingRoom);
-      //save changes to the database
-      _context.SaveChanges();
+      var classroom = await _context.Classrooms.FindAsync(id);
+      _context.Classrooms.Remove(classroom);
+
+      await _context.SaveChangesAsync();
+
       return RedirectToAction("Index", classroom);
-
     }
   }
 }
