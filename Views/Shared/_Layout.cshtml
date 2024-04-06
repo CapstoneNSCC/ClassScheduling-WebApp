@@ -17,7 +17,6 @@
   <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
   <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
   @* ----------------------------------------------------------------- *@
-  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
   <script>
@@ -27,9 +26,10 @@
       const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'timeGridWeek',
         slotMinTime: '08:00',
-        slotMaxTime: '17:00',
-        slotDuration: '01:00:00',
-        height: '100%',
+        slotMaxTime: '18:00',
+        slotDuration: '00:30:00',
+        slotLabelInterval: '01:00:00',
+        height: '855px',
         themeSystem: 'bootstrap5',
         navLinks: false,
         weekends: false,
@@ -56,8 +56,35 @@
             daysOfWeek: ['1'],
             startTime: '10:30:00',
             endTime: '12:30:00',
-            teacher: 'Sean Morrow',
+            teacher: 'Ryan McLaren',
             classroom: 'TRF-308'
+          },
+          {
+            title: 'COMM 4700',
+            description: 'Professional Practice',
+            daysOfWeek: ['1'],
+            startTime: '10:30:00',
+            endTime: '12:30:00',
+            teacher: 'Nasser Jaleel',
+            classroom: 'TRM-114',
+          },
+          {
+            title: 'INFT 4000',
+            description: 'Special Topics',
+            daysOfWeek: ['1'],
+            startTime: '10:30:00',
+            endTime: '12:30:00',
+            teacher: 'Sean Morrow',
+            classroom: 'TRF-312',
+          },
+          {
+            title: 'NWTS 1000',
+            description: 'Networking and Security',
+            daysOfWeek: ['1'],
+            startTime: '10:30:00',
+            endTime: '12:30:00',
+            teacher: 'Gordon Larusic',
+            classroom: 'TRF-306',
           },
           {
             title: 'WEBD 3027',
@@ -66,7 +93,7 @@
             startTime: '13:30:00',
             endTime: '15:30:00',
             teacher: 'Ryan McLaren',
-            classroom: 'TRF-312'
+            classroom: 'TRF-312',
           }],
         eventContent: function (e) {
           console.log(e.event);
@@ -103,7 +130,19 @@
 
           let arrayOfDomNodes = [titleEl, easyNameEl, timeEl, roomEl, teacherEl]
           return { domNodes: arrayOfDomNodes }
-        }
+        },
+        eventMouseEnter: function (e) {
+          let popover = bootstrap.Popover.getOrCreateInstance(e.el, {
+            title: e.event.title,
+            content: `
+              <div class="test">${e.event.extendedProps.teacher}</div>
+            `,
+            html: true,
+            trigger: 'hover'
+          })
+
+          popover.toggle();
+        },
       })
       calendar.render()
     })
@@ -115,6 +154,10 @@
 
   @RenderBody()
 
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
 
   <script src="~/js/site.js" asp-append-version="true"></script>
   @await RenderSectionAsync("Scripts", required: false)
