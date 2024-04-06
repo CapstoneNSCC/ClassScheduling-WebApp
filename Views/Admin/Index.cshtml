@@ -94,7 +94,15 @@
         meridiem: 'short'
       },
       eventDisplay: 'block',
-      events: event,
+      events: [{
+        title: 'INFT 3000',
+        description: 'Capstone',
+        daysOfWeek: ['2'],
+        startTime: '10:30:00',
+        endTime: '12:30:00',
+        teacher: 'Ryan McLaren',
+        classroom: 'TRF-308'
+      }],
       eventContent: function (e) {
         console.log(e.event);
 
@@ -148,9 +156,9 @@
       {
         title: 'INFT 3000',
         description: 'Capstone',
-        daysOfWeek: ['2'],
-        startTime: '10:30:00',
-        endTime: '12:30:00',
+        daysOfWeek: ['3'],
+        startTime: '12:30:00',
+        endTime: '14:30:00',
         teacher: 'Ryan McLaren',
         classroom: 'TRF-308'
       }

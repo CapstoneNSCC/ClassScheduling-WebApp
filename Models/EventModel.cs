@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
+
 using System;
 
 namespace ClassScheduling_WebApp.Models
