@@ -63,3 +63,99 @@
   <div id='calendar'></div>
 
 </div>
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar')
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'timeGridWeek',
+      slotMinTime: '08:00',
+      slotMaxTime: '18:00',
+      slotDuration: '00:30:00',
+      slotLabelInterval: '01:00:00',
+      height: '855px',
+      themeSystem: 'bootstrap5',
+      navLinks: false,
+      weekends: false,
+      allDaySlot: false,
+      eventMinHeight: 30,
+      headerToolbar: {
+        start: '',
+        center: '',
+        end: '',
+      },
+      dayHeaderFormat: { weekday: 'long' },
+      nowIndicator: true,
+      slotLabelFormat: {
+        hour: 'numeric',
+        minute: '2-digit',
+        omitZeroMinute: true,
+        meridiem: 'short'
+      },
+      eventDisplay: 'block',
+      events: 'api/Events'
+      eventContent: function (e) {
+        console.log(e.event);
+
+        let timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true }
+
+        let title = e.event.title;
+        let className = e.event.extendedProps.description;
+        let startTime = e.event.start;
+        let endTime = e.event.end;
+        let teacher = e.event.extendedProps.teacher;
+        let classroom = e.event.extendedProps.classroom;
+
+
+        let titleEl = document.createElement('div')
+        titleEl.classList = ['title title2']
+        titleEl.innerHTML = title;
+
+        let easyNameEl = document.createElement('div')
+        easyNameEl.classList = ['easyname1 easyname2']
+        easyNameEl.innerHTML = className;
+
+        let roomEl = document.createElement('div')
+        roomEl.classList = ['easyname1 easyname2']
+        roomEl.innerHTML = classroom;
+
+        let timeEl = document.createElement('div')
+        timeEl.classList = ['class1 class2']
+        timeEl.innerHTML = `${startTime.toLocaleString('en-US', timeOptions)} - ${endTime.toLocaleString('en-US', timeOptions)}`
+
+        let teacherEl = document.createElement('div')
+        teacherEl.classList = ['easyname1 easyname2']
+        teacherEl.innerHTML = teacher;
+
+        let arrayOfDomNodes = [titleEl, easyNameEl, timeEl, roomEl, teacherEl]
+        return { domNodes: arrayOfDomNodes }
+      },
+      eventMouseEnter: function (e) {
+        let popover = bootstrap.Popover.getOrCreateInstance(e.el, {
+          title: e.event.title,
+          content: `
+              <div class="test">${e.event.extendedProps.teacher}</div>
+            `,
+          html: true,
+          trigger: 'hover'
+        })
+
+        popover.toggle();
+      },
+    })
+    calendar.addEvent(
+      {
+        title: 'INFT 3000',
+        description: 'Capstone',
+        daysOfWeek: ['2'],
+        startTime: '10:30:00',
+        endTime: '12:30:00',
+        teacher: 'Ryan McLaren',
+        classroom: 'TRF-308'
+      }
+    );
+    calendar.render()
+  })
+
+</script>

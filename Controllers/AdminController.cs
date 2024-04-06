@@ -66,7 +66,6 @@ namespace ClassScheduling_WebApp.Controllers
       //   Users = users
       // };
       // return View(viewModel);
-
       return View(programs);
     }
 
