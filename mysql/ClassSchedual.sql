@@ -31,6 +31,10 @@ DROP TABLE IF EXISTS TblCourse;
 DROP TABLE IF EXISTS TblTechnology;
 DROP TABLE IF EXISTS TblProgram;
 DROP TABLE IF EXISTS TblUser;
+-- added this to test scedule modle and data fetching.
+DROP TABLE IF EXISTS Events;
+
+
 
 -- Create TblUser table
 CREATE TABLE IF NOT EXISTS TblUser (
@@ -43,6 +47,18 @@ CREATE TABLE IF NOT EXISTS TblUser (
     Salt VARCHAR(255) NOT NULL,
     PRIMARY KEY (Id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Create TblEvents table
+CREATE TABLE IF NOT EXISTS Events (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    description VARCHAR(255),
+    daysOfWeek INT,
+    StartTime DATETIME,
+    EndTime DATETIME,
+    teacher VARCHAR(100),
+    Classroom VARCHAR(100)
+);
+
 
 -- Create TblProgram table
 CREATE TABLE IF NOT EXISTS TblProgram (
@@ -146,6 +162,9 @@ CREATE TABLE IF NOT EXISTS TblTechRoom (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- INSERTS
+-- Insert data into TblEvents
+
+
 -- Insert data into TblProgram
 INSERT INTO TblProgram (Name, Year) VALUES
 ('IT Web Programming', 1),
@@ -155,13 +174,23 @@ INSERT INTO TblProgram (Name, Year) VALUES
 
 -- Insert data into TblUser
 INSERT INTO TblUser (FirstName, LastName, SetAsAdmin, UserName, Password, Salt) VALUES
-('user', 'admin', TRUE, 'user', 'jSANqsAHN3BKj2onm6KPStvO5O5taYzxBxDQydzgLTM=', '0w54NUgsGa53PfCmOt9Lhg=='),
-('pablo', 'admin', TRUE, 'pablo', 'GWftrhCl31KH54HIo5pDKBOZCRDdjxtLxq571rJuycA=', '0w54NUgsGa53PfCmOt9Lhg=='),
-('kayla', 'gillam', TRUE, 'kayla', 'TS2OQQ7XOGnvq9C/aS4WNiiGAdMz8osde8xBQl6JvsU=', '0w54NUgsGa53PfCmOt9Lhg=='),
-('sean', 'morrow', TRUE, 'sean', 'nNKacirUadrGD9npbzM3FpdqobbNucxXwq9TDPHaG7Q=', '0w54NUgsGa53PfCmOt9Lhg=='),
-('dylan', 'admin', TRUE, 'dylan', 'HCYHoaYJWGyduzsHuU6+s+dsAofaGClontE/t5blwak=','0w54NUgsGa53PfCmOt9Lhg=='),
+('user', 'admin', TRUE, 'user', 'V3wjYKvYBnCwEn6wIR1HDJbP+P1dz+pgyDbb2UlI95s=', '0w54NUgsGa53PfCmOt9Lhg=='),
+('Pablo', 'Santos', TRUE, 'pablo', 'GWftrhCl31KH54HIo5pDKBOZCRDdjxtLxq571rJuycA=', '0w54NUgsGa53PfCmOt9Lhg=='),
+('Kayla', 'Gillam', TRUE, 'kayla', 'TS2OQQ7XOGnvq9C/aS4WNiiGAdMz8osde8xBQl6JvsU=', '0w54NUgsGa53PfCmOt9Lhg=='),
+('Dylan', 'MacCormack', TRUE, 'dylan', 'HCYHoaYJWGyduzsHuU6+s+dsAofaGClontE/t5blwak=','0w54NUgsGa53PfCmOt9Lhg=='),
+('Sean', 'Morrow', FALSE, 'sean', 'nNKacirUadrGD9npbzM3FpdqobbNucxXwq9TDPHaG7Q=', '0w54NUgsGa53PfCmOt9Lhg=='),
 ('Gordon', 'Larusic', FALSE, 'gordon', 'nNKacirUadrGD9npbzM3FpdqobbNucxXwq9TDPHaG7Q=', '0w54NUgsGa53PfCmOt9Lhg=='),
-('Matthew', 'Redmond', FALSE, 'matthew', 'nNKacirUadrGD9npbzM3FpdqobbNucxXwq9TDPHaG7Q=', '0w54NUgsGa53PfCmOt9Lhg==');
+('Matthew', 'Redmond', FALSE, 'matthew', 'nNKacirUadrGD9npbzM3FpdqobbNucxXwq9TDPHaG7Q=', '0w54NUgsGa53PfCmOt9Lhg=='),
+('Ryan', 'McLaren', FALSE, 'ryan', 'AdWTSk6URrGZIonKcPpAecHm5XFGAEcNAT7G32Hf308=', '0w54NUgsGa53PfCmOt9Lhg=='),
+('Matthew', 'Craig', FALSE, 'matt', 'gljYbbgsHhLCVHk1SHmEubC8GOzp/c4lDZyULueMr3o=', '0w54NUgsGa53PfCmOt9Lhg=='),
+('Hyesun', 'Kwon', FALSE, 'hyesun', 'gljYbbgsHhLCVHk1SHmEubC8GOzp/c4lDZyULueMr3o=', '0w54NUgsGa53PfCmOt9Lhg=='),
+('test', 'test', FALSE, 'test', 'iBffC45HMekQwUMnYq4aoZulUda+pCpV379Rznrrf1A=', '0w54NUgsGa53PfCmOt9Lhg==');
+
+INSERT INTO Events (description, daysOfWeek, StartTime, EndTime, teacher, Classroom) VALUES
+('Math Class', 1, '2024-04-06 08:00:00', '2024-04-06 09:30:00', 'Mr. Smith', 'Room A'),
+('English Class', 2, '2024-04-06 10:00:00', '2024-04-06 11:30:00', 'Ms. Johnson', 'Room B'),
+('History Class', 3, '2024-04-06 13:00:00', '2024-04-06 14:30:00', 'Mr. Brown', 'Room C');
+
 
 -- Insert data into TblTechnology
 INSERT INTO TblTechnology (Description) VALUES
@@ -199,14 +228,29 @@ INSERT INTO TblCalendar (DayWeek, StartTime) VALUES
 ('Friday', '13:30:00');
 
 -- Insert data into TblCourse
+-- sean 5 gord 6 matt 7 ryan 8
 INSERT INTO TblCourse (Code, Name, Hours, IdProfessor, IdProgram) VALUES
-('WBP101', 'Introduction to Web Technologies', 100, 2, 1),
-('WBP102', 'Programming Fundamentals', 100, 3, 1),
-('WBP103', 'Web Design Principles', 100, 4, 2),
-('WBP104', 'Introduction to Databases', 100, 5, 2),
-('WBP105', 'Basic Computing and Networking', 100, 2, 1),
-('ISM101', 'Fundamentals of Information Systems', 100, 3, 3),
-('ISM102', 'Basic Networking Concepts', 100, 4, 3),
-('ISM103', 'Introduction to System Administration', 100, 5, 4),
-('ISM104', 'IT Security Basics', 100, 2, 4),
-('ISM105', 'Computing Essentials', 100, 3, 3);
+('WBP001', 'Data Fundamentals', 60, 8, 1),
+('WBP002', 'Introduction to Networking and Security', 60, 6, 1),
+('WBP003', 'Introduction to Windows Administration', 60, 7, 1),
+('WBP004', 'Logic and Programming I', 60, 5, 1),
+('WBP005', 'Professional Practices for IT I', 30, 9, 1),
+('WBP006', 'Website Development', 90, 5, 1),
+('WBP101', 'Full Stack Programming', 90, 5, 2),
+('WBP102', 'Introduction to Hardware and Security', 60, 6, 2),
+('WBP103', 'Professional Pratices III', 30, 9, 2),
+('WBP104', 'Project Management', 60, 7, 2),
+('WBP105', 'Web Application Programming I', 60, 8, 2),
+('WEP106', 'Web Design Fundamentals', 60, 10, 2),
+('ISM001', 'Fundamentals of Information Systems', 60, 7, 3),
+('ISM002', 'Basic Networking Concepts', 90, 6, 3),
+('ISM003', 'Introduction to System Administration', 60, 7, 3),
+('ISM004', 'IT Security Basics', 60, 6, 3),
+('ISM005', 'Computing Essentials', 60, 7, 3),
+('ISM006', 'Professional Practices for IT I', 30, 9, 3),
+('ISM101', 'Advanced Networking', 60, 6, 4),
+('ISM102', 'Advanced System Administration', 60, 7, 4),
+('ISM103', 'IT Security Advanced', 60, 7, 4),
+('ISM104', 'IT Systems Hardware', 60, 6, 4),
+('ISM105', 'Professional Pratices III', 30, 9, 4),
+('ISM106', 'Operating Systems', 60, 7, 4);
