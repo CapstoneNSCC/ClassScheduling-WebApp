@@ -132,10 +132,10 @@ CREATE TABLE IF NOT EXISTS TblTechClass (
 
 -- Create TblTechRoom table
 CREATE TABLE IF NOT EXISTS TblTechRoom (
-    IdRoom INT NOT NULL,
+    IdClassroom INT NOT NULL,
     IdTechnology INT NOT NULL,
-    PRIMARY KEY (IdRoom, IdTechnology),
-    FOREIGN KEY (IdRoom)
+    PRIMARY KEY (IdClassroom, IdTechnology),
+    FOREIGN KEY (IdClassroom)
     REFERENCES TblClassroom(Id)
         ON DELETE NO ACTION
         ON UPDATE NO ACTION,
@@ -209,4 +209,4 @@ INSERT INTO TblCourse (Code, Name, Hours, IdProfessor, IdProgram) VALUES
 ('ISM102', 'Basic Networking Concepts', 100, 4, 3),
 ('ISM103', 'Introduction to System Administration', 100, 5, 4),
 ('ISM104', 'IT Security Basics', 100, 2, 4),
-('ISM105', 'Computing Essentials', 100, 3, 3);
+('ISM105', 'Computing Essentials', 100, 3, 3)
