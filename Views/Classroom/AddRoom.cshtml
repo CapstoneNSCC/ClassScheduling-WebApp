@@ -31,13 +31,12 @@
 
   <form asp-controller="Classroom" asp-action="AddSubmit" method="post">
     <div class="mb-4">
-      <label class="pb-2">Classroom Number:</label>
-
+      <label asp-for="RoomNumber" class="pb-2">Classroom Number:</label>
       <input type="text" asp-for="RoomNumber" class="form-control" maxlength="3" />
       <span asp-validation-for="RoomNumber" class="text-danger" />
     </div>
     <div class="mb-4">
-      <label class="pb-2">Building Acronym:</label>
+      <label asp-for="BuildingAcronym" class="pb-2">Building Acronym:</label>
       <input type="text" asp-for="BuildingAcronym" class="form-control" maxlength="3" />
       <span asp-validation-for="BuildingAcronym" class="text-danger" />
     </div>
@@ -62,3 +61,9 @@
 
   </form>
 </div>
+
+@section Scripts {
+  @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+  }
+}

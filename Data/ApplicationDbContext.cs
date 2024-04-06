@@ -26,7 +26,7 @@ namespace ClassScheduling_WebApp.Data
             // Composite Keys
             modelBuilder.Entity<ScheduleModel>().HasKey(s => new { s.IdCalendar, s.IdCourse, s.IdClassroom });
             modelBuilder.Entity<TechClassModel>().HasKey(tc => new { tc.IdCourse, tc.IdTechnology });
-            modelBuilder.Entity<TechRoomModel>().HasKey(tr => new { tr.IdRoom, tr.IdTechnology });
+            modelBuilder.Entity<TechRoomModel>().HasKey(tr => new { tr.IdClassroom, tr.IdTechnology });
 
             // Foreign Key Relationships
             modelBuilder.Entity<CourseModel>()
@@ -50,13 +50,13 @@ namespace ClassScheduling_WebApp.Data
                 .HasForeignKey(tc => tc.IdTechnology);
 
             modelBuilder.Entity<TechRoomModel>()
-                .HasOne(tr => tr.Room)
-                .WithMany()
-                .HasForeignKey(tr => tr.IdRoom);
+                .HasOne(tr => tr.Classroom)
+                .WithMany(t => t.TechRooms)
+                .HasForeignKey(tr => tr.IdClassroom);
 
             modelBuilder.Entity<TechRoomModel>()
                 .HasOne(tr => tr.Technology)
-                .WithMany()
+                .WithMany(t => t.TechRooms)
                 .HasForeignKey(tr => tr.IdTechnology);
 
             modelBuilder.Entity<ScheduleModel>()

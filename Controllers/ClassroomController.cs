@@ -73,21 +73,39 @@ namespace ClassScheduling_WebApp.Controllers
         return RedirectToAction("Index", "Login");
       }
 
-      // add the classroom to db
-      _context.Classrooms.Add(classroom);
-      //save changes to the database
-      await _context.SaveChangesAsync();
+      if (ModelState.IsValid){
+        _context.Add(classroom);
+        await _context.SaveChangesAsync();
 
-      foreach (var techId in SelectedTechnologyIds)
-      {
-        var techRoom = new TechRoomModel { IdRoom = classroom.Id, IdTechnology = techId };
-        _context.TechRooms.Add(techRoom);
+        foreach (var techId in SelectedTechnologyIds)
+        {
+          var techRoom = new TechRoomModel { IdClassroom = classroom.Id, IdTechnology = techId };
+          _context.TechRooms.Add(techRoom);
+        }
+
+        await _context.SaveChangesAsync();
+
+        var classrooms = _context.Classrooms
+        .Select(c => new ClassroomModel
+        {
+          Id = c.Id,
+          RoomNumber = c.RoomNumber,
+          BuildingAcronym = c.BuildingAcronym
+        })
+        .OrderByDescending(c => c.RoomNumber)
+        .ToList();
+
+        var viewModel = new IndexViewModel
+        {
+          Classrooms = classrooms
+        };
+
+        return View("Index", viewModel);
       }
 
-      //save changes to the database
-      await _context.SaveChangesAsync();
+      ViewBag.Technologies = _context.Technologies.ToList();
 
-      return View("Index");
+      return View("~/Views/Classroom", classroom);
     }
 
 
@@ -106,7 +124,7 @@ namespace ClassScheduling_WebApp.Controllers
       ViewBag.Technologies = _context.Technologies.ToList();
 
       classroom.SelectedTechnologyIds = _context.TechRooms
-          .Where(tr => tr.IdRoom == ClassroomID)
+          .Where(tr => tr.IdClassroom == ClassroomID)
           .Select(tr => tr.IdTechnology)
           .ToList();
 
