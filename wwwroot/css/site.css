@@ -32,6 +32,14 @@ textarea {
   width: 200px;
 }
 
+#admin-calendar {
+  height: 600px;
+  /* Set the desired height */
+}
+
+.fc .fc-timegrid-slot {
+  height: 5rem;
+}
 
 /* #myModal {
   background-color: yellow;

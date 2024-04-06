@@ -5,6 +5,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Class Scheduling Web App</title>
+  <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet'>
+  <link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css' rel='stylesheet'>
   <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="~/css/site.css" />
   <link rel="stylesheet"
@@ -16,33 +18,103 @@
   <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
   @* ----------------------------------------------------------------- *@
   <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const calendarEl = document.getElementById('calendar')
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'timeGridWeek',
+        slotMinTime: '08:00',
+        slotMaxTime: '17:00',
+        slotDuration: '01:00:00',
+        height: '100%',
+        themeSystem: 'bootstrap5',
+        navLinks: false,
+        weekends: false,
+        allDaySlot: false,
+        eventMinHeight: 30,
+        headerToolbar: {
+          start: '',
+          center: '',
+          end: '',
+        },
+        dayHeaderFormat: { weekday: 'long' },
+        nowIndicator: true,
+        slotLabelFormat: {
+          hour: 'numeric',
+          minute: '2-digit',
+          omitZeroMinute: true,
+          meridiem: 'short'
+        },
+        eventDisplay: 'block',
+        events: [
+          {
+            title: 'INFT 3000',
+            description: 'Capstone',
+            daysOfWeek: ['1'],
+            startTime: '10:30:00',
+            endTime: '12:30:00',
+            teacher: 'Sean Morrow',
+            classroom: 'TRF-308'
+          },
+          {
+            title: 'WEBD 3027',
+            description: 'Developing for CM Systems',
+            daysOfWeek: ['4'],
+            startTime: '13:30:00',
+            endTime: '15:30:00',
+            teacher: 'Ryan McLaren',
+            classroom: 'TRF-312'
+          }],
+        eventContent: function (e) {
+          console.log(e.event);
+
+          let timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true }
+
+          let title = e.event.title;
+          let className = e.event.extendedProps.description;
+          let startTime = e.event.start;
+          let endTime = e.event.end;
+          let teacher = e.event.extendedProps.teacher;
+          let classroom = e.event.extendedProps.classroom;
+
+
+          let titleEl = document.createElement('div')
+          titleEl.classList = ['title title2']
+          titleEl.innerHTML = title;
+
+          let easyNameEl = document.createElement('div')
+          easyNameEl.classList = ['easyname1 easyname2']
+          easyNameEl.innerHTML = className;
+
+          let roomEl = document.createElement('div')
+          roomEl.classList = ['easyname1 easyname2']
+          roomEl.innerHTML = classroom;
+
+          let timeEl = document.createElement('div')
+          timeEl.classList = ['class1 class2']
+          timeEl.innerHTML = `${startTime.toLocaleString('en-US', timeOptions)} - ${endTime.toLocaleString('en-US', timeOptions)}`
+
+          let teacherEl = document.createElement('div')
+          teacherEl.classList = ['easyname1 easyname2']
+          teacherEl.innerHTML = teacher;
+
+          let arrayOfDomNodes = [titleEl, easyNameEl, timeEl, roomEl, teacherEl]
+          return { domNodes: arrayOfDomNodes }
+        }
+      })
+      calendar.render()
+    })
+
+  </script>
 </head>
 
 <body>
 
   @RenderBody()
-  @* created modal to warn the user 2 minutes before the auto logout. using tabindex with a neagtive number
-  will make the modal focusable but not reachable also using fade effect to make it fancy*@
-  <!-- Modal -->
-  <div class="modal fade text-black" id="myModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class=" modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modaTitle">Warning!</h5>
-          <button type="button" class="close">
-            <span>&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          You are about to be logged out due to inactivity. Please click the close button below to continue
-          your session.
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
+
 
   <script src="~/js/site.js" asp-append-version="true"></script>
   @await RenderSectionAsync("Scripts", required: false)
