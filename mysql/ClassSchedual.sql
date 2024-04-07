@@ -149,10 +149,10 @@ CREATE TABLE IF NOT EXISTS TblTechClass (
 
 -- Create TblTechRoom table
 CREATE TABLE IF NOT EXISTS TblTechRoom (
-    IdRoom INT NOT NULL,
+    IdClassroom INT NOT NULL,
     IdTechnology INT NOT NULL,
-    PRIMARY KEY (IdRoom, IdTechnology),
-    FOREIGN KEY (IdRoom)
+    PRIMARY KEY (IdClassroom, IdTechnology),
+    FOREIGN KEY (IdClassroom)
     REFERENCES TblClassroom(Id)
         ON DELETE NO ACTION
         ON UPDATE NO ACTION,

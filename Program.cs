@@ -14,6 +14,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Adds support for environment variables
 builder.Configuration.AddEnvironmentVariables();
 
+// DEPLOY VERSION
+// var connectionString = "Server=capstoneteam6db.mysql.database.azure.com;Database=dbclassschedule;Uid=DylanMac;Pwd=Wer45Tgbvf;Port=3306;SslMode=Required;SslCa=wwwroot/ssl/DigiCertGlobalRootCA.crt.pem";
+
+// LOCAL/DEV VERSION
 var connectionString = $"Server={builder.Configuration["DB_SERVER"]};" +
                     $"Database={builder.Configuration["DB_DATABASE"]};" +
                     $"Uid={builder.Configuration["DB_USER"]};" +
