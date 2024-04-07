@@ -18,27 +18,24 @@ namespace ClassScheduling_WebApp.Controllers
       _context = context;
     }
 
-    //GET: api/Events
-    [HttpGet]
-    [Route("/api/Events")]
-    public IActionResult GetEvents()
-    {
-      var events = _context.TblEvents.Select(e => new
-      {
-        id = e.Id,
-        title = e.title,
-        description = e.description,
-        daysOfWeek = new[] { e.daysOfWeek.ToString() },
-        startTime = e.StartTime.ToString("HH:mm:ss"),
-        endTime = e.EndTime.ToString("HH:mm:ss"),
-        teacher = e.teacher,
-        classroom = e.Classroom
-      })
+        //GET: api/Events
+        [HttpGet]
+        [Route("/api/Events")]
+        public IActionResult GetEvents()
+        {
+            var events = _context.TblEvents.Select(e => new
+            {
+                title = e.title,
+                description = e.description,
+                daysOfWeek = new[] { e.daysOfWeek.ToString() },
+                startTime = e.StartTime.ToString("HH:mm:ss"),
+                endTime = e.EndTime.ToString("HH:mm:ss"),
+                teacher = e.teacher,
+                classroom = e.Classroom
+            })
             .ToList();
 
-      var tblEvents = new JsonResult(events);
-      return tblEvents;
+            return Json(events);
+        }
     }
-  }
-
 }
