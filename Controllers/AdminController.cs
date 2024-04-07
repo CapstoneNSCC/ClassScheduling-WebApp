@@ -23,16 +23,28 @@ namespace ClassScheduling_WebApp.Controllers
         return RedirectToAction("Index", "Login");
       }
 
-      var programs = _context.Programs
-      .Select(p => new ProgramModel
+      var tblEvents = _context.TblEvents.Select(e => new EventModel
       {
-        Id = p.Id,
-        Name = p.Name,
-        Year = p.Year,
-        // Include other properties as needed
+        Id = e.Id,
+        title = e.title,
+        description = e.description,
+        StartTime = e.StartTime,
+        EndTime = e.EndTime,
+        Classroom = e.Classroom,
+        teacher = e.teacher,
       })
-      .OrderByDescending(p => p.Name)
-      .ToList();
+            .ToList();
+
+      // var programs = _context.Programs
+      // .Select(p => new ProgramModel
+      // {
+      //   Id = p.Id,
+      //   Name = p.Name,
+      //   Year = p.Year,
+      //   // Include other properties as needed
+      // })
+      // .OrderByDescending(p => p.Name)
+      // .ToList();
 
       // var technologies = _context.Technologies
       // .Select(t => new TechnologyModel
@@ -66,7 +78,7 @@ namespace ClassScheduling_WebApp.Controllers
       //   Users = users
       // };
       // return View(viewModel);
-      return View(programs);
+      return View(tblEvents);
     }
 
     public IActionResult Logout()
