@@ -23,27 +23,19 @@ namespace ClassScheduling_WebApp.Controllers
         [Route("/api/Events")]
         public IActionResult GetEvents()
         {
-            var data = _context.TblEvents.Select(e => new EventModel
+            var events = _context.TblEvents.Select(e => new
             {
-                Id = e.Id,
                 title = e.title,
                 description = e.description,
-                dayOfWeek = e.dayOfWeek,
-                StartTime = e.StartTime,
-                EndTime = e.EndTime,
-                Classroom = e.Classroom,
+                daysOfWeek = new[] { e.dayOfWeek.ToString() },
+                startTime = e.StartTime.ToString("HH:mm:ss"),
+                endTime = e.EndTime.ToString("HH:mm:ss"),
                 teacher = e.teacher,
+                classroom = e.Classroom
             })
             .ToList();
-            Console.WriteLine(data.Count);
 
-            var tblEvents = new JsonResult(data);
-
-            Console.WriteLine(tblEvents);
-
-
-
-            return tblEvents;
+            return Json(events);
         }
     }
 

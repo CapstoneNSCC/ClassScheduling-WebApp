@@ -40,6 +40,7 @@
   <div class="admin-controls">
     <div class="p-5 text-white">
       <h1>Admin Dashboard.</h1>
+      <div class="fs-5">message here.</div>
 
       <div class="mt-3">
         <a asp-controller="Programs" asp-action="Index" asp-route-programs="@Model"
@@ -77,38 +78,9 @@
 </div>
 
 <script>
-  $(document).ready(function () {
-    var events = [];
-    $.ajax({
-      type: "GET",
-      url: "/api/Events",
-      success: function (data) {
-        console.log('incomeing data', data);
-        $.each(data, function (i, v) {
-          events.push({
-            id: v.id,
-            title: v.title,
-            description: v.description,
-            dayOfWeek: v.dayOfWeek,
-            start: v.startTime,
-            end: v.endTime != null ? v.endTime : null,
-            teacher: v.teacher,
-            classroom: v.classroom
-          });
-        })
-        //alert('success');
-        console.log('data pushed to local events array', events);
-        GenerateCalender(events);
-      },
-      error: function (error) {
-        alert('failed');
-      }
-    });
-  });
 
-  function GenerateCalender(myEvents) {
-    console.log('events inside the generate events function', myEvents);
-    const calendarEl = document.getElementById('calendar');
+  document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar')
     const calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: 'timeGridWeek',
       slotMinTime: '08:00',
@@ -135,9 +107,11 @@
         meridiem: 'short'
       },
       eventDisplay: 'block',
-      events: myEvents,
+      events: '/api/Events',
       eventContent: function (e) {
-        let timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
+  @* console.log(e.event); *@
+
+          let timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true }
 
         let title = e.event.title;
         let className = e.event.extendedProps.description;
@@ -146,39 +120,44 @@
         let teacher = e.event.extendedProps.teacher;
         let classroom = e.event.extendedProps.classroom;
 
-        let titleEl = document.createElement('div');
-        titleEl.classList = ['title title2'];
+
+        let titleEl = document.createElement('div')
+        titleEl.classList = ['title title2']
         titleEl.innerHTML = title;
 
-        let easyNameEl = document.createElement('div');
-        easyNameEl.classList = ['easyname1 easyname2'];
+        let easyNameEl = document.createElement('div')
+        easyNameEl.classList = ['easyname1 easyname2']
         easyNameEl.innerHTML = className;
 
-        let roomEl = document.createElement('div');
-        roomEl.classList = ['easyname1 easyname2'];
+        let roomEl = document.createElement('div')
+        roomEl.classList = ['easyname1 easyname2']
         roomEl.innerHTML = classroom;
 
-        let timeEl = document.createElement('div');
-        timeEl.classList = ['class1 class2'];
-        timeEl.innerHTML = `${startTime.toLocaleString('en-US', timeOptions)} - ${endTime.toLocaleString('en-US', timeOptions)}`;
+        let timeEl = document.createElement('div')
+        timeEl.classList = ['class1 class2']
+        timeEl.innerHTML = ${startTime.toLocaleString('en-US', timeOptions)} - ${endTime.toLocaleString('en-US', timeOptions)}
 
-        let teacherEl = document.createElement('div');
-        teacherEl.classList = ['easyname1 easyname2'];
+        let teacherEl = document.createElement('div')
+        teacherEl.classList = ['easyname1 easyname2']
         teacherEl.innerHTML = teacher;
 
-        let arrayOfDomNodes = [titleEl, easyNameEl, timeEl, roomEl, teacherEl];
-        return { domNodes: arrayOfDomNodes };
+        let arrayOfDomNodes = [titleEl, easyNameEl, timeEl, roomEl, teacherEl]
+        return { domNodes: arrayOfDomNodes }
       },
       eventMouseEnter: function (e) {
         let popover = bootstrap.Popover.getOrCreateInstance(e.el, {
           title: e.event.title,
-          content: `<div class="test">${e.event.extendedProps.teacher}</div>`,
+          content: `
+<div class="test">${e.event.extendedProps.teacher}</div>
+`,
           html: true,
           trigger: 'hover'
-        });
+        })
+
         popover.toggle();
-      }
-    });
-    calendar.render();
-  }
+      },
+    })
+    calendar.render()
+  })
+
 </script>
