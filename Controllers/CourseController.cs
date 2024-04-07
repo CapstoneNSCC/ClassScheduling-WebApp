@@ -69,12 +69,28 @@ namespace ClassScheduling_WebApp.Controllers
       PopulateProgramsDropDownList(programId);
       ViewBag.Technologies = _context.Technologies.ToList();
 
+      var existingCourse90Hours = _context.Courses.FirstOrDefault(c => c.Hours == 90);
+     
+      var courseModel = new CourseModel();
 
-      var courseModel = new CourseModel
+      if (existingCourse90Hours != null)
       {
-        IdProgram = programId // Pre-select the program
-      };
+          courseModel = new CourseModel
+          {
+              IdProgram = programId,
+              Hours = 60
+          };
 
+          ViewBag.Block90Hours = true;
+          
+          ViewBag.Message = "There is already a course with a workload of 90 hours. The default workload has been set to 60 hours.";
+      }else{
+        courseModel = new CourseModel
+        {
+          IdProgram = programId // Pre-select the program
+        };
+      }
+      
       return View("~/Views/Course/AddCourse.cshtml", courseModel);
     }
 
@@ -153,6 +169,15 @@ namespace ClassScheduling_WebApp.Controllers
       if (course == null)
       {
         return NotFound();
+      }
+
+      var existingCourse90Hours = _context.Courses.FirstOrDefault(c => c.Hours == 90);
+     
+      if (existingCourse90Hours != null && existingCourse90Hours.Id != course.Id)
+      {
+          ViewBag.Block90Hours = true;
+          
+          ViewBag.Message = "There is already a course with a workload of 90 hours. The default workload has been set to 60 hours.";
       }
 
       PopulateProfessorsDropDownList(course.IdProfessor);

@@ -64,11 +64,25 @@
       </div>
     </div>
 
+    @if (ViewBag.Block90Hours != null && ViewBag.Block90Hours)
+    {
+        <div class="alert alert-warning" role="alert">
+            @ViewBag.Message
+        </div>
+    }
+
     <div class=" mb-4">
       <label asp-for="Hours" class="control-label mb-2">Hours</label>
-      <div><input asp-for="Hours" type="radio" value="60" checked /> 60 hours </div>
-      <div><input asp-for="Hours" type="radio" value="90" /> 90 hours </div>
-      @* <span asp-validation-for="Hours" class="text-danger"></span> *@
+      @if (ViewBag.Block90Hours != null && ViewBag.Block90Hours)
+      {
+          <div><input asp-for="Hours" type="radio" value="60" checked /> 60 hours </div>
+          <div><input asp-for="Hours" type="radio" value="90" disabled /> 90 hours </div>
+      }
+      else
+      {
+          <div><input asp-for="Hours" type="radio" value="60" /> 60 hours </div>
+          <div><input asp-for="Hours" type="radio" value="90" checked /> 90 hours </div>
+      }
     </div>
 
     <div class="mb-4">
