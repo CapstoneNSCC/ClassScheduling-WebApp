@@ -23,6 +23,18 @@ namespace ClassScheduling_WebApp.Controllers
         return RedirectToAction("Index", "Login");
       }
 
+      // var tblEvents = _context.TblEvents.Select(e => new EventModel
+      // {
+      //   Id = e.Id,
+      //   title = e.title,
+      //   description = e.description,
+      //   StartTime = e.StartTime,
+      //   EndTime = e.EndTime,
+      //   Classroom = e.Classroom,
+      //   teacher = e.teacher,
+      // })
+      //       .ToList();
+
       var programs = _context.Programs
       .Select(p => new ProgramModel
       {
@@ -66,7 +78,6 @@ namespace ClassScheduling_WebApp.Controllers
       //   Users = users
       // };
       // return View(viewModel);
-
       return View(programs);
     }
 
