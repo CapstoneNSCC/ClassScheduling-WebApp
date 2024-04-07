@@ -27,7 +27,7 @@ namespace ClassScheduling_WebApp.Controllers
             {
                 title = e.title,
                 description = e.description,
-                daysOfWeek = new[] { e.dayOfWeek.ToString() },
+                daysOfWeek = new[] { e.daysOfWeek.ToString() },
                 startTime = e.StartTime.ToString("HH:mm:ss"),
                 endTime = e.EndTime.ToString("HH:mm:ss"),
                 teacher = e.teacher,
@@ -38,5 +38,4 @@ namespace ClassScheduling_WebApp.Controllers
             return Json(events);
         }
     }
-
 }
