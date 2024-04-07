@@ -1,9 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClassScheduling_WebApp.Models
 {
+    [Table("TblEvents")]
     public class EventModel
     {
         public int Id { get; set; }
