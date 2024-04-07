@@ -84,7 +84,7 @@
       type: "GET",
       url: "/api/Events",
       success: function (data) {
-        console.log(data);
+        console.log('incomeing data', data);
         $.each(data, function (i, v) {
           events.push({
             id: v.id,
@@ -98,7 +98,7 @@
           });
         })
         //alert('success');
-        console.log(events);
+        console.log('data pushed to local events array', events);
         GenerateCalender(events);
       },
       error: function (error) {
@@ -107,7 +107,8 @@
     });
   });
 
-  function GenerateCalender(events) {
+  function GenerateCalender(myEvents) {
+    console.log('events inside the generate events function', myEvents);
     const calendarEl = document.getElementById('calendar');
     const calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: 'timeGridWeek',
@@ -135,7 +136,7 @@
         meridiem: 'short'
       },
       eventDisplay: 'block',
-      events: events,
+      events: myEvents,
       eventContent: function (e) {
         let timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
 
