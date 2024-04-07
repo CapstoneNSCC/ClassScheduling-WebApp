@@ -79,36 +79,6 @@
 
 <script>
   $(document).ready(function () {
-    var events = [];
-    $.ajax({
-      type: "GET",
-      url: "/api/Events",
-      success: function (data) {
-        console.log('incomeing data', data);
-        $.each(data, function (i, v) {
-          events.push({
-            id: v.id,
-            title: v.title,
-            description: v.description,
-            dayOfWeek: v.dayOfWeek,
-            start: v.startTime,
-            end: v.endTime != null ? v.endTime : null,
-            teacher: v.teacher,
-            classroom: v.classroom
-          });
-        })
-        //alert('success');
-        console.log('data pushed to local events array', events);
-        GenerateCalender(events);
-      },
-      error: function (error) {
-        alert('failed');
-      }
-    });
-  });
-
-  function GenerateCalender(myEvents) {
-    console.log('events inside the generate events function', myEvents);
     const calendarEl = document.getElementById('calendar');
     const calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: 'timeGridWeek',
@@ -136,7 +106,7 @@
         meridiem: 'short'
       },
       eventDisplay: 'block',
-      events: myEvents,
+      events: '/api/Events',
       eventContent: function (e) {
         let timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
 
@@ -181,5 +151,5 @@
       }
     });
     calendar.render();
-  }
+  });
 </script>
