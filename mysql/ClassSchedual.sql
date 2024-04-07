@@ -32,7 +32,7 @@ DROP TABLE IF EXISTS TblTechnology;
 DROP TABLE IF EXISTS TblProgram;
 DROP TABLE IF EXISTS TblUser;
 -- added this to test scedule modle and data fetching.
-DROP TABLE IF EXISTS Events;
+DROP TABLE IF EXISTS TblEvents;
 
 
 
