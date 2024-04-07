@@ -8,6 +8,8 @@ namespace ClassScheduling_WebApp.Models
     {
         public int Id { get; set; }
 
+        public string title { get; set; }
+
         public string description { get; set; }
 
         public int daysOfWeek { get; set; }

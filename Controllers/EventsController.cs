@@ -21,10 +21,23 @@ namespace ClassScheduling_WebApp.Controllers
         //GET: api/Events
         [HttpGet]
         [Route("api/Events")]
-        public IActionResult GetEvents()
+        public JsonResult GetEvents()
         {
-            var events = _context.Events.ToList();
-            return Json(events);
+            var events = _context.Events.Select(e => new
+            {
+                id = e.Id,
+                title = e.title,
+                description = e.description,
+                startTime = e.StartTime,
+                endTime = e.EndTime,
+                classroom = e.Classroom,
+                teacher = e.teacher,
+            })
+                      .ToList();
+            Console.WriteLine(events);
+
+
+            return new JsonResult(events);
         }
     }
 
