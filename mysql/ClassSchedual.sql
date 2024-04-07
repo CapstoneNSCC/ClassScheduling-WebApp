@@ -31,8 +31,8 @@ DROP TABLE IF EXISTS TblCourse;
 DROP TABLE IF EXISTS TblTechnology;
 DROP TABLE IF EXISTS TblProgram;
 DROP TABLE IF EXISTS TblUser;
--- added this to test scedule modle and data fetching.
-DROP TABLE IF EXISTS Events;
+-- added this to test schedule modle and data fetching.
+DROP TABLE IF EXISTS TblEvents;
 
 
 
@@ -89,9 +89,9 @@ CREATE TABLE IF NOT EXISTS TblCourse (
         REFERENCES TblUser(Id)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION,
-    FOREIGN KEY (IdProgram) 
+    FOREIGN KEY (IdProgram)
         REFERENCES TblProgram(Id)
-            ON DELETE NO ACTION 
+            ON DELETE NO ACTION
             ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -122,9 +122,9 @@ CREATE TABLE IF NOT EXISTS TblSchedule (
     REFERENCES TblCalendar(Id)
         ON DELETE NO ACTION
         ON UPDATE NO ACTION,
-    FOREIGN KEY (IdCourse) 
-    REFERENCES TblCourse(Id) 
-        ON DELETE NO ACTION 
+    FOREIGN KEY (IdCourse)
+    REFERENCES TblCourse(Id)
+        ON DELETE NO ACTION
         ON UPDATE NO ACTION,
     FOREIGN KEY (IdClassroom)
     REFERENCES TblClassroom(Id)
@@ -137,9 +137,9 @@ CREATE TABLE IF NOT EXISTS TblTechClass (
     IdCourse INT NOT NULL,
     IdTechnology INT NOT NULL,
     PRIMARY KEY (IdCourse, IdTechnology),
-    FOREIGN KEY (IdCourse) 
-    REFERENCES TblCourse(Id) 
-        ON DELETE NO ACTION 
+    FOREIGN KEY (IdCourse)
+    REFERENCES TblCourse(Id)
+        ON DELETE NO ACTION
         ON UPDATE NO ACTION,
     FOREIGN KEY (IdTechnology)
     REFERENCES TblTechnology(Id)
