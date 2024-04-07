@@ -19,7 +19,7 @@ namespace ClassScheduling_WebApp.Data
         public DbSet<TechRoomModel> TechRooms { get; set; }
         public DbSet<UserModel> Users { get; set; }
 
-        public DbSet<Event> Events { get; set; }
+        public DbSet<EventModel> TblEvents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

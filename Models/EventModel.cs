@@ -4,7 +4,7 @@ using System;
 
 namespace ClassScheduling_WebApp.Models
 {
-    public class Event
+    public class EventModel
     {
         public int Id { get; set; }
 

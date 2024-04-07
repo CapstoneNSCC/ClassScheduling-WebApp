@@ -23,7 +23,7 @@ namespace ClassScheduling_WebApp.Controllers
         [Route("api/Events")]
         public JsonResult GetEvents()
         {
-            var events = _context.Events.Select(e => new
+            var data = _context.TblEvents.Select(e => new
             {
                 id = e.Id,
                 title = e.title,
@@ -34,10 +34,15 @@ namespace ClassScheduling_WebApp.Controllers
                 teacher = e.teacher,
             })
                       .ToList();
-            Console.WriteLine(events);
+            //Console.WriteLine(data);
+
+            var events = new JsonResult(data);
+
+            Console.WriteLine(data);
 
 
-            return new JsonResult(events);
+
+            return events;
         }
     }
 
