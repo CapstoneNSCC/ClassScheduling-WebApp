@@ -15,7 +15,7 @@ namespace ClassScheduling_WebApp.Models
 
         public string description { get; set; }
 
-        public int daysOfWeek { get; set; }
+        public string dayOfWeek { get; set; }
 
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }

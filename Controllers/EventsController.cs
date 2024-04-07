@@ -28,17 +28,18 @@ namespace ClassScheduling_WebApp.Controllers
                 Id = e.Id,
                 title = e.title,
                 description = e.description,
+                dayOfWeek = e.dayOfWeek,
                 StartTime = e.StartTime,
                 EndTime = e.EndTime,
                 Classroom = e.Classroom,
                 teacher = e.teacher,
             })
             .ToList();
-            // Console.WriteLine(data);
+            Console.WriteLine(data.Count);
 
             var tblEvents = new JsonResult(data);
 
-            // Console.WriteLine(events);
+            Console.WriteLine(tblEvents);
 
 
 
