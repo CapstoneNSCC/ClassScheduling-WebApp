@@ -30,7 +30,7 @@
 
 <div class="container mt-5 text-white">
   <h1 class="mb-4">Add Course</h1>
-  <div style="margin-bottom:10px" class="fs-5">Enter the new Course data below:</div>
+  <div class="fs-5">Enter the new Course data below:</div>
 
 
   <form asp-controller="Course" asp-action="AddSubmit" method="post">
@@ -50,7 +50,7 @@
 
     <div class="mb-4">
       <label asp-for="IdProgram" class="control-label mb-2">Program</label>
-      <select asp-for="IdProgram" class="form-control" asp-items="ViewBag.IdProgram">
+      <select asp-for="IdProgram" class="form-control" asp-items="ViewBag.IdProgram" disabled>
       </select>
     </div>
 
@@ -77,24 +77,24 @@
 
     @if (ViewBag.Block90Hours != null && ViewBag.Block90Hours)
     {
-        <div class="alert alert-warning" role="alert">
-            @ViewBag.Message
-        </div>
+      <div class="alert alert-warning" role="alert">
+        @ViewBag.Message
+      </div>
     }
 
     <div class=" mb-4">
       <label asp-for="Hours" class="control-label mb-2">Hours</label>
       @if (ViewBag.Block90Hours != null && ViewBag.Block90Hours)
       {
-          <div><input asp-for="Hours" type="radio" value="60" checked /> 60 hours </div>
-          <div><input asp-for="Hours" type="radio" value="90" disabled /> 90 hours </div>
+        <div><input asp-for="Hours" type="radio" value="60" checked /> 60 hours </div>
+        <div><input asp-for="Hours" type="radio" value="90" disabled /> 90 hours </div>
       }
       else
       {
-          <div><input asp-for="Hours" type="radio" value="60" /> 60 hours </div>
-          <div><input asp-for="Hours" type="radio" value="90" /> 90 hours </div>
+        <div><input asp-for="Hours" type="radio" value="60" /> 60 hours </div>
+        <div><input asp-for="Hours" type="radio" value="90" /> 90 hours </div>
       }
-      
+
     </div>
 
     <div class="mb-4">
@@ -111,7 +111,8 @@
 
 
     <div class="mb-4">
-      <input type="submit" asp-controller="Course" asp-action="AddSubmit" class="btn btn-warning" value="Add" />
+      <input type="submit" asp-controller="Course" asp-action="AddSubmit" class="btn btn-warning"
+        value="Add" />
       <a href="/Program/ProgramDetails/@Model.IdProgram" class="btn btn-warning">Cancel</a>
     </div>
   </form>

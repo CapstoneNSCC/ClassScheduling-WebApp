@@ -75,22 +75,24 @@ namespace ClassScheduling_WebApp.Controllers
 
       if (course90Hours != null)
       {
-          courseModel = new CourseModel
-          {
-              IdProgram = programId,
-              Hours = 60
-          };
+        courseModel = new CourseModel
+        {
+          IdProgram = programId,
+          Hours = 60
+        };
 
-          ViewBag.Block90Hours = true;
-          
-          ViewBag.Message = "There is already a course with a workload of 90 hours. The default workload has been set to 60 hours.";
-      }else{
+        ViewBag.Block90Hours = true;
+
+        ViewBag.Message = "There is already a course with a workload of 90 hours. The default workload has been set to 60 hours.";
+      }
+      else
+      {
         courseModel = new CourseModel
         {
           IdProgram = programId // Pre-select the program
         };
       }
-      
+
       return View("~/Views/Course/AddCourse.cshtml", courseModel);
     }
 
@@ -153,12 +155,12 @@ namespace ClassScheduling_WebApp.Controllers
       }
 
       var course90Hours = getCourse90Hours(course.IdProgram);
-     
+
       if (course90Hours != null && course90Hours.Id != course.Id)
       {
-          ViewBag.Block90Hours = true;
-          
-          ViewBag.Message = "There is already a course with a workload of 90 hours. The default workload has been set to 60 hours.";
+        ViewBag.Block90Hours = true;
+
+        ViewBag.Message = "There is already a course with a workload of 90 hours. The default workload has been set to 60 hours.";
       }
 
       PopulateProfessorsDropDownList(course.IdProfessor);
@@ -303,8 +305,8 @@ namespace ClassScheduling_WebApp.Controllers
                           where p.Id == programId || programId == null // Allows for all programs if no ID is specified
                           select new
                           {
-                              Id = p.Id,
-                              Name = $"{p.Name}, year {p.Year}"
+                            Id = p.Id,
+                            Name = $"{p.Name}, year {p.Year}"
                           };
       ViewBag.IdProgram = new SelectList(programsQuery.AsNoTracking(), "Id", "Name", selectedProgram);
     }
@@ -322,6 +324,6 @@ namespace ClassScheduling_WebApp.Controllers
                                                   .Select(cp => cp.Course)
                                                   .FirstOrDefault();
     }
-    
+
   }
 }

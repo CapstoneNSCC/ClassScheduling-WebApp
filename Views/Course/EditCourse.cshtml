@@ -38,7 +38,7 @@
 
     <div class="mb-4">
       <label asp-for="IdProgram" class="control-label mb-2">Program</label>
-      <select asp-for="IdProgram" class="form-control" asp-items="ViewBag.IdProgram">
+      <select asp-for="IdProgram" class="form-control" asp-items="ViewBag.IdProgram" disabled>
       </select>
     </div>
 
@@ -65,9 +65,9 @@
 
     @if (ViewBag.Block90Hours != null && ViewBag.Block90Hours)
     {
-        <div class="alert alert-warning" role="alert">
-            @ViewBag.Message
-        </div>
+      <div class="alert alert-warning" role="alert">
+        @ViewBag.Message
+      </div>
     }
 
     <div class=" mb-4">
@@ -80,9 +80,12 @@
       else
       {
         <div>
-            <input asp-for="Hours" type="radio" value="60" checked="@(Model.Hours == 60 ? "checked" : null)" /> 60 hours        </div>
+          <input asp-for="Hours" type="radio" value="60" checked="@(Model.Hours == 60 ? "checked" : null)" /> 60
+          hours
+        </div>
         <div>
-            <input asp-for="Hours" type="radio" value="90" checked="@(Model.Hours == 90 ? "checked" : null)" /> 90 hours
+          <input asp-for="Hours" type="radio" value="90" checked="@(Model.Hours == 90 ? "checked" : null)" /> 90
+          hours
         </div>
       }
     </div>
