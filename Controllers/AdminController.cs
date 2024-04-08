@@ -79,12 +79,18 @@ namespace ClassScheduling_WebApp.Controllers
       //   Users = users
       // };
       // return View(viewModel);
-      PopulateProgramrsDropDownList();
+
+      var userId = HttpContext.Session.GetInt32("userId");
+      var userName = HttpContext.Session.GetString("user");
+      ViewBag.currentUserId = userId;
+      ViewBag.currentUserName = userName;
+
+      PopulateProgramsDropDownList();
       return View(programs);
     }
 
 
-    public void PopulateProgramrsDropDownList(object selectedProgram = null)
+    public void PopulateProgramsDropDownList(object selectedProgram = null)
     {
       var programsQuery = from d in _context.Programs
                           orderby d.Name

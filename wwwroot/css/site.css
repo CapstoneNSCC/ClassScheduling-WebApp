@@ -99,6 +99,10 @@ textarea {
   padding-bottom: 0;
 }
 
+.fc-day-today {
+  background-color: inherit !important;
+}
+
 @media print {
   @page {
     size: letter landscape;
