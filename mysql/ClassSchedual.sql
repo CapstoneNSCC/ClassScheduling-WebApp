@@ -48,6 +48,17 @@ CREATE TABLE IF NOT EXISTS TblUser (
     PRIMARY KEY (Id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+
+
+-- Create TblProgram table
+CREATE TABLE IF NOT EXISTS TblProgram (
+    Id INT NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(60) NOT NULL,
+    Year INT NOT NULL,
+    PRIMARY KEY (Id)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 -- Create TblEvents table
 CREATE TABLE IF NOT EXISTS TblEvents (
     Id INT AUTO_INCREMENT PRIMARY KEY,
@@ -62,15 +73,6 @@ CREATE TABLE IF NOT EXISTS TblEvents (
     FOREIGN KEY (teacher) REFERENCES TblUser(Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
     FOREIGN KEY (program) REFERENCES TblProgram(Id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
-
-
--- Create TblProgram table
-CREATE TABLE IF NOT EXISTS TblProgram (
-    Id INT NOT NULL AUTO_INCREMENT,
-    Name VARCHAR(60) NOT NULL,
-    Year INT NOT NULL,
-    PRIMARY KEY (Id)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Create TblTechnology table
 CREATE TABLE IF NOT EXISTS TblTechnology (
@@ -190,7 +192,7 @@ INSERT INTO TblUser (FirstName, LastName, SetAsAdmin, UserName, Password, Salt) 
 ('Hyesun', 'Kwon', FALSE, 'hyesun', 'gljYbbgsHhLCVHk1SHmEubC8GOzp/c4lDZyULueMr3o=', '0w54NUgsGa53PfCmOt9Lhg=='),
 ('test', 'test', FALSE, 'test', 'iBffC45HMekQwUMnYq4aoZulUda+pCpV379Rznrrf1A=', '0w54NUgsGa53PfCmOt9Lhg==');
 
-INSERT INTO TblEvents (title, description, daysOfWeek, StartTime, EndTime, teacher, Classroom) VALUES
+INSERT INTO TblEvents (title, description, daysOfWeek, StartTime, EndTime, teacher, Classroom, program) VALUES
 ('NFT300', 'Math Class', '1', '2024-04-06 08:00:00', '2024-04-06 09:30:00', 5, 'Room A', 1),
 ('NJF400', 'English Class', '2', '2024-04-06 10:00:00', '2024-04-06 11:30:00', 6, 'Room B', 2),
 ('NTG800', 'History Class', '3', '2024-04-06 13:00:00', '2024-04-06 14:30:00', 7, 'Room C', 3);

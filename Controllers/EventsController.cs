@@ -9,14 +9,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace ClassScheduling_WebApp.Controllers
 {
 
-  public class EventsController : Controller
-  {
-    private readonly ApplicationDbContext _context;
-
-    public EventsController(ApplicationDbContext context)
+    public class EventsController : Controller
     {
-      _context = context;
-    }
+        private readonly ApplicationDbContext _context;
+
+        public EventsController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         //GET: api/Events
         [HttpGet]
@@ -31,7 +31,8 @@ namespace ClassScheduling_WebApp.Controllers
                 startTime = e.StartTime.ToString("HH:mm:ss"),
                 endTime = e.EndTime.ToString("HH:mm:ss"),
                 teacher = e.teacher,
-                classroom = e.Classroom
+                classroom = e.Classroom,
+                program = e.program
             })
             .ToList();
 

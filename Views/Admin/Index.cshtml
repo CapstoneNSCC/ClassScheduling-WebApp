@@ -23,18 +23,6 @@
   </div>
 </nav>
 
-@* @foreach (var item in Model)
-{
-<div class="container">
-<p>@item.Id</p>
-<p>@item.title</p>
-<p>@item.description</p>
-<p>@item.StartTime</p>
-<p>@item.EndTime</p>
-<p>@item.teacher</p>
-<p>@item.Classroom</p>
-</div>
-} *@
 
 <div class="admin-cal-conatiner">
   <div class="admin-controls">
@@ -96,7 +84,7 @@
       customButtons: {
         printButton: {
           text: 'Print',
-          click: function() {
+          click: function () {
             window.print();
           }
         }
@@ -118,7 +106,7 @@
       events: '/api/Events',
       eventContent: function (e) {
 
-          let timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true }
+        let timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true }
 
         let title = e.event.title;
         let className = e.event.extendedProps.description;
