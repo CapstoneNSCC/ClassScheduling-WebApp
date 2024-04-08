@@ -62,8 +62,8 @@ CREATE TABLE IF NOT EXISTS TblProgram (
 -- Create TblEvents table
 CREATE TABLE IF NOT EXISTS TblEvents (
     Id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255),
-    description VARCHAR(255),
+    courseCode VARCHAR(255),
+    courseName VARCHAR(255),
     daysOfWeek VARCHAR(10),
     StartTime DATETIME,
     EndTime DATETIME,

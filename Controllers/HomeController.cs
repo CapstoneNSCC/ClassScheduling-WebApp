@@ -20,7 +20,7 @@ namespace ClassScheduling_WebApp.Controllers
     {
       if (HttpContext.Session.GetString("auth") != "true")
       {
-        return RedirectToAction("HomeIndex", "Login");
+        return RedirectToAction("index", "Login");
       }
 
       var userId = HttpContext.Session.GetInt32("userId");
