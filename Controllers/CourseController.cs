@@ -69,11 +69,11 @@ namespace ClassScheduling_WebApp.Controllers
       PopulateProgramsDropDownList(programId);
       ViewBag.Technologies = _context.Technologies.ToList();
 
-      var existingCourse90Hours = _context.Courses.FirstOrDefault(c => c.Hours == 90);
-     
+      var course90Hours = getCourse90Hours(programId);
+
       var courseModel = new CourseModel();
 
-      if (existingCourse90Hours != null)
+      if (course90Hours != null)
       {
           courseModel = new CourseModel
           {
@@ -171,9 +171,9 @@ namespace ClassScheduling_WebApp.Controllers
         return NotFound();
       }
 
-      var existingCourse90Hours = _context.Courses.FirstOrDefault(c => c.Hours == 90);
+      var course90Hours = getCourse90Hours(course.IdProgram);
      
-      if (existingCourse90Hours != null && existingCourse90Hours.Id != course.Id)
+      if (course90Hours != null && course90Hours.Id != course.Id)
       {
           ViewBag.Block90Hours = true;
           
@@ -322,5 +322,20 @@ namespace ClassScheduling_WebApp.Controllers
                           select p;
       ViewBag.IdProgram = new SelectList(programsQuery.AsNoTracking(), "Id", "Name", selectedProgram);
     }
+
+    private CourseModel getCourse90Hours(int IdProgram)
+    {
+      return _context.Courses.Where(c => c.Hours == 90)
+                                                  .Join(
+                                                      _context.Programs,
+                                                      c => c.IdProgram,
+                                                      p => p.Id,
+                                                      (c, p) => new { Course = c, Program = p }
+                                                  )
+                                                  .Where(cp => cp.Program.Id == IdProgram)
+                                                  .Select(cp => cp.Course)
+                                                  .FirstOrDefault();
+    }
+    
   }
 }
