@@ -19,6 +19,13 @@ namespace ClassScheduling_WebApp.Models
 
     [NotMapped]
     public string CombinedRoom => $"{RoomNumber}-{BuildingAcronym}";
+
+    // Collection navigation properties
+    public virtual ICollection<TechRoomModel> TechRooms { get; set; } = new List<TechRoomModel>();
+
+    // Used for handling selected technology IDs in forms
+    [NotMapped] // Ensures this property is not mapped to the database
+    public List<int> SelectedTechnologyIds { get; set; } = new List<int>();
   }
 
 }

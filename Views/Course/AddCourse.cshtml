@@ -9,10 +9,9 @@
     <a class="navbar-brand" href="/">
       <img src="\lib\images\nscc-logo.jpg" alt="nscc-logo" width="200px" class="d-inline-block ms-3">
     </a>
-    @* <div>
-    <span id="lblExpire" class="text-warning" style="margin-left:10px">WARNING: You're session is about
-    to expire</span>
-    </div> *@
+    <div>
+      <span id="lblExpire" class="text-warning" style="margin-left:10px"></span>
+    </div>
     <div class="d-flex flex-row">
       <form method="post">
         <button type="submit" class="btn btn-warning me-3" asp-controller="Admin" asp-action="Index">
@@ -77,11 +76,26 @@
       <span asp-validation-for="@Model.IdProfessor" class="text-danger"></span>
     </div>
 
+    @if (ViewBag.Block90Hours != null && ViewBag.Block90Hours)
+    {
+      <div class="alert alert-warning" role="alert">
+        @ViewBag.Message
+      </div>
+    }
+
     <div class=" mb-4">
-      <label asp-for="@Model.Hours" class="control-label mb-2">Hours</label>
-      <div><input asp-for="@Model.Hours" type="radio" value="60" checked /> 60 hours </div>
-      <div><input asp-for="@Model.Hours" type="radio" value="90" /> 90 hours </div>
-      <span asp-validation-for="@Model.Hours" class="text-danger"></span>
+      <label asp-for="Hours" class="control-label mb-2">Hours</label>
+      @if (ViewBag.Block90Hours != null && ViewBag.Block90Hours)
+      {
+        <div><input asp-for="Hours" type="radio" value="60" checked /> 60 hours </div>
+        <div><input asp-for="Hours" type="radio" value="90" disabled /> 90 hours </div>
+      }
+      else
+      {
+        <div><input asp-for="Hours" type="radio" value="60" /> 60 hours </div>
+        <div><input asp-for="Hours" type="radio" value="90" /> 90 hours </div>
+      }
+
     </div>
 
     <div class="mb-4">
@@ -98,7 +112,7 @@
 
 
     <div class="mb-4">
-      <input type="submit" class="btn btn-warning" value="Add" />
+      <input type="submit" asp-controller="Course" asp-action="AddSubmit" class="btn btn-warning" value="Add" />
       <a href="/Program/ProgramDetails/@Model.IdProgram" class="btn btn-warning">Cancel</a>
     </div>
   </form>
@@ -107,5 +121,6 @@
 @section Scripts {
   @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    <script>startAutoLogout();</script>
   }
 }

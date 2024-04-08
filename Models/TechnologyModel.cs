@@ -16,6 +16,8 @@ namespace ClassScheduling_WebApp.Models
 
     // Propriedades de navegação para relações muitos-para-muitos
     public virtual ICollection<TechClassModel> TechClasses { get; set; } = new List<TechClassModel>();
+
+    public virtual ICollection<TechRoomModel> TechRooms { get; set; } = new List<TechRoomModel>();
   }
 
 }
