@@ -65,10 +65,10 @@ CREATE TABLE IF NOT EXISTS TblEvents (
     courseCode VARCHAR(255),
     courseName VARCHAR(255),
     daysOfWeek VARCHAR(10),
-    StartTime DATETIME,
-    EndTime DATETIME,
+    startTime DATETIME,
+    endTime DATETIME,
     professor INT,
-    Classroom VARCHAR(100),
+    classroom VARCHAR(100),
     program INT,
     FOREIGN KEY (professor) REFERENCES TblUser(Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
     FOREIGN KEY (program) REFERENCES TblProgram(Id) ON DELETE NO ACTION ON UPDATE NO ACTION
