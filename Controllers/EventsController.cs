@@ -11,6 +11,8 @@ namespace ClassScheduling_WebApp.Controllers
   public class EventsController : Controller
   {
     private readonly ApplicationDbContext _context;
+    
+    private static List<EventModel> _eventList = new List<EventModel> {};
 
     public EventsController(ApplicationDbContext context)
     {
@@ -163,19 +165,29 @@ namespace ClassScheduling_WebApp.Controllers
             DateTime startDateTime = DateTime.Today.Add(calendar.StartTime);
             DateTime endDateTime = startDateTime.AddHours(2); 
 
-            var eventModel = new EventModel
-            {
-                courseCode = eventData.Course.Code,
-                courseName = eventData.Course.Name,
-                daysOfWeek = GetDayOfWeekValue(calendar.DayWeek),
-                startTime = startDateTime,
-                endTime = endDateTime,
-                professor = eventData.Course.IdProfessor,
-                classroom = eventData.Classroom.RoomNumber.ToString(),
-                program = eventData.Course.IdProgram
-            };
+            bool professorAvailable = IsProfessorAvailable(eventData.Course.IdProfessor, GetDayOfWeekValue(calendar.DayWeek), startDateTime, endDateTime);
+
+            bool classroomAvailable = IsClassroomAvailable(eventData.Classroom.Id.ToString(), GetDayOfWeekValue(calendar.DayWeek), startDateTime, endDateTime, eventData.Course.IdProgram);
+
+            bool withinTimeLimit = IsWithinTimeLimit(eventData.Course.Code, eventData.Course.IdProgram, GetDayOfWeekValue(calendar.DayWeek), eventData.Course.Hours);
             
-            _context.TblEvents.Add(eventModel);
+            if (professorAvailable && classroomAvailable && withinTimeLimit)
+            {
+              var eventModel = new EventModel
+              {
+                  courseCode = eventData.Course.Code,
+                  courseName = eventData.Course.Name,
+                  daysOfWeek = GetDayOfWeekValue(calendar.DayWeek),
+                  startTime = startDateTime,
+                  endTime = endDateTime,
+                  professor = eventData.Course.IdProfessor,
+                  classroom = eventData.Classroom.RoomNumber.ToString(),
+                  program = eventData.Course.IdProgram
+              };
+              
+              _eventList.Add(eventModel);
+              _context.TblEvents.Add(eventModel);
+            }
           }
         }
 
@@ -202,7 +214,7 @@ namespace ClassScheduling_WebApp.Controllers
         })
         .ToList();
 
-        return Json(events);
+        return Json(_eventList);
     }
 
     private string GetDayOfWeekValue(string dayOfWeekName)
@@ -223,5 +235,47 @@ namespace ClassScheduling_WebApp.Controllers
             throw new ArgumentException("Invalid day of week name.");
       }
     }
+
+    private bool IsProfessorAvailable(int professorId, string daysOfWeek, DateTime startTime, DateTime endTime)
+    {
+        return !_eventList.Any(e =>
+            e.professor == professorId &&
+            e.daysOfWeek == daysOfWeek &&
+            e.startTime <= startTime && e.endTime >= endTime);
+    }
+
+    private bool IsClassroomAvailable(string classroom, string daysOfWeek, DateTime startTime, DateTime endTime, int programId)
+    {
+        return !_eventList.Any(e =>
+            e.classroom == classroom &&
+            e.daysOfWeek == daysOfWeek &&
+            e.startTime <= startTime && e.endTime >= endTime &&
+            e.program == programId);
+    }
+
+    private bool IsWithinTimeLimit(string courseCode, int programId, string daysOfWeek, int hours)
+    {
+        if (_eventList.Any(e => e.courseCode == courseCode && e.program == programId && e.daysOfWeek == daysOfWeek))
+        {
+            return false; 
+        }
+
+        int eventosComMesmoHorario = _eventList.Count(e => e.courseCode == courseCode);
+
+        if (hours == 60 && eventosComMesmoHorario < 2)
+        {
+            return true; 
+        }
+        else if (hours == 90 && eventosComMesmoHorario < 3)
+        {
+            return true; 
+        }
+        else
+        {
+            return false;
+        }
+    }
+
   }
+
 }
