@@ -84,9 +84,6 @@ namespace ClassScheduling_WebApp.Controllers
       {
         return RedirectToAction("Index", "Admin");
       }
-
-      //var webLogin = new WebLogin(_context, HttpContext);
-
       var salt = user.getSalt();
       user.Salt = salt;
 
@@ -97,7 +94,6 @@ namespace ClassScheduling_WebApp.Controllers
       _context.Users.Add(user);
       //save changes to the database
       _context.SaveChanges();
-      //HttpContext.Session.SetString("auth", "true");
 
       return RedirectToAction("UserIndex", user);
     }

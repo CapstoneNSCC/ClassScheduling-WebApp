@@ -1,38 +1,77 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿
+const generateCalendar = (element, endpoint) => {
+  const calendar = new FullCalendar.Calendar(element, {
+    lazyFetching: false,
+    initialView: 'timeGridWeek',
+    slotMinTime: '08:00',
+    slotMaxTime: '18:00',
+    slotDuration: '00:30:00',
+    slotLabelInterval: '01:00:00',
+    height: '720px',
+    themeSystem: 'bootstrap5',
+    navLinks: false,
+    weekends: false,
+    allDaySlot: false,
+    eventMinHeight: 30,
+    headerToolbar: false,
+    dayHeaderFormat: { weekday: 'long' },
+    nowIndicator: false,
+    slotLabelFormat: {
+      hour: 'numeric',
+      minute: '2-digit',
+      omitZeroMinute: true,
+      meridiem: 'short'
+    },
+    eventDisplay: 'block',
+    events: endpoint,
+    eventContent: (e) => {
+      let timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true }
 
-// A $( document ).ready() block.
-$(document).ready(function () {
-
-  // -----------------------------------------------------------> Modal
-  // $('#myModal').modal({ show: false });
-
-  // // warning time (2 minutes before logout - 18 minutes) current times are for testing
-  // let warningTime = 1 * 100 * 1000;
-
-  // // timeout to make the model appear
-  // let modalAppear = setTimeout(openModal, warningTime);
-
-  // // auto close the modal after 5 seconds - testing
-  // let modalDisappear = setTimeout(closeModal, warningTime + 10000);
-
-  // // using this to pop up a modal for warning the user their session is about to expire and they are about to be logged out.
-  // // function to open the modal
-  // function openModal() {
-  //   $('#myModal').modal('show')
-  // }
-
-  // // function to close the modal
-  // function closeModal() {
-  //   clearTimeout(modalAppear);
-  //   clearTimeout(modalDisappear);
-
-  //   $('#myModal').modal('hide')
+      let courseCode = e.event.extendedProps.courseCode;
+      let courseName = e.event.extendedProps.courseName;
+      let program = e.event.extendedProps.program;
+      let startTime = new Date(e.event.startStr);
+      let endTime = new Date(e.event.endStr);
+      let professor = e.event.extendedProps.professor;
+      let classroom = e.event.extendedProps.classroom;
 
 
-  //   // let modal = document.getElementById("myModal");
-  //   // modal.style.display = "none";
-  //   // // redirect to the login page after closing the modal
-  //   // window.location.href = '/Login/Index';
-  // }
-});
+      let courseEl = document.createElement('div');
+      courseEl.innerHTML = `${courseCode} - ${courseName}`;
+
+      let programEl = document.createElement('div');
+      programEl.innerHTML = program;
+
+      let timeEl = document.createElement('div');
+      timeEl.innerHTML = `${startTime.toLocaleString('en-US', timeOptions)} - ${endTime.toLocaleString('en-US', timeOptions)}`;
+
+      let classroomEl = document.createElement('div');
+      classroomEl.innerHTML = classroom;
+
+      let professorEl = document.createElement('div');
+      professorEl.innerHTML = professor;
+
+      let arrayOfDomNodes = [courseEl, programEl, timeEl, classroomEl, professorEl];
+      return { domNodes: arrayOfDomNodes };
+    },
+    eventMouseEnter: (e) => {
+      let popover = bootstrap.Popover.getOrCreateInstance(e.el, {
+        title: e.event.extendedProps.courseCode + " " + e.event.extendedProps.courseName,
+        content: `
+          <div class="test">${e.event.extendedProps.program}</div>
+          <div class="test">${new Date(e.event.startStr).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })} - ${new Date(e.event.endStr).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</div>
+          <div class="test">${e.event.extendedProps.classroom}</div>
+          <div class="teacher">${e.event.extendedProps.professor}</div>
+        `,
+        html: true,
+        trigger: 'hover'
+      })
+
+      popover.toggle()
+    },
+  })
+
+  calendar.render()
+
+  return calendar
+}

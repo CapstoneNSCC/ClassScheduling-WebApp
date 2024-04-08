@@ -11,20 +11,20 @@ namespace ClassScheduling_WebApp.Models
   {
     public int Id { get; set; }
 
-    public string title { get; set; }
+    public string courseCode { get; set; }
 
-    public string description { get; set; }
+    public string courseName { get; set; }
 
     public string daysOfWeek { get; set; }
 
-    public DateTime StartTime { get; set; }
-    public DateTime EndTime { get; set; }
-    public int teacher { get; set; }
-    //public virtual UserModel Professor { get; set; }
-    public string Classroom { get; set; }
+    public DateTime startTime { get; set; }
+    public DateTime endTime { get; set; }
+    public int professor { get; set; }
+    public string classroom { get; set; }
 
     public int program { get; set; }
 
+    //public virtual UserModel Professor { get; set; }
     //public virtual ProgramModel Programs { get; set; }
   }
 

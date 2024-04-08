@@ -25,20 +25,22 @@ namespace ClassScheduling_WebApp.Controllers
     {
       var events = _context.TblEvents.Select(e => new
       {
-        title = e.title,
-        description = e.description,
+        courseCode = e.courseCode,
+        courseName = e.courseName,
         daysOfWeek = new[] { e.daysOfWeek.ToString() },
-        startTime = e.StartTime.ToString("HH:mm:ss"),
-        endTime = e.EndTime.ToString("HH:mm:ss"),
-        teacher = (from user in _context.Users
-                   where user.Id == e.teacher
-                   select user.FirstName + " " + user.LastName)
+        startTime = e.startTime.ToString("HH:mm:ss"),
+        endTime = e.endTime.ToString("HH:mm:ss"),
+        professor = (from user in _context.Users
+                     where user.Id == e.professor
+                     select user.FirstName + " " + user.LastName)
                     .ToList(),
-        classroom = e.Classroom,
-        program = (from program in _context.Programs
-                   where program.Id == e.program
-                   select program.Name)
-                     .ToList()
+        classroom = e.classroom,
+        program = (
+            from program in _context.Programs
+            where program.Id == e.program
+            select program.Name + ": Year " + program.Year
+        )
+        .ToList()
       })
       .ToList();
 
@@ -51,23 +53,25 @@ namespace ClassScheduling_WebApp.Controllers
     public IActionResult GetEventsByTeacher(int id)
     {
       var events = _context.TblEvents
-          .Where(e => e.teacher == id)
+          .Where(e => e.professor == id)
           .Select(e => new
           {
-            title = e.title,
-            description = e.description,
+            courseCode = e.courseCode,
+            courseName = e.courseName,
             daysOfWeek = new[] { e.daysOfWeek.ToString() },
-            startTime = e.StartTime.ToString("HH:mm:ss"),
-            endTime = e.EndTime.ToString("HH:mm:ss"),
-            teacher = (from user in _context.Users
-                       where user.Id == e.teacher
-                       select user.FirstName + " " + user.LastName)
-                        .ToList(),
-            classroom = e.Classroom,
-            program = (from program in _context.Programs
-                       where program.Id == e.program
-                       select program.Name)
-                         .ToList()
+            startTime = e.startTime.ToString("HH:mm:ss"),
+            endTime = e.endTime.ToString("HH:mm:ss"),
+            professor = (from user in _context.Users
+                         where user.Id == e.professor
+                         select user.FirstName + " " + user.LastName)
+                    .ToList(),
+            classroom = e.classroom,
+            program = (
+            from program in _context.Programs
+            where program.Id == e.program
+            select program.Name + ": Year " + program.Year
+        )
+        .ToList()
           })
           .ToList();
 
@@ -83,20 +87,22 @@ namespace ClassScheduling_WebApp.Controllers
           .Where(e => e.program == id)
           .Select(e => new
           {
-            title = e.title,
-            description = e.description,
+            courseCode = e.courseCode,
+            courseName = e.courseName,
             daysOfWeek = new[] { e.daysOfWeek.ToString() },
-            startTime = e.StartTime.ToString("HH:mm:ss"),
-            endTime = e.EndTime.ToString("HH:mm:ss"),
-            teacher = (from user in _context.Users
-                       where user.Id == e.teacher
-                       select user.FirstName + " " + user.LastName)
-                        .ToList(),
-            classroom = e.Classroom,
-            program = (from program in _context.Programs
-                       where program.Id == e.program
-                       select program.Name)
-                         .ToList()
+            startTime = e.startTime.ToString("HH:mm:ss"),
+            endTime = e.endTime.ToString("HH:mm:ss"),
+            professor = (from user in _context.Users
+                         where user.Id == e.professor
+                         select user.FirstName + " " + user.LastName)
+                    .ToList(),
+            classroom = e.classroom,
+            program = (
+            from program in _context.Programs
+            where program.Id == e.program
+            select program.Name + ": Year " + program.Year
+        )
+        .ToList()
           })
           .ToList();
 

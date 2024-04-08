@@ -94,8 +94,6 @@ namespace ClassScheduling_WebApp.Models
       {
         rng.GetBytes(salt);
       }
-      //Console.WriteLine(">>> Salt: " + Convert.ToBase64String(salt));
-
       return Convert.ToBase64String(salt);
     }
 
