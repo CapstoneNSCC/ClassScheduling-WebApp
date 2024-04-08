@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using ClassScheduling_WebApp.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ClassScheduling_WebApp.Controllers
 {
@@ -78,7 +79,21 @@ namespace ClassScheduling_WebApp.Controllers
       //   Users = users
       // };
       // return View(viewModel);
+      PopulateProgramrsDropDownList();
       return View(programs);
+    }
+
+
+    public void PopulateProgramrsDropDownList(object selectedProgram = null)
+    {
+      var programsQuery = from d in _context.Programs
+                          orderby d.Name
+                          select new
+                          {
+                            d.Id,
+                            ProgramName = d.Name
+                          };
+      ViewBag.IdProgram = new SelectList(programsQuery.AsNoTracking(), "Id", "ProgramName", selectedProgram);
     }
 
     public IActionResult Logout()

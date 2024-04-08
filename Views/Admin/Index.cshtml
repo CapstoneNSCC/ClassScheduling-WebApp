@@ -61,15 +61,70 @@
     </div>
   </div>
 
-  <div id='calendar'></div>
+  <div class="fc toolbar">
+    <div class="fc-header-toolbar fc-toolbar">
+      <div class="fc-toolbar-chunk">
+        <select id="selectedProgram" name="selectedProgram" class="form-select dashboard-button">
+          <option value="-1">All</option>
+          @foreach (var item in ViewBag.IdProgram as SelectList)
+          {
+                      <option value="@item.Value">@item.Text</option>
+          }
+        </select>
+      </div>
+      <div class="fc-toolbar-chunk"></div>
+      <div class="fc-toolbar-chunk">
+        <button type="button" title="Print" class="fc-printButton-button fc-button fc-button-primary">Print</button>
+      </div>
+    </div>
+  </div>
+  <div id='calendar'>
+
+  </div>
 
 </div>
 
 <script>
 
-  document.addEventListener('DOMContentLoaded', function () {
+  $(document).ready(()=> {
+    const defaultApiEndpoint = '/api/Events'
+    let apiEndpoint =defaultApiEndpoint
+
+     // button initizliations
+    const printButton = document.getElementsByClassName('fc-printButton-button')
+    printButton[0].onclick = () => {
+      window.print()
+    }
+
+    // dropdown initializations
+    const programDropdown = document.getElementById('selectedProgram')
+    programDropdown.onchange = (e) => {
+      let programId = e.target.value
+
+      if (programId == -1) {
+        apiEndpoint = defaultApiEndpoint
+      } else {
+        apiEndpoint = `${defaultApiEndpoint}/program/${programId}`
+      }
+
+      // get all sources in calendar
+      let sources = calendar.getEventSources()
+
+      // remove them so the calendar can update
+      sources.forEach((source) => {
+        source.remove()
+      })
+
+      // add new api endpoint to calendar
+      calendar.addEventSource(apiEndpoint)
+      calendar.refetchEvents()
+    }
+
+
+    // calendar initialization
     const calendarEl = document.getElementById('calendar')
     const calendar = new FullCalendar.Calendar(calendarEl, {
+      lazyFetching: false,
       initialView: 'timeGridWeek',
       slotMinTime: '08:00',
       slotMaxTime: '18:00',
@@ -81,19 +136,7 @@
       weekends: false,
       allDaySlot: false,
       eventMinHeight: 30,
-      customButtons: {
-        printButton: {
-          text: 'Print',
-          click: function () {
-            window.print();
-          }
-        }
-      },
-      headerToolbar: {
-        start: '',
-        center: '',
-        end: 'printButton',
-      },
+      headerToolbar: false,
       dayHeaderFormat: { weekday: 'long' },
       nowIndicator: true,
       slotLabelFormat: {
@@ -103,8 +146,8 @@
         meridiem: 'short'
       },
       eventDisplay: 'block',
-      events: '/api/Events',
-      eventContent: function (e) {
+      events: apiEndpoint,
+      eventContent: (e) => {
 
         let timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true }
 
@@ -139,7 +182,7 @@
         let arrayOfDomNodes = [titleEl, easyNameEl, timeEl, roomEl, teacherEl]
         return { domNodes: arrayOfDomNodes }
       },
-      eventMouseEnter: function (e) {
+      eventMouseEnter: (e) => {
         let popover = bootstrap.Popover.getOrCreateInstance(e.el, {
           title: e.event.title,
           content: `
@@ -152,6 +195,7 @@
         popover.toggle();
       },
     })
+
     calendar.render()
   })
 
