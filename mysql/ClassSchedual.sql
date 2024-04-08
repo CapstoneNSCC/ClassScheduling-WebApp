@@ -59,7 +59,6 @@ CREATE TABLE IF NOT EXISTS TblProgram (
     PRIMARY KEY (Id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Create TblEvents table
 CREATE TABLE IF NOT EXISTS TblEvents (
     Id INT AUTO_INCREMENT PRIMARY KEY,
     courseCode VARCHAR(255),
@@ -70,10 +69,9 @@ CREATE TABLE IF NOT EXISTS TblEvents (
     professor INT,
     classroom VARCHAR(100),
     program INT,
-    FOREIGN KEY (professor) REFERENCES TblUser(Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
-    FOREIGN KEY (program) REFERENCES TblProgram(Id) ON DELETE NO ACTION ON UPDATE NO ACTION
+    CONSTRAINT fk_professor FOREIGN KEY (professor) REFERENCES TblUser(Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT fk_program FOREIGN KEY (program) REFERENCES TblProgram(Id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
-
 -- Create TblTechnology table
 CREATE TABLE IF NOT EXISTS TblTechnology (
     Id INT NOT NULL AUTO_INCREMENT,
@@ -87,14 +85,14 @@ CREATE TABLE IF NOT EXISTS TblCourse (
     Code VARCHAR(10) NOT NULL UNIQUE,
     Name VARCHAR(50) NOT NULL,
     Hours INT NOT NULL,
-    IdProfessor INT NOT NULL,
-    IdProgram INT NOT NULL,
+    IdProfessor INT,
+    IdProgram INT,
     PRIMARY KEY (Id),
-    FOREIGN KEY (IdProfessor)
+    CONSTRAINT fk_professor_course FOREIGN KEY (IdProfessor)
         REFERENCES TblUser(Id)
-            ON DELETE NO ACTION
+            ON DELETE SET NULL
             ON UPDATE NO ACTION,
-    FOREIGN KEY (IdProgram)
+    CONSTRAINT fk_program_course FOREIGN KEY (IdProgram)
         REFERENCES TblProgram(Id)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
@@ -168,7 +166,7 @@ CREATE TABLE IF NOT EXISTS TblTechRoom (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- INSERTS
--- Insert data into TblEvents
+
 
 
 -- Insert data into TblProgram
@@ -192,6 +190,8 @@ INSERT INTO TblUser (FirstName, LastName, SetAsAdmin, UserName, Password, Salt) 
 ('Hyesun', 'Kwon', FALSE, 'hyesun', 'gljYbbgsHhLCVHk1SHmEubC8GOzp/c4lDZyULueMr3o=', '0w54NUgsGa53PfCmOt9Lhg=='),
 ('test', 'test', FALSE, 'test', 'iBffC45HMekQwUMnYq4aoZulUda+pCpV379Rznrrf1A=', '0w54NUgsGa53PfCmOt9Lhg==');
 
+
+-- Insert data into TblEvents
 INSERT INTO TblEvents (courseCode, courseName, daysOfWeek, startTime, endTime, professor, classroom, program) VALUES
 ('NFT300', 'Math Class', '1', '2024-04-06 08:00:00', '2024-04-06 09:30:00', 5, 'Room A', 1),
 ('NJF400', 'English Class', '2', '2024-04-06 10:00:00', '2024-04-06 11:30:00', 6, 'Room B', 2),
@@ -258,3 +258,32 @@ INSERT INTO TblCourse (Code, Name, Hours, IdProfessor, IdProgram) VALUES
 ('ISM104', 'IT Systems Hardware', 60, 6, 4),
 ('ISM105', 'Professional Pratices III', 30, 9, 4),
 ('ISM106', 'Operating Systems', 60, 7, 4);
+
+-- Testing program delete
+
+-- Modify foreign key constraint for TblEvents to set the corresponding user column to NULL on delete
+ALTER TABLE TblEvents
+DROP FOREIGN KEY fk_program,
+DROP FOREIGN KEY fk_professor;
+
+-- Add foreign key constraints with ON DELETE CASCADE and ON DELETE SET NULL options
+ALTER TABLE TblEvents
+ADD CONSTRAINT fk_professor_event
+FOREIGN KEY (professor)
+REFERENCES TblUser(Id)
+ON DELETE SET NULL,
+ADD CONSTRAINT fk_program
+FOREIGN KEY (program)
+REFERENCES TblProgram(Id)
+ON DELETE CASCADE;
+
+-- Modify foreign key constraint for TblCourse to set the corresponding user column to NULL on delete
+ALTER TABLE TblCourse
+DROP FOREIGN KEY fk_professor_course;
+
+-- Add foreign key constraint with ON DELETE SET NULL option
+ALTER TABLE TblCourse
+ADD CONSTRAINT fk_professor_course
+FOREIGN KEY (IdProfessor)
+REFERENCES TblUser(Id)
+ON DELETE SET NULL;

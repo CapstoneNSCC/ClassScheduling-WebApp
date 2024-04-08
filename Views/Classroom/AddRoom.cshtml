@@ -31,7 +31,7 @@
   <form asp-controller="Classroom" asp-action="AddSubmit" method="post">
     <div class="mb-4">
       <label asp-for="RoomNumber" class="pb-2">Classroom Number:</label>
-      <input type="text" asp-for="RoomNumber" class="form-control" maxlength="3" />
+      <input type="text" asp-for="RoomNumber" class="form-control" maxlength="3" value="" />
       <span asp-validation-for="RoomNumber" class="text-danger" />
     </div>
     <div class="mb-4">
@@ -44,17 +44,16 @@
       <label class="control-label mb-2">Technology</label>
       @foreach (var tech in ViewBag.Technologies as List<TechnologyModel>)
       {
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" name="SelectedTechnologyIds" value="@tech.Id"
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="SelectedTechnologyIds" value="@tech.Id"
           @(Model.SelectedTechnologyIds.Contains(tech.Id) ? "checked" : "")>
-          <label class="form-check-label">@tech.Description</label>
-        </div>
+            <label class="form-check-label">@tech.Description</label>
+          </div>
       }
     </div>
 
     <div class="mb-4">
-      <input type="submit" asp-controler="Classroom" asp-action="AddSubmit" class="btn btn-warning"
-        value="Add" />
+      <input type="submit" asp-controler="Classroom" asp-action="AddSubmit" class="btn btn-warning" value="Add" />
       <a href="/Classroom/Index" class="btn btn-warning">Cancel</a>
     </div>
 
@@ -62,6 +61,5 @@
 </div>
 
 @section scripts {
-  <script>startAutoLogout();</script>
-await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    <script>startAutoLogout();</script>
 }

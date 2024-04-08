@@ -84,6 +84,13 @@ namespace ClassScheduling_WebApp.Controllers
       {
         return RedirectToAction("Index", "Admin");
       }
+      //check if username is already taken
+      var Userame = user.UserName;
+      var existingUser = _context.Users.FirstOrDefault(u => u.UserName == Userame);
+      if (existingUser != null)
+      {
+        return RedirectToAction("AddUser", "Login");
+      }
       var salt = user.getSalt();
       user.Salt = salt;
 
@@ -121,6 +128,7 @@ namespace ClassScheduling_WebApp.Controllers
         return RedirectToAction("Index", "Login");
       }
 
+
       var salt = user.getSalt();
       user.Salt = salt;
 
@@ -143,7 +151,7 @@ namespace ClassScheduling_WebApp.Controllers
         return RedirectToAction("Index", "Login");
       }
 
-      // find the technology by the technologyID
+      // find the user by the userID
       UserModel user = _context.Users.Find(UserID);
 
       return View("DeleteUser", user);
@@ -158,14 +166,13 @@ namespace ClassScheduling_WebApp.Controllers
         return RedirectToAction("Index", "Login");
       }
 
-      var existingTech = _context.Users.Find(user.Id);
-      if (existingTech == null)
+      var existingUser = _context.Users.Find(user.Id);
+      if (existingUser == null)
       {
         return RedirectToAction("Index", "Admin");
       }
-
-      // remove the program from the list of programs
-      _context.Users.Remove(existingTech);
+      // remove the user
+      _context.Users.Remove(existingUser);
       //save changes to the database
       _context.SaveChanges();
       return RedirectToAction("UserIndex", user);

@@ -31,19 +31,19 @@
   <form method="post">
     <div class="mb-4">
       <label class="pb-2">First Name:</label>
-      <input type="text" asp-for="@Model.FirstName" class="form-control" maxlength="60" />
+      <input type="text" asp-for="@Model.FirstName" class="form-control" maxlength="50" />
       <span asp-validation-for="@Model.FirstName" class="text-danger" />
     </div>
 
     <div class="mb-4">
       <label class="pb-2">Last Name:</label>
-      <input type="text" asp-for="@Model.LastName" class="form-control" maxlength="60" />
+      <input type="text" asp-for="@Model.LastName" class="form-control" maxlength="50" />
       <span asp-validation-for="@Model.LastName" class="text-danger" />
     </div>
 
     <div class="mb-4">
       <label class="pb-2">Username:</label>
-      <input type="text" asp-for="@Model.UserName" class="form-control" maxlength="60" />
+      <input type="text" asp-for="@Model.UserName" class="form-control" maxlength="30" />
       <span asp-validation-for="@Model.UserName" class="text-danger" />
     </div>
 
@@ -61,8 +61,7 @@
     </div>
 
     <div class="mt-4">
-      <input type="submit" asp-controller="Login" asp-action="AddSubmit" class="btn btn-warning"
-        value="Add" />
+      <input type="submit" asp-controller="Login" asp-action="AddSubmit" class="btn btn-warning" value="Add" />
       <a href="/Login/UserIndex" class="btn btn-warning">Cancel</a>
     </div>
   </form>
