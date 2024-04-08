@@ -50,37 +50,38 @@
 
 
     <div class="mb-4">
-      <label asp-for="IdProgram" class="control-label mb-2">Program</label>
-      <select asp-for="IdProgram" class="form-control" asp-items="ViewBag.IdProgram">
+      <label asp-for="@Model.IdProgram" class="control-label mb-2">Program</label>
+      <select asp-for="@Model.IdProgram" class="form-control" asp-items="ViewBag.IdProgram">
       </select>
     </div>
 
     <div class="mb-4">
-      <label asp-for="Code" class="control-label mb-2">Course Code</label>
-      <input asp-for="Code" class="form-control" />
-      <span asp-validation-for="Code" class="text-danger"></span>
+      <label asp-for="@Model.Code" class="control-label mb-2">Course Code</label>
+      <input asp-for="@Model.Code" class="form-control" />
+      <span asp-validation-for="@Model.Code" class="text-danger"></span>
     </div>
 
     <div class="mb-4">
-      <label asp-for="Name" class="control-label mb-2">Course Name</label>
-      <input asp-for="Name" class="form-control" />
-      <span asp-validation-for="Name" class="text-danger"></span>
+      <label asp-for="@Model.Name" class="control-label mb-2">Course Name</label>
+      <input asp-for="@Model.Name" class="form-control" />
+      <span asp-validation-for="@Model.Name" class="text-danger"></span>
     </div>
 
     <div class="mb-4">
-      <label asp-for="IdProfessor" class="control-label mb-2">Professor</label>
+      <label asp-for="@Model.IdProfessor" class="control-label mb-2">Professor</label>
       <div class="d-flex flex-row pr-3">
-        <select asp-for=" IdProfessor" class="form-control" asp-items="ViewBag.IdProfessor">
+        <select asp-for="@Model.IdProfessor" class="form-control" asp-items="ViewBag.IdProfessor">
           <option value="">Please select a professor</option>
         </select>
       </div>
+      <span asp-validation-for="@Model.IdProfessor" class="text-danger"></span>
     </div>
 
     <div class=" mb-4">
-      <label asp-for="Hours" class="control-label mb-2">Hours</label>
-      <div><input asp-for="Hours" type="radio" value="60" checked /> 60 hours </div>
-      <div><input asp-for="Hours" type="radio" value="90" /> 90 hours </div>
-      @* <span asp-validation-for="Hours" class="text-danger"></span> *@
+      <label asp-for="@Model.Hours" class="control-label mb-2">Hours</label>
+      <div><input asp-for="@Model.Hours" type="radio" value="60" checked /> 60 hours </div>
+      <div><input asp-for="@Model.Hours" type="radio" value="90" /> 90 hours </div>
+      <span asp-validation-for="@Model.Hours" class="text-danger"></span>
     </div>
 
     <div class="mb-4">
