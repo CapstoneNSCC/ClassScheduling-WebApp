@@ -72,7 +72,7 @@ namespace ClassScheduling_WebApp.Controllers
 
       var courseModel = new CourseModel
       {
-        IdProgram = programId // Pre-select the program
+        IdProgram = programId
       };
 
       return View("~/Views/Course/AddCourse.cshtml", courseModel);
@@ -273,7 +273,7 @@ namespace ClassScheduling_WebApp.Controllers
     {
       int? programId = selectedProgram as int?;
       var programsQuery = from p in _context.Programs
-                          where p.Id == programId || programId == null // Allows for all programs if no ID is specified
+                          where p.Id == programId || programId == null
                           select p;
       ViewBag.IdProgram = new SelectList(programsQuery.AsNoTracking(), "Id", "Name", selectedProgram);
     }

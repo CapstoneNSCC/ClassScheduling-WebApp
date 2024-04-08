@@ -25,7 +25,6 @@ const generateCalendar = (element, endpoint) => {
     eventDisplay: 'block',
     events: endpoint,
     eventContent: (e) => {
-      console.log(e.event.startStr);
       let timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true }
 
       let courseCode = e.event.extendedProps.courseCode;
@@ -60,7 +59,7 @@ const generateCalendar = (element, endpoint) => {
         title: e.event.extendedProps.courseCode + " " + e.event.extendedProps.courseName,
         content: `
           <div class="test">${e.event.extendedProps.program}</div>
-          <div class="test">${e.event.extendedProps.time}</div>
+          <div class="test">${new Date(e.event.startStr).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })} - ${new Date(e.event.endStr).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</div>
           <div class="test">${e.event.extendedProps.classroom}</div>
           <div class="teacher">${e.event.extendedProps.professor}</div>
         `,
