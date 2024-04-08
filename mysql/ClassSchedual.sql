@@ -48,17 +48,7 @@ CREATE TABLE IF NOT EXISTS TblUser (
     PRIMARY KEY (Id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Create TblEvents table
-CREATE TABLE IF NOT EXISTS TblEvents (
-    Id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255),
-    description VARCHAR(255),
-    daysOfWeek VARCHAR(10),
-    StartTime DATETIME,
-    EndTime DATETIME,
-    teacher VARCHAR(100),
-    Classroom VARCHAR(100)
-);
+
 
 
 -- Create TblProgram table
@@ -68,6 +58,21 @@ CREATE TABLE IF NOT EXISTS TblProgram (
     Year INT NOT NULL,
     PRIMARY KEY (Id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Create TblEvents table
+CREATE TABLE IF NOT EXISTS TblEvents (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255),
+    description VARCHAR(255),
+    daysOfWeek VARCHAR(10),
+    StartTime DATETIME,
+    EndTime DATETIME,
+    teacher INT, 
+    Classroom VARCHAR(100),
+    program INT,
+    FOREIGN KEY (teacher) REFERENCES TblUser(Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY (program) REFERENCES TblProgram(Id) ON DELETE NO ACTION ON UPDATE NO ACTION
+);
 
 -- Create TblTechnology table
 CREATE TABLE IF NOT EXISTS TblTechnology (
@@ -187,10 +192,10 @@ INSERT INTO TblUser (FirstName, LastName, SetAsAdmin, UserName, Password, Salt) 
 ('Hyesun', 'Kwon', FALSE, 'hyesun', 'gljYbbgsHhLCVHk1SHmEubC8GOzp/c4lDZyULueMr3o=', '0w54NUgsGa53PfCmOt9Lhg=='),
 ('test', 'test', FALSE, 'test', 'iBffC45HMekQwUMnYq4aoZulUda+pCpV379Rznrrf1A=', '0w54NUgsGa53PfCmOt9Lhg==');
 
-INSERT INTO TblEvents (title, description, daysOfWeek, StartTime, EndTime, teacher, Classroom) VALUES
-('NFT300', 'Math Class', '1', '2024-04-06 08:00:00', '2024-04-06 09:30:00', 'Mr. Smith', 'Room A'),
-('NJF400', 'English Class', '2', '2024-04-06 10:00:00', '2024-04-06 11:30:00', 'Ms. Johnson', 'Room B'),
-('NTG800', 'History Class', '3', '2024-04-06 13:00:00', '2024-04-06 14:30:00', 'Mr. Brown', 'Room C');
+INSERT INTO TblEvents (title, description, daysOfWeek, StartTime, EndTime, teacher, Classroom, program) VALUES
+('NFT300', 'Math Class', '1', '2024-04-06 08:00:00', '2024-04-06 09:30:00', 5, 'Room A', 1),
+('NJF400', 'English Class', '2', '2024-04-06 10:00:00', '2024-04-06 11:30:00', 6, 'Room B', 2),
+('NTG800', 'History Class', '3', '2024-04-06 13:00:00', '2024-04-06 14:30:00', 7, 'Room C', 3);
 
 
 -- Insert data into TblTechnology

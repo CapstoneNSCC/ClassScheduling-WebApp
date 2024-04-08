@@ -23,18 +23,6 @@
   </div>
 </nav>
 
-@* @foreach (var item in Model)
-{
-<div class="container">
-<p>@item.Id</p>
-<p>@item.title</p>
-<p>@item.description</p>
-<p>@item.StartTime</p>
-<p>@item.EndTime</p>
-<p>@item.teacher</p>
-<p>@item.Classroom</p>
-</div>
-} *@
 
 <div class="admin-cal-conatiner">
   <div class="admin-controls">
@@ -87,16 +75,24 @@
       slotMaxTime: '18:00',
       slotDuration: '00:30:00',
       slotLabelInterval: '01:00:00',
-      height: '855px',
+      height: '782px',
       themeSystem: 'bootstrap5',
       navLinks: false,
       weekends: false,
       allDaySlot: false,
       eventMinHeight: 30,
+      customButtons: {
+        printButton: {
+          text: 'Print',
+          click: function () {
+            window.print();
+          }
+        }
+      },
       headerToolbar: {
         start: '',
         center: '',
-        end: '',
+        end: 'printButton',
       },
       dayHeaderFormat: { weekday: 'long' },
       nowIndicator: true,
@@ -109,9 +105,8 @@
       eventDisplay: 'block',
       events: '/api/Events',
       eventContent: function (e) {
-  @* console.log(e.event); *@
 
-          let timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true }
+        let timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true }
 
         let title = e.event.title;
         let className = e.event.extendedProps.description;
