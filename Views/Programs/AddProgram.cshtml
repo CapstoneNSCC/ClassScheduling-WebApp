@@ -38,8 +38,10 @@
 
     <div class="mb-4">
       <label class="pb-2">Program Year:</label>
-      <input type="text" asp-for="@Model.Year" class="form-control" maxlength="1" />
-      <span asp-validation-for="@Model.Year" class="text-danger" />
+      <select class="yearSelect mb-4 form-select" asp-for="@Model.Year">
+        <option value="1">1</option>
+        <option value="2">2</option>
+      </select>
     </div>
 
     <div class="mb-4">

@@ -35,10 +35,12 @@ namespace ClassScheduling_WebApp.Controllers
                      select user.FirstName + " " + user.LastName)
                     .ToList(),
         classroom = e.classroom,
-        program = (from program in _context.Programs
-                   where program.Id == e.program
-                   select program.Name)
-                     .ToList()
+        program = (
+            from program in _context.Programs
+            where program.Id == e.program
+            select program.Name + ": Year " + program.Year
+        )
+        .ToList()
       })
       .ToList();
 
@@ -64,10 +66,12 @@ namespace ClassScheduling_WebApp.Controllers
                          select user.FirstName + " " + user.LastName)
                     .ToList(),
             classroom = e.classroom,
-            program = (from program in _context.Programs
-                       where program.Id == e.program
-                       select program.Name)
-                     .ToList()
+            program = (
+            from program in _context.Programs
+            where program.Id == e.program
+            select program.Name + ": Year " + program.Year
+        )
+        .ToList()
           })
           .ToList();
 
@@ -93,10 +97,12 @@ namespace ClassScheduling_WebApp.Controllers
                          select user.FirstName + " " + user.LastName)
                     .ToList(),
             classroom = e.classroom,
-            program = (from program in _context.Programs
-                       where program.Id == e.program
-                       select program.Name)
-                     .ToList()
+            program = (
+            from program in _context.Programs
+            where program.Id == e.program
+            select program.Name + ": Year " + program.Year
+        )
+        .ToList()
           })
           .ToList();
 

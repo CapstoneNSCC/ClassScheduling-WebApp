@@ -62,15 +62,15 @@ CREATE TABLE IF NOT EXISTS TblProgram (
 -- Create TblEvents table
 CREATE TABLE IF NOT EXISTS TblEvents (
     Id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255),
-    description VARCHAR(255),
+    courseCode VARCHAR(255),
+    courseName VARCHAR(255),
     daysOfWeek VARCHAR(10),
-    StartTime DATETIME,
-    EndTime DATETIME,
-    teacher INT,
-    Classroom VARCHAR(100),
+    startTime DATETIME,
+    endTime DATETIME,
+    professor INT,
+    classroom VARCHAR(100),
     program INT,
-    FOREIGN KEY (teacher) REFERENCES TblUser(Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY (professor) REFERENCES TblUser(Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
     FOREIGN KEY (program) REFERENCES TblProgram(Id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
@@ -154,10 +154,10 @@ CREATE TABLE IF NOT EXISTS TblTechClass (
 
 -- Create TblTechRoom table
 CREATE TABLE IF NOT EXISTS TblTechRoom (
-    IdRoom INT NOT NULL,
+    IdClassroom INT NOT NULL,
     IdTechnology INT NOT NULL,
-    PRIMARY KEY (IdRoom, IdTechnology),
-    FOREIGN KEY (IdRoom)
+    PRIMARY KEY (IdClassroom, IdTechnology),
+    FOREIGN KEY (IdClassroom)
     REFERENCES TblClassroom(Id)
         ON DELETE NO ACTION
         ON UPDATE NO ACTION,
@@ -240,11 +240,9 @@ INSERT INTO TblCourse (Code, Name, Hours, IdProfessor, IdProgram) VALUES
 ('WBP002', 'Introduction to Networking and Security', 60, 6, 1),
 ('WBP003', 'Introduction to Windows Administration', 60, 7, 1),
 ('WBP004', 'Logic and Programming I', 60, 5, 1),
-('WBP005', 'Professional Practices for IT I', 30, 9, 1),
 ('WBP006', 'Website Development', 90, 5, 1),
 ('WBP101', 'Full Stack Programming', 90, 5, 2),
 ('WBP102', 'Introduction to Hardware and Security', 60, 6, 2),
-('WBP103', 'Professional Pratices III', 30, 9, 2),
 ('WBP104', 'Project Management', 60, 7, 2),
 ('WBP105', 'Web Application Programming I', 60, 8, 2),
 ('WEP106', 'Web Design Fundamentals', 60, 10, 2),

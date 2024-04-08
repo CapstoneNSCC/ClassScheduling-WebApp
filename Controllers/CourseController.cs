@@ -69,12 +69,28 @@ namespace ClassScheduling_WebApp.Controllers
       PopulateProgramsDropDownList(programId);
       ViewBag.Technologies = _context.Technologies.ToList();
 
+      var course90Hours = getCourse90Hours(programId);
 
-      var courseModel = new CourseModel
+      var courseModel = new CourseModel();
+
+      if (course90Hours != null)
       {
-        IdProgram = programId
-      };
+          courseModel = new CourseModel
+          {
+              IdProgram = programId,
+              Hours = 60
+          };
 
+          ViewBag.Block90Hours = true;
+          
+          ViewBag.Message = "There is already a course with a workload of 90 hours. The default workload has been set to 60 hours.";
+      }else{
+        courseModel = new CourseModel
+        {
+          IdProgram = programId // Pre-select the program
+        };
+      }
+      
       return View("~/Views/Course/AddCourse.cshtml", courseModel);
     }
 
@@ -113,6 +129,7 @@ namespace ClassScheduling_WebApp.Controllers
       PopulateProfessorsDropDownList(course.IdProfessor);
       PopulateProgramsDropDownList(course.IdProgram);
       ViewBag.Technologies = _context.Technologies.ToList();
+
       return View("~/Views/Course/AddCourse.cshtml", course);
     }
 
@@ -135,8 +152,18 @@ namespace ClassScheduling_WebApp.Controllers
         return NotFound();
       }
 
+      var course90Hours = getCourse90Hours(course.IdProgram);
+     
+      if (course90Hours != null && course90Hours.Id != course.Id)
+      {
+          ViewBag.Block90Hours = true;
+          
+          ViewBag.Message = "There is already a course with a workload of 90 hours. The default workload has been set to 60 hours.";
+      }
+
       PopulateProfessorsDropDownList(course.IdProfessor);
       PopulateProgramsDropDownList(course.IdProgram);
+      ViewBag.Technologies = _context.Technologies.ToList();
       ViewBag.Technologies = _context.Technologies.ToList();
 
       course.SelectedTechnologyIds = _context.TechClasses
@@ -273,9 +300,28 @@ namespace ClassScheduling_WebApp.Controllers
     {
       int? programId = selectedProgram as int?;
       var programsQuery = from p in _context.Programs
-                          where p.Id == programId || programId == null
-                          select p;
+                          where p.Id == programId || programId == null // Allows for all programs if no ID is specified
+                          select new
+                          {
+                              Id = p.Id,
+                              Name = $"{p.Name}, year {p.Year}"
+                          };
       ViewBag.IdProgram = new SelectList(programsQuery.AsNoTracking(), "Id", "Name", selectedProgram);
     }
+
+    private CourseModel getCourse90Hours(int IdProgram)
+    {
+      return _context.Courses.Where(c => c.Hours == 90)
+                                                  .Join(
+                                                      _context.Programs,
+                                                      c => c.IdProgram,
+                                                      p => p.Id,
+                                                      (c, p) => new { Course = c, Program = p }
+                                                  )
+                                                  .Where(cp => cp.Program.Id == IdProgram)
+                                                  .Select(cp => cp.Course)
+                                                  .FirstOrDefault();
+    }
+    
   }
 }
