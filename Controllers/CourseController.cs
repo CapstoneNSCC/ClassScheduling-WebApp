@@ -300,8 +300,12 @@ namespace ClassScheduling_WebApp.Controllers
     {
       int? programId = selectedProgram as int?;
       var programsQuery = from p in _context.Programs
-                          where p.Id == programId || programId == null
-                          select p;
+                          where p.Id == programId || programId == null // Allows for all programs if no ID is specified
+                          select new
+                          {
+                              Id = p.Id,
+                              Name = $"{p.Name}, year {p.Year}"
+                          };
       ViewBag.IdProgram = new SelectList(programsQuery.AsNoTracking(), "Id", "Name", selectedProgram);
     }
   }
