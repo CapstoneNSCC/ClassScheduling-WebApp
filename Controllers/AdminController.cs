@@ -51,7 +51,7 @@ namespace ClassScheduling_WebApp.Controllers
                           select new
                           {
                             d.Id,
-                            ProgramName = d.Name
+                            ProgramName = d.Name + ": Year " + d.Year
                           };
       ViewBag.IdProgram = new SelectList(programsQuery.AsNoTracking(), "Id", "ProgramName", selectedProgram);
     }
