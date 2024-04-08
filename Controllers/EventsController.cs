@@ -38,7 +38,7 @@ namespace ClassScheduling_WebApp.Controllers
                 program = (
                   from program in _context.Programs
                   where program.Id == e.program
-                  select program.Name + " " + program.Year
+                  select program.Name + " Year: " + program.Year
               )
               .ToList()
             })
@@ -69,7 +69,7 @@ namespace ClassScheduling_WebApp.Controllers
                     program = (
                   from program in _context.Programs
                   where program.Id == e.program
-                  select program.Name + " " + program.Year
+                  select program.Name + " Year: " + program.Year
               )
               .ToList()
                 })
@@ -100,7 +100,7 @@ namespace ClassScheduling_WebApp.Controllers
                     program = (
                   from program in _context.Programs
                   where program.Id == e.program
-                  select program.Name + " " + program.Year
+                  select program.Name + " Year: " + program.Year
               )
               .ToList()
                 })
