@@ -67,10 +67,10 @@ CREATE TABLE IF NOT EXISTS TblEvents (
     daysOfWeek VARCHAR(10),
     StartTime DATETIME,
     EndTime DATETIME,
-    teacher INT,
+    professor INT,
     Classroom VARCHAR(100),
     program INT,
-    FOREIGN KEY (teacher) REFERENCES TblUser(Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY (professor) REFERENCES TblUser(Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
     FOREIGN KEY (program) REFERENCES TblProgram(Id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
