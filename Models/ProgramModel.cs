@@ -11,7 +11,8 @@ namespace ClassScheduling_WebApp.Models
     public int Id { get; set; }
 
     [Required(ErrorMessage = "Program name is required.")]
-    [StringLength(30, ErrorMessage = "Program name cannot exceed 30 characters.")]
+    [StringLength(60, ErrorMessage = "Program name cannot exceed 60 characters.")]
+    [RegularExpression(@"^[a-zA-Z]+(?:\s[a-zA-Z]+)*$", ErrorMessage = "Program name can only contain letters and must have at least one letter.")]
     public string Name { get; set; }
 
     [Required(ErrorMessage = "Year is required.")]
