@@ -88,25 +88,6 @@ namespace ClassScheduling_WebApp.Controllers
         return RedirectToAction("Index", "Login");
       }
 
-      // if (!ModelState.IsValid)
-      // {
-      //     foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-      //     {
-      //         string errorMessage = error.ErrorMessage;
-      //         // Se você quiser exibir mensagens de erro das validações baseadas em atributos, como Required, etc.
-      //         string exceptionMessage = error.Exception?.Message;
-
-      //         // Escreve as mensagens de erro no terminal
-      //         Console.WriteLine("Erro de validação: " + errorMessage);
-      //         if (!string.IsNullOrEmpty(exceptionMessage))
-      //         {
-      //             Console.WriteLine("Erro de validação: " + exceptionMessage);
-      //         }
-      //     }
-      // }
-
-
-
       // if (ModelState.IsValid)
       ModelState.Remove("Professor");
       ModelState.Remove("Programs");
@@ -131,7 +112,7 @@ namespace ClassScheduling_WebApp.Controllers
 
       PopulateProfessorsDropDownList(course.IdProfessor);
       PopulateProgramsDropDownList(course.IdProgram);
-      ViewBag.Technologies = _context.Technologies.ToList(); // Add this line again for model validation fail scenario
+      ViewBag.Technologies = _context.Technologies.ToList();
       return View("~/Views/Course/AddCourse.cshtml", course);
     }
 
@@ -156,7 +137,7 @@ namespace ClassScheduling_WebApp.Controllers
 
       PopulateProfessorsDropDownList(course.IdProfessor);
       PopulateProgramsDropDownList(course.IdProgram);
-      ViewBag.Technologies = _context.Technologies.ToList(); // Add this line
+      ViewBag.Technologies = _context.Technologies.ToList();
 
       course.SelectedTechnologyIds = _context.TechClasses
           .Where(tc => tc.IdCourse == id)
@@ -221,11 +202,11 @@ namespace ClassScheduling_WebApp.Controllers
 
       PopulateProfessorsDropDownList(course.IdProfessor);
       PopulateProgramsDropDownList(course.IdProgram);
-      ViewBag.Technologies = _context.Technologies.ToList(); // Add this line again for model validation fail scenario
+      ViewBag.Technologies = _context.Technologies.ToList();
       return View(course);
     }
 
-    // Shows a confirmation page for course deletion
+    // shows confirmation page for delete course
     public async Task<IActionResult> Delete(int? id)
     {
       if (HttpContext.Session.GetString("auth") != "true")

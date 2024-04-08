@@ -28,7 +28,6 @@ namespace ClassScheduling_WebApp.Controllers
       ViewBag.currentUserId = userId;
       ViewBag.currentUserName = userName;
 
-      // Reused the PopulateProfessorsDropDownList method from the course controller
       PopulateProfessorsDropDownList();
       return View("~/Views/Home/Index.cshtml");
     }

@@ -51,7 +51,6 @@ namespace ClassScheduling_WebApp.Controllers
         return RedirectToAction("Index", "Login");
       }
 
-      // construct course object that will be used to add a new course.
       TechnologyModel tech = new TechnologyModel
       {
         Description = "",

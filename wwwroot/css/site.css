@@ -74,10 +74,12 @@ textarea {
 
 .fc,
 #calendar {
+  width: 94%;
   max-width: 1200px;
   min-width: 520px;
   margin: 3rem;
   margin-top: 0;
+  margin-left: 1.5rem;
   padding-bottom: 3rem;
 }
 
@@ -97,10 +99,42 @@ textarea {
 .fc.toolbar {
   margin-bottom: 0;
   padding-bottom: 0;
+  width: 94%;
 }
 
 .fc-day-today {
   background-color: inherit !important;
+}
+
+.home-cal-container,
+.admin-cal-container {
+  flex-direction: column;
+}
+
+.calendar-view {
+  align-items: start;
+}
+
+@media only screen and (min-width: 950px) {
+
+  .home-cal-container,
+  .admin-cal-container {
+    flex-direction: row;
+  }
+
+  .admin-controls {
+    flex-basis: 40%;
+  }
+
+  .calendar-view {
+    flex-basis: 60%;
+    align-items: end;
+  }
+
+  .fc.toolbar,
+  .fc#calendar {
+    width: 100%;
+  }
 }
 
 @media print {
@@ -117,14 +151,8 @@ textarea {
     print-color-adjust: exact !important;
   }
 
-  .admin-controls,
-  .navbar,
-  .fc.toolbar {
-    display: none;
-  }
-
-  .fc .fc-printButton-button {
-    display: none;
+  .no-print {
+    display: none !important;
   }
 
   .fc,
@@ -143,5 +171,10 @@ textarea {
 
   .fc .fc-timegrid-slot {
     height: 2rem !important;
+  }
+
+  .calendar-view {
+    flex-basis: 100%;
+    align-items: start;
   }
 }
