@@ -16,6 +16,7 @@ namespace ClassScheduling_WebApp.Models
 
     [Required(ErrorMessage = "Building acronym is required.")]
     [StringLength(5, ErrorMessage = "Building acronym cannot exceed 5 characters.")]
+    [RegularExpression("^[A-Z]+$", ErrorMessage = "Course code can only contain uppercase letters")]
     public string BuildingAcronym { get; set; }
 
     [NotMapped]
