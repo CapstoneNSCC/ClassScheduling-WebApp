@@ -44,5 +44,63 @@ namespace ClassScheduling_WebApp.Controllers
 
             return Json(events);
         }
+
+        //GET: api/Events/teacher/{id}
+        [HttpGet]
+        [Route("/api/Events/teacher/{id}")]
+        public IActionResult GetEventsByTeacher(int id)
+        {
+            var events = _context.TblEvents
+                .Where(e => e.teacher == id)
+                .Select(e => new
+                {
+                    title = e.title,
+                    description = e.description,
+                    daysOfWeek = new[] { e.daysOfWeek.ToString() },
+                    startTime = e.StartTime.ToString("HH:mm:ss"),
+                    endTime = e.EndTime.ToString("HH:mm:ss"),
+                    teacher = (from user in _context.Users
+                               where user.Id == e.teacher
+                               select user.FirstName + " " + user.LastName)
+                              .ToList(),
+                    classroom = e.Classroom,
+                    program = (from program in _context.Programs
+                               where program.Id == e.program
+                               select program.Name)
+                               .ToList()
+                })
+                .ToList();
+
+            return Json(events);
+        }
+
+        //GET: api/Events/program/{id}
+        [HttpGet]
+        [Route("/api/Events/program/{id}")]
+        public IActionResult GetEventsByProgram(int id)
+        {
+            var events = _context.TblEvents
+                .Where(e => e.program == id)
+                .Select(e => new
+                {
+                    title = e.title,
+                    description = e.description,
+                    daysOfWeek = new[] { e.daysOfWeek.ToString() },
+                    startTime = e.StartTime.ToString("HH:mm:ss"),
+                    endTime = e.EndTime.ToString("HH:mm:ss"),
+                    teacher = (from user in _context.Users
+                               where user.Id == e.teacher
+                               select user.FirstName + " " + user.LastName)
+                              .ToList(),
+                    classroom = e.Classroom,
+                    program = (from program in _context.Programs
+                               where program.Id == e.program
+                               select program.Name)
+                               .ToList()
+                })
+                .ToList();
+
+            return Json(events);
+        }
     }
 }
