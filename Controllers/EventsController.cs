@@ -30,7 +30,10 @@ namespace ClassScheduling_WebApp.Controllers
                 daysOfWeek = new[] { e.daysOfWeek.ToString() },
                 startTime = e.StartTime.ToString("HH:mm:ss"),
                 endTime = e.EndTime.ToString("HH:mm:ss"),
-                teacher = e.teacher,
+                teacher = (from user in _context.Users
+                           where user.Id == e.teacher
+                           select user.FirstName + " " + user.LastName)
+                          .ToList(),
                 classroom = e.Classroom,
                 program = e.program
             })

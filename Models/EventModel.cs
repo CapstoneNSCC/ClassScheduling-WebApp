@@ -19,10 +19,13 @@ namespace ClassScheduling_WebApp.Models
 
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public string teacher { get; set; }
+        public int teacher { get; set; }
+        //public virtual UserModel Professor { get; set; }
         public string Classroom { get; set; }
 
-        public string program { get; set; }
+        public int program { get; set; }
+
+        //public virtual ProgramModel Programs { get; set; }
     }
 
 }
