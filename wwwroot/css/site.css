@@ -165,7 +165,9 @@ textarea {
 
   .fc-col-header,
   .fc-timegrid-body,
-  .fc-timegrid-cols table {
+  .fc-timegrid-cols table,
+  .fc .fc-timegrid-body,
+  .fc .fc-timegrid-slots table {
     width: 260mm !important;
   }
 
@@ -174,7 +176,7 @@ textarea {
   }
 
   .calendar-view {
-    flex-basis: 100%;
+    width: 260mm !important;
     align-items: start;
   }
 }
