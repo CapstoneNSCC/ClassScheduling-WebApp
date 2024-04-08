@@ -62,15 +62,15 @@ CREATE TABLE IF NOT EXISTS TblProgram (
 -- Create TblEvents table
 CREATE TABLE IF NOT EXISTS TblEvents (
     Id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255),
-    description VARCHAR(255),
+    courseCode VARCHAR(255),
+    courseName VARCHAR(255),
     daysOfWeek VARCHAR(10),
-    StartTime DATETIME,
-    EndTime DATETIME,
-    teacher INT,
-    Classroom VARCHAR(100),
+    startTime DATETIME,
+    endTime DATETIME,
+    professor INT,
+    classroom VARCHAR(100),
     program INT,
-    FOREIGN KEY (teacher) REFERENCES TblUser(Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY (professor) REFERENCES TblUser(Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
     FOREIGN KEY (program) REFERENCES TblProgram(Id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
