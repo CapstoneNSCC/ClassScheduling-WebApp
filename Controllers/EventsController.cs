@@ -35,7 +35,10 @@ namespace ClassScheduling_WebApp.Controllers
                            select user.FirstName + " " + user.LastName)
                           .ToList(),
                 classroom = e.Classroom,
-                program = e.program
+                program = (from program in _context.Programs
+                           where program.Id == e.program
+                           select program.Name)
+                           .ToList()
             })
             .ToList();
 
