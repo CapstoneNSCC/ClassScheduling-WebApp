@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Cryptography;
+using ClassScheduling_WebApp.Data;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace ClassScheduling_WebApp.Models
@@ -14,10 +15,12 @@ namespace ClassScheduling_WebApp.Models
 
     [Required(ErrorMessage = "First name is required.")]
     [StringLength(50, ErrorMessage = "First name cannot exceed 50 characters.")]
+    [RegularExpression("^[A-Za-z]+$", ErrorMessage = "First name must contain only letters and spaces, and cannot start or end with a space.")]
     public string FirstName { get; set; }
 
     [Required(ErrorMessage = "Last name is required.")]
     [StringLength(50, ErrorMessage = "Last name cannot exceed 50 characters.")]
+    [RegularExpression("^[A-Za-z]+$", ErrorMessage = "First name must contain only letters and spaces, and cannot start or end with a space.")]
     public string LastName { get; set; }
 
     [Required]
@@ -58,6 +61,6 @@ namespace ClassScheduling_WebApp.Models
       }
       return Convert.ToBase64String(salt);
     }
-  }
 
+  }
 }

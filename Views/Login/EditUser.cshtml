@@ -49,7 +49,7 @@
 
     <div class="mb-4">
       <label class="pb-2">Password:</label>
-      <input type="text" asp-for="@Model.Password" class="form-control" maxlength="60" />
+      <input type="text" asp-for="@Model.Password" class="form-control" maxlength="60" value="" />
       <span asp-validation-for="@Model.Password" class="text-danger" />
     </div>
 
@@ -62,8 +62,7 @@
 
     <div class="mb-4">
       <input type="hidden" asp-for="@Model.Id" />
-      <input type="submit" asp-controller="Login" asp-action="UpdateSubmit" class="btn btn-warning"
-        value="Update" />
+      <input type="submit" asp-controller="Login" asp-action="UpdateSubmit" class="btn btn-warning" value="Update" />
       <a href="/Login/UserIndex" class="btn btn-warning">Cancel</a>
     </div>
   </form>
