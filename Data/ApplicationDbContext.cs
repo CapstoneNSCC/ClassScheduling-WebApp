@@ -13,7 +13,6 @@ namespace ClassScheduling_WebApp.Data
         public DbSet<ClassroomModel> Classrooms { get; set; }
         public DbSet<CourseModel> Courses { get; set; }
         public DbSet<ProgramModel> Programs { get; set; }
-        public DbSet<ScheduleModel> Schedules { get; set; }
         public DbSet<TechClassModel> TechClasses { get; set; }
         public DbSet<TechnologyModel> Technologies { get; set; }
         public DbSet<TechRoomModel> TechRooms { get; set; }
@@ -26,7 +25,6 @@ namespace ClassScheduling_WebApp.Data
             base.OnModelCreating(modelBuilder);
 
             // Composite Keys
-            modelBuilder.Entity<ScheduleModel>().HasKey(s => new { s.IdCalendar, s.IdCourse, s.IdClassroom });
             modelBuilder.Entity<TechClassModel>().HasKey(tc => new { tc.IdCourse, tc.IdTechnology });
             modelBuilder.Entity<TechRoomModel>().HasKey(tr => new { tr.IdClassroom, tr.IdTechnology });
 
@@ -60,21 +58,6 @@ namespace ClassScheduling_WebApp.Data
                 .HasOne(tr => tr.Technology)
                 .WithMany(t => t.TechRooms)
                 .HasForeignKey(tr => tr.IdTechnology);
-
-            modelBuilder.Entity<ScheduleModel>()
-                .HasOne(s => s.Calendar)
-                .WithMany()
-                .HasForeignKey(s => s.IdCalendar);
-
-            modelBuilder.Entity<ScheduleModel>()
-                .HasOne(s => s.Course)
-                .WithMany(c => c.Schedules)
-                .HasForeignKey(s => s.IdCourse);
-
-            modelBuilder.Entity<ScheduleModel>()
-                .HasOne(s => s.Classroom)
-                .WithMany()
-                .HasForeignKey(s => s.IdClassroom);
         }
     }
 }

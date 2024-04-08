@@ -55,8 +55,9 @@
       </div>
 
       <div class="mt-3">
-        <a asp-controller="Schedule" asp-action="Index" asp-route-programs="@Model"
-          class="dashboard-button btn btn-light">Generate Schedule</a>
+        <form method="post" asp-controller="Events" asp-action="GetSchedule">
+            <button type="submit" class="dashboard-button btn btn-light">Generate Schedule</button>
+        </form>
       </div>
     </div>
   </div>
