@@ -23,6 +23,11 @@ namespace ClassScheduling_WebApp.Controllers
         return RedirectToAction("HomeIndex", "Login");
       }
 
+      var userId = HttpContext.Session.GetInt32("userId");
+      var userName = HttpContext.Session.GetString("user");
+      ViewBag.currentUserId = userId;
+      ViewBag.currentUserName = userName;
+
       // Reused the PopulateProfessorsDropDownList method from the course controller
       PopulateProfessorsDropDownList();
       return View("~/Views/Home/Index.cshtml");
