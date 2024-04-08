@@ -72,21 +72,22 @@
     }
 
     <div class=" mb-4">
-      <label asp-for="Hours" class="control-label mb-2">Hours</label>
+      <label asp-for="@Model.Hours" class="control-label mb-2">Hours</label>
       @if (ViewBag.Block90Hours != null && ViewBag.Block90Hours)
       {
-        <div><input asp-for="Hours" type="radio" value="60" checked /> 60 hours </div>
-        <div><input asp-for="Hours" type="radio" value="90" disabled /> 90 hours </div>
+        <div><input asp-for="@Model.Hours" type="radio" value="60" checked /> 60 hours </div>
+        <div><input asp-for="@Model.Hours" type="radio" value="90" disabled /> 90 hours </div>
       }
       else
       {
         <div>
-          <input asp-for="Hours" type="radio" value="60" checked="@(Model.Hours == 60 ? "checked" : null)" /> 60 hours
+          <input asp-for="@Model.Hours" type="radio" value="60" checked="@(Model.Hours == 60 ? "checked" : null)" /> 60 hours
         </div>
         <div>
-          <input asp-for="Hours" type="radio" value="90" checked="@(Model.Hours == 90 ? "checked" : null)" /> 90 hours
+          <input asp-for="@Model.Hours" type="radio" value="90" checked="@(Model.Hours == 90 ? "checked" : null)" /> 90 hours
         </div>
       }
+      <span asp-validation-for="@Model.Hours" class="text-danger"></span>
     </div>
 
     <div class="mb-4">
