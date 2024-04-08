@@ -20,10 +20,14 @@ namespace ClassScheduling_WebApp.Controllers
     {
       if (HttpContext.Session.GetString("auth") != "true")
       {
-        return RedirectToAction("HomeIndex", "Login");
+        return RedirectToAction("index", "Login");
       }
 
-      // Reused the PopulateProfessorsDropDownList method from the course controller
+      var userId = HttpContext.Session.GetInt32("userId");
+      var userName = HttpContext.Session.GetString("user");
+      ViewBag.currentUserId = userId;
+      ViewBag.currentUserName = userName;
+
       PopulateProfessorsDropDownList();
       return View("~/Views/Home/Index.cshtml");
     }

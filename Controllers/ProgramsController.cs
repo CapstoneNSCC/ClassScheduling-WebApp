@@ -30,41 +30,13 @@ namespace ClassScheduling_WebApp.Controllers
         Id = p.Id,
         Name = p.Name,
         Year = p.Year,
-        // Include other properties as needed
       })
       .OrderByDescending(p => p.Name)
       .ToList();
 
-      // var technologies = _context.Technologies
-      // .Select(t => new TechnologyModel
-      // {
-      //   Id = t.Id,
-      //   Description = t.Description,
-      //   // Include other properties as needed
-      // })
-      // .OrderByDescending(t => t.Description)
-      // .ToList();
-
-      // var users = _context.Users
-      // .Select(u => new UserModel
-      // {
-      //   Id = u.Id,
-      //   FirstName = u.FirstName,
-      //   LastName = u.LastName,
-      //   SetAsAdmin = u.SetAsAdmin,
-      //   UserName = u.UserName,
-      //   Password = u.Password,
-      //   Salt = u.Salt,
-      //   // Include other properties as needed
-      // })
-      // .OrderByDescending(u => u.UserName)
-      // .ToList();
-
       var viewModel = new IndexViewModel
       {
         Programs = programs,
-        // Technologies = technologies,
-        // Users = users
       };
 
       return View(viewModel);

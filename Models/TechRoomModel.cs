@@ -11,6 +11,8 @@ namespace ClassScheduling_WebApp.Models
 
     [ForeignKey("Technology")]
     public int IdTechnology { get; set; }
+    [ForeignKey("Technology")]
+    public int IdTechnology { get; set; }
 
     // Navigation properties
     [Required(ErrorMessage = "Room is required.")]
