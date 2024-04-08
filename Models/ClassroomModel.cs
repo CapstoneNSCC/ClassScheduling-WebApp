@@ -11,6 +11,7 @@ namespace ClassScheduling_WebApp.Models
     public int Id { get; set; }
 
     [Required(ErrorMessage = "Room number is required.")]
+    [Range(1, 999, ErrorMessage = "Room number must be between 1 and 999.")]
     public int RoomNumber { get; set; }
 
     [Required(ErrorMessage = "Building acronym is required.")]

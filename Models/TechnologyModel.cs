@@ -12,6 +12,7 @@ namespace ClassScheduling_WebApp.Models
 
     [Required(ErrorMessage = "Technology description is required.")]
     [StringLength(20, ErrorMessage = "Technology description cannot exceed 20 characters.")]
+    [RegularExpression(@"^[a-zA-Z]+(?:\s[a-zA-Z]+)*$", ErrorMessage = "Technology name can only contain letters and must have at least one letter.")]
     public string Description { get; set; }
 
     // Propriedades de navegação para relações muitos-para-muitos

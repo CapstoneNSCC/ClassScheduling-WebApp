@@ -31,7 +31,7 @@
   <form asp-controller="Classroom" asp-action="AddSubmit" method="post">
     <div class="mb-4">
       <label asp-for="RoomNumber" class="pb-2">Classroom Number:</label>
-      <input type="text" asp-for="RoomNumber" class="form-control" maxlength="3" />
+      <input type="text" asp-for="RoomNumber" class="form-control" maxlength="3" value="" />
       <span asp-validation-for="RoomNumber" class="text-danger" />
     </div>
     <div class="mb-4">
@@ -53,8 +53,7 @@
     </div>
 
     <div class="mb-4">
-      <input type="submit" asp-controler="Classroom" asp-action="AddSubmit" class="btn btn-warning"
-        value="Add" />
+      <input type="submit" asp-controler="Classroom" asp-action="AddSubmit" class="btn btn-warning" value="Add" />
       <a href="/Classroom/Index" class="btn btn-warning">Cancel</a>
     </div>
 
@@ -63,5 +62,5 @@
 
 @section scripts {
   <script>startAutoLogout();</script>
-  await Html.RenderPartialAsync("_ValidationScriptsPartial");
+  @* await Html.RenderPartialAsync("_ValidationScriptsPartial"); *@
 }
