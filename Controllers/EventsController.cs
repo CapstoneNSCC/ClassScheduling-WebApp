@@ -12,11 +12,28 @@ namespace ClassScheduling_WebApp.Controllers
   {
     private readonly ApplicationDbContext _context;
     
-    private static List<EventModel> _eventList = new List<EventModel> {};
+    private static List<FullCalendarModel> _eventList = new List<FullCalendarModel> {};
 
     public EventsController(ApplicationDbContext context)
     {
       _context = context;
+    }
+
+    public IActionResult Index()
+    {
+      if (HttpContext.Session.GetString("auth") != "true")
+      {
+        return RedirectToAction("Index", "Login");
+      }
+
+      var eventOptions = GetSchedule();
+
+      var viewModel = new IndexViewModel
+      {
+        EventOptions = eventOptions
+      };
+      
+      return View(viewModel);
     }
 
     //GET: api/Events
@@ -32,9 +49,9 @@ namespace ClassScheduling_WebApp.Controllers
         startTime = e.startTime.ToString("HH:mm:ss"),
         endTime = e.endTime.ToString("HH:mm:ss"),
         professor = (from user in _context.Users
-                     where user.Id == e.professor
-                     select user.FirstName + " " + user.LastName)
-                    .ToList(),
+                    where user.Id == e.professor
+                    select user.FirstName + " " + user.LastName)
+                  .ToList(),
         classroom = e.classroom,
         program = (
             from program in _context.Programs
@@ -111,13 +128,8 @@ namespace ClassScheduling_WebApp.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> GetSchedule()
+    public Dictionary<string, List<FullCalendarModel>> GetSchedule()
     {
-        if (HttpContext.Session.GetString("auth") != "true")
-        {
-            return RedirectToAction("Index", "Login");
-        }
-
         try
         {
             _context.TblEvents.RemoveRange(_context.TblEvents);
@@ -128,8 +140,13 @@ namespace ClassScheduling_WebApp.Controllers
             Console.WriteLine($"Erro ao excluir registros: {ex.Message}");
         }
 
-        var calendars = _context.Calendars.ToList();
-
+        var eventOptions = new Dictionary<string, List<FullCalendarModel>>
+        {
+            { "Option1", new List<FullCalendarModel>() },
+            { "Option2", new List<FullCalendarModel>() },
+            { "Option3", new List<FullCalendarModel>() }
+        };
+        
         /*
           The below code is this script
 
@@ -158,40 +175,58 @@ namespace ClassScheduling_WebApp.Controllers
         })
         .ToList();
 
-        foreach (var eventData in query)
+        for (int i = 0; i < 3; i++)
         {
-          foreach (var calendar in calendars)
+          _eventList.Clear();
+          
+          var calendars = _context.Calendars.ToList().OrderBy(x => Random.Shared.Next()).ToList();
+
+          foreach (var eventData in query)
           {
-            DateTime startDateTime = DateTime.Today.Add(calendar.StartTime);
-            DateTime endDateTime = startDateTime.AddHours(2); 
-
-            bool professorAvailable = IsProfessorAvailable(eventData.Course.IdProfessor, GetDayOfWeekValue(calendar.DayWeek), startDateTime, endDateTime);
-
-            bool classroomAvailable = IsClassroomAvailable(eventData.Classroom.Id.ToString(), GetDayOfWeekValue(calendar.DayWeek), startDateTime, endDateTime, eventData.Course.IdProgram);
-
-            bool withinTimeLimit = IsWithinTimeLimit(eventData.Course.Code, eventData.Course.IdProgram, GetDayOfWeekValue(calendar.DayWeek), eventData.Course.Hours);
-            
-            if (professorAvailable && classroomAvailable && withinTimeLimit)
+            foreach (var calendar in calendars)
             {
-              var eventModel = new EventModel
-              {
-                  courseCode = eventData.Course.Code,
-                  courseName = eventData.Course.Name,
-                  daysOfWeek = GetDayOfWeekValue(calendar.DayWeek),
-                  startTime = startDateTime,
-                  endTime = endDateTime,
-                  professor = eventData.Course.IdProfessor,
-                  classroom = eventData.Classroom.RoomNumber.ToString(),
-                  program = eventData.Course.IdProgram
-              };
+              DateTime startDateTime = DateTime.Today.Add(calendar.StartTime);
+              DateTime endDateTime = startDateTime.AddHours(2); 
+
+              bool professorAvailable = IsProfessorAvailable(eventData.Course.IdProfessor, GetDayOfWeekValue(calendar.DayWeek), startDateTime, endDateTime);
+
+              bool classroomAvailable = IsClassroomAvailable(eventData.Classroom.Id.ToString(), GetDayOfWeekValue(calendar.DayWeek), startDateTime, endDateTime, eventData.Course.IdProgram);
+
+              bool withinTimeLimit = IsWithinTimeLimit(eventData.Course.Code, eventData.Course.IdProgram, GetDayOfWeekValue(calendar.DayWeek), eventData.Course.Hours);
               
-              _eventList.Add(eventModel);
-              _context.TblEvents.Add(eventModel);
+              if (professorAvailable && classroomAvailable && withinTimeLimit)
+              {
+                UserModel professor = _context.Users.Find(eventData.Course.IdProfessor);
+
+                ProgramModel program = _context.Programs.Find(eventData.Course.IdProgram);
+
+                var eventModel = new FullCalendarModel
+                {
+                    courseCode = eventData.Course.Code,
+                    courseName = eventData.Course.Name,
+                    daysOfWeekArray = new[] { GetDayOfWeekValue(calendar.DayWeek) },
+                    startTimeStr = startDateTime.ToString("HH:mm:ss"),
+                    endTimeStr = endDateTime.ToString("HH:mm:ss"),
+                    daysOfWeek = GetDayOfWeekValue(calendar.DayWeek),
+                    startTime = startDateTime,
+                    endTime = endDateTime,
+                    professor = professor.FirstName,
+                    professorId = eventData.Course.IdProfessor,
+                    classroom = eventData.Classroom.RoomNumber.ToString(),
+                    programId = eventData.Course.IdProgram,
+                    program = program.Name,
+                };
+                
+                _eventList.Add(eventModel);
+                //_context.TblEvents.Add(eventModel);
+              }
             }
           }
+
+          eventOptions[$"Option{i + 1}"].AddRange(_eventList);
         }
 
-        await _context.SaveChangesAsync();
+//        await _context.SaveChangesAsync();
 
         var events = _context.TblEvents.Select(e => new
         {
@@ -214,7 +249,7 @@ namespace ClassScheduling_WebApp.Controllers
         })
         .ToList();
 
-        return Json(_eventList);
+        return eventOptions;
     }
 
     private string GetDayOfWeekValue(string dayOfWeekName)
@@ -239,7 +274,7 @@ namespace ClassScheduling_WebApp.Controllers
     private bool IsProfessorAvailable(int professorId, string daysOfWeek, DateTime startTime, DateTime endTime)
     {
         return !_eventList.Any(e =>
-            e.professor == professorId &&
+            e.professorId == professorId &&
             e.daysOfWeek == daysOfWeek &&
             e.startTime <= startTime && e.endTime >= endTime);
     }
@@ -250,12 +285,12 @@ namespace ClassScheduling_WebApp.Controllers
             e.classroom == classroom &&
             e.daysOfWeek == daysOfWeek &&
             e.startTime <= startTime && e.endTime >= endTime &&
-            e.program == programId);
+            e.programId == programId);
     }
 
     private bool IsWithinTimeLimit(string courseCode, int programId, string daysOfWeek, int hours)
     {
-        if (_eventList.Any(e => e.courseCode == courseCode && e.program == programId && e.daysOfWeek == daysOfWeek))
+        if (_eventList.Any(e => e.courseCode == courseCode && e.programId == programId && e.daysOfWeek == daysOfWeek))
         {
             return false; 
         }

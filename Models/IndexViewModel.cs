@@ -12,5 +12,6 @@ namespace ClassScheduling_WebApp.Models
     public List<TechnologyModel> Technologies { get; set; }
     public List<UserModel> Users { get; set; }
     public List<ClassroomModel> Classrooms { get; set; }
+    public Dictionary<string, List<FullCalendarModel>> EventOptions { get; set; }
   }
 }
