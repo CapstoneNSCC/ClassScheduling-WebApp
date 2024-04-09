@@ -10,7 +10,7 @@
       <img src="\lib\images\nscc-logo.jpg" alt="nscc-logo" width="200px" class="d-inline-block ms-3">
     </a>
     <div>
-    <span id="lblExpire" class="text-warning" style="margin-left:10px"></span>
+      <span id="lblExpire" class="text-warning" style="margin-left:10px"></span>
     </div>
     <div class="d-flex flex-row">
       <form method="post">
@@ -54,13 +54,12 @@
       </div>
 
       <div class="mt-3">
-        <a asp-controller="Admin" asp-action="AdminFacultyDashboard"
-          class="dashboard-button btn btn-warning">Faculty Schedules</a>
+        <a asp-controller="Admin" asp-action="AdminFacultyDashboard" class="dashboard-button btn btn-warning">Faculty
+          Schedules</a>
       </div>
 
       <div class="mt-3">
-        <a asp-controller="Schedule" asp-action="Index" asp-route-programs="@Model"
-          class="dashboard-button btn btn-light">Generate Schedule</a>
+        <a asp-controller="Events" asp-action="Index" class="dashboard-button btn btn-light">Generate Schedule</a>
       </div>
     </div>
   </div>
@@ -75,7 +74,7 @@
             <option value="-1">All</option>
             @foreach (var item in ViewBag.IdProgram as SelectList)
             {
-                        <option value="@item.Value">@item.Text</option>
+              <option value="@item.Value">@item.Text</option>
             }
           </select>
         </div>
@@ -94,9 +93,9 @@
 
 <script>
 
-  $(document).ready(()=> {
+  $(document).ready(() => {
     const defaultApiEndpoint = '/api/Events'
-    let apiEndpoint =defaultApiEndpoint
+    let apiEndpoint = defaultApiEndpoint
 
     // button initizliations
     const printButton = document.getElementsByClassName('fc-printButton-button')
@@ -137,6 +136,6 @@
 </script>
 
 
-  @section scripts {
-      <script>startAutoLogout();</script>
-  }
+@section scripts {
+  <script>startAutoLogout();</script>
+}

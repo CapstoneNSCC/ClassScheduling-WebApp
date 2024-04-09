@@ -33,7 +33,6 @@ namespace ClassScheduling_WebApp.Models
 
     // navigation properties
     public virtual ICollection<TechClassModel> TechClasses { get; set; } = new List<TechClassModel>();
-    public virtual ICollection<ScheduleModel> Schedules { get; set; } = new List<ScheduleModel>();
 
     // used for handling selected technology IDs in forms and making sure its not mapped to the database.
     [NotMapped]
