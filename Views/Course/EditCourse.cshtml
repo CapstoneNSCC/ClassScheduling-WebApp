@@ -38,7 +38,7 @@
 
     <div class="mb-4">
       <label asp-for="@Model.IdProgram" class="control-label mb-2">Program</label>
-      <select asp-for="@Model.IdProgram" class="form-control" asp-items="ViewBag.IdProgram">
+      <select asp-for="@Model.IdProgram" class="form-control" asp-items="ViewBag.IdProgram" disabled>
       </select>
     </div>
 
@@ -81,10 +81,12 @@
       else
       {
         <div>
-          <input asp-for="@Model.Hours" type="radio" value="60" checked="@(Model.Hours == 60 ? "checked" : null)" /> 60 hours
+          <input asp-for="@Model.Hours" type="radio" value="60"
+            checked="@(Model.Hours == 60 ? "checked" : null)" /> 60 hours
         </div>
         <div>
-          <input asp-for="@Model.Hours" type="radio" value="90" checked="@(Model.Hours == 90 ? "checked" : null)" /> 90 hours
+          <input asp-for="@Model.Hours" type="radio" value="90"
+            checked="@(Model.Hours == 90 ? "checked" : null)" /> 90 hours
         </div>
       }
       <span asp-validation-for="@Model.Hours" class="text-danger"></span>

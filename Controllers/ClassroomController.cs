@@ -73,7 +73,8 @@ namespace ClassScheduling_WebApp.Controllers
         return RedirectToAction("Index", "Login");
       }
 
-      if (ModelState.IsValid){
+      if (ModelState.IsValid)
+      {
         _context.Add(classroom);
         await _context.SaveChangesAsync();
 
@@ -146,7 +147,8 @@ namespace ClassScheduling_WebApp.Controllers
         return NotFound();
       }
 
-      if (ModelState.IsValid){
+      if (ModelState.IsValid)
+      {
         try
         {
           _context.Update(classroom);
@@ -198,7 +200,7 @@ namespace ClassScheduling_WebApp.Controllers
     }
 
 
-     // POST: Deletes a course from the database
+    // POST: Deletes a course from the database
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteSubmit(int id)

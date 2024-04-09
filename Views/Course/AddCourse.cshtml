@@ -30,7 +30,7 @@
 
 <div class="container mt-5 text-white">
   <h1 class="mb-4">Add Course</h1>
-  <div style="margin-bottom:10px" class="fs-5">Enter the new Course data below:</div>
+  <div class="fs-5">Enter the new Course data below:</div>
 
 
   <form asp-controller="Course" asp-action="AddSubmit" method="post">
@@ -50,7 +50,7 @@
 
     <div class="mb-4">
       <label asp-for="@Model.IdProgram" class="control-label mb-2">Program</label>
-      <select asp-for="@Model.IdProgram" class="form-control" asp-items="ViewBag.IdProgram">
+      <select asp-for="@Model.IdProgram" class="form-control" asp-items="ViewBag.IdProgram" disabled>
       </select>
     </div>
 
@@ -95,7 +95,7 @@
         <div><input asp-for="@Model.Hours" type="radio" value="60" /> 60 hours </div>
         <div><input asp-for="@Model.Hours" type="radio" value="90" /> 90 hours </div>
       }
-<span asp-validation-for="@Model.Hours" class="text-danger"></span>
+      <span asp-validation-for="@Model.Hours" class="text-danger"></span>
     </div>
 
     <div class="mb-4">
@@ -112,7 +112,8 @@
 
 
     <div class="mb-4">
-      <input type="submit" asp-controller="Course" asp-action="AddSubmit" class="btn btn-warning" value="Add" />
+      <input type="submit" asp-controller="Course" asp-action="AddSubmit" class="btn btn-warning"
+        value="Add" />
       <a href="/Program/ProgramDetails/@Model.IdProgram" class="btn btn-warning">Cancel</a>
     </div>
   </form>

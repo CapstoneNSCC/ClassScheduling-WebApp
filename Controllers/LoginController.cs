@@ -89,7 +89,8 @@ namespace ClassScheduling_WebApp.Controllers
       var existingUser = _context.Users.FirstOrDefault(u => u.UserName == Userame);
       if (existingUser != null)
       {
-        return RedirectToAction("AddUser", "Login");
+        ViewData["feedback"] = "User already exists, Please add a different user.";
+        return View("AddUser", user);
       }
       var salt = user.getSalt();
       user.Salt = salt;

@@ -1,16 +1,12 @@
 @model List<ClassScheduling_WebApp.Models.ProgramModel>
 
-@{
-  Layout = "_Layout";
-}
-
 <nav class="navbar bg-body-tertiary no-print">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">
       <img src="\lib\images\nscc-logo.jpg" alt="nscc-logo" width="200px" class="d-inline-block ms-3">
     </a>
     <div>
-    <span id="lblExpire" class="text-warning" style="margin-left:10px"></span>
+      <span id="lblExpire" class="text-warning" style="margin-left:10px"></span>
     </div>
     <div class="d-flex flex-row">
       <form method="post">
@@ -21,7 +17,6 @@
     </div>
   </div>
 </nav>
-
 
 <div class="admin-cal-container d-flex">
   <div class="admin-controls d-flex no-print">
@@ -54,8 +49,8 @@
       </div>
 
       <div class="mt-3">
-        <a asp-controller="Admin" asp-action="AdminFacultyDashboard"
-          class="dashboard-button btn btn-warning">Faculty Schedules</a>
+        <a asp-controller="Admin" asp-action="Index" class="dashboard-button btn btn-warning">Program
+          Schedules</a>
       </div>
 
       <div class="mt-3">
@@ -65,24 +60,24 @@
     </div>
   </div>
 
+
   <div class="calendar-view d-flex flex-column">
     <h1 class="no-print">&nbsp;</h1>
     <div class="fc toolbar no-print">
       <div class="fc-header-toolbar fc-toolbar">
         <div class="fc-toolbar-chunk">
-          <label class="text-white mb-2"> Filter by program: </label>
-          <select id="selectedProgram" name="selectedProgram" class="form-select dashboard-button">
-            <option value="-1">All</option>
-            @foreach (var item in ViewBag.IdProgram as SelectList)
+          <label class="text-white mb-2"> Filter by Professor: </label>
+          <select id="selectedProfessor" name="selectedProfessor" class="form-select dashboard-button">
+            @foreach (var item in ViewBag.IdProfessor as SelectList)
             {
-                        <option value="@item.Value">@item.Text</option>
+              <option value="@item.Value" selected="@ViewBag.currentUserId == @item.Value">@item.Text</option>
             }
           </select>
         </div>
+        <div class="fc-toolbar-chunk"></div>
         <div class="fc-toolbar-chunk">
-        </div>
-        <div class="fc-toolbar-chunk">
-          <button type="button" title="Print" class="fc-printButton-button btn btn-warning">Print</button>
+          <button type="button" title="Print"
+            class="fc-printButton-button btn btn-warning no-print">Print</button>
         </div>
       </div>
     </div>
@@ -90,13 +85,11 @@
   </div>
 </div>
 
-</div>
-
 <script>
 
-  $(document).ready(()=> {
+  $(document).ready(() => {
     const defaultApiEndpoint = '/api/Events'
-    let apiEndpoint =defaultApiEndpoint
+    let apiEndpoint = `${defaultApiEndpoint}/teacher/@ViewBag.currentUserId`
 
     // button initizliations
     const printButton = document.getElementsByClassName('fc-printButton-button')
@@ -105,14 +98,14 @@
     }
 
     // dropdown initializations
-    const programDropdown = document.getElementById('selectedProgram')
-    programDropdown.onchange = (e) => {
-      let programId = e.target.value
+    const professorDropdown = document.getElementById('selectedProfessor')
+    professorDropdown.onchange = (e) => {
+      let professorId = e.target.value
 
-      if (programId == -1) {
+      if (professorId == -1) {
         apiEndpoint = defaultApiEndpoint
       } else {
-        apiEndpoint = `${defaultApiEndpoint}/program/${programId}`
+        apiEndpoint = `${defaultApiEndpoint}/teacher/${professorId}`
       }
 
       // get all sources in calendar
@@ -129,14 +122,13 @@
     }
 
     // calendar initialization
+    // calendar initialization
     const calendarEl = document.getElementById('calendar')
     const calendar = generateCalendar(calendarEl, apiEndpoint)
-
   })
 
 </script>
 
-
-  @section scripts {
-      <script>startAutoLogout();</script>
-  }
+@section scripts {
+  <script>startAutoLogout();</script>
+}

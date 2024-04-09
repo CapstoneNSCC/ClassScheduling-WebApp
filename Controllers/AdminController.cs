@@ -62,5 +62,36 @@ namespace ClassScheduling_WebApp.Controllers
       HttpContext.Session.Clear();
       return RedirectToAction("Index", "Login");
     }
+
+
+    public IActionResult AdminFacultyDashboard()
+    {
+      if (HttpContext.Session.GetString("auth") != "true")
+      {
+        return RedirectToAction("index", "Login");
+      }
+
+      var userId = HttpContext.Session.GetInt32("userId");
+      var userName = HttpContext.Session.GetString("user");
+      ViewBag.currentUserId = userId;
+      ViewBag.currentUserName = userName;
+
+      PopulateProfessorsDropDownList();
+      return View("~/Views/Admin/adminFacultyDashboard.cshtml");
+    }
+
+    // reused this method from the Home controller to populate the professors dropdown
+    public void PopulateProfessorsDropDownList(object selectedProfessor = null)
+    {
+      var professorsQuery = from d in _context.Users
+                            where d.SetAsAdmin == false
+                            orderby d.FirstName
+                            select new
+                            {
+                              d.Id,
+                              ProfessorName = d.FirstName + " " + d.LastName
+                            };
+      ViewBag.IdProfessor = new SelectList(professorsQuery.AsNoTracking(), "Id", "ProfessorName", selectedProfessor);
+    }
   }
 }
