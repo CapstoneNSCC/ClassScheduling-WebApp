@@ -49,7 +49,6 @@ CREATE TABLE IF NOT EXISTS TblProgram (
     PRIMARY KEY (Id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Create TblEvents table
 CREATE TABLE IF NOT EXISTS TblEvents (
     Id INT AUTO_INCREMENT PRIMARY KEY,
     courseCode VARCHAR(255),
@@ -60,10 +59,9 @@ CREATE TABLE IF NOT EXISTS TblEvents (
     professor INT,
     classroom VARCHAR(100),
     program INT,
-    FOREIGN KEY (professor) REFERENCES TblUser(Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
-    FOREIGN KEY (program) REFERENCES TblProgram(Id) ON DELETE NO ACTION ON UPDATE NO ACTION
+    CONSTRAINT fk_professor FOREIGN KEY (professor) REFERENCES TblUser(Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT fk_program FOREIGN KEY (program) REFERENCES TblProgram(Id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
-
 -- Create TblTechnology table
 CREATE TABLE IF NOT EXISTS TblTechnology (
     Id INT NOT NULL AUTO_INCREMENT,
@@ -77,14 +75,14 @@ CREATE TABLE IF NOT EXISTS TblCourse (
     Code VARCHAR(10) NOT NULL UNIQUE,
     Name VARCHAR(50) NOT NULL,
     Hours INT NOT NULL,
-    IdProfessor INT NOT NULL,
-    IdProgram INT NOT NULL,
+    IdProfessor INT,
+    IdProgram INT,
     PRIMARY KEY (Id),
-    FOREIGN KEY (IdProfessor)
+    CONSTRAINT fk_professor_course FOREIGN KEY (IdProfessor)
         REFERENCES TblUser(Id)
-            ON DELETE NO ACTION
+            ON DELETE SET NULL
             ON UPDATE NO ACTION,
-    FOREIGN KEY (IdProgram)
+    CONSTRAINT fk_program_course FOREIGN KEY (IdProgram)
         REFERENCES TblProgram(Id)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION

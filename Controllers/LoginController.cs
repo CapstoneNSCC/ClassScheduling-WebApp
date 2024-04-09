@@ -46,7 +46,7 @@ namespace ClassScheduling_WebApp.Controllers
 
     public IActionResult UserIndex()
     {
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -74,15 +74,27 @@ namespace ClassScheduling_WebApp.Controllers
 
     public IActionResult AddUser()
     {
+      if (HttpContext.Session.GetString("admin") != "true")
+      {
+        return RedirectToAction("Index", "Admin");
+      }
       return View();
     }
 
     public IActionResult AddSubmit(UserModel user)
     {
       // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Admin");
+      }
+      //check if username is already taken
+      var Userame = user.UserName;
+      var existingUser = _context.Users.FirstOrDefault(u => u.UserName == Userame);
+      if (existingUser != null)
+      {
+        ViewData["feedback"] = "User already exists, Please add a different user.";
+        return View("AddUser", user);
       }
       var salt = user.getSalt();
       user.Salt = salt;
@@ -102,7 +114,7 @@ namespace ClassScheduling_WebApp.Controllers
     public IActionResult Update(int UserID)
     {
       // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -116,10 +128,11 @@ namespace ClassScheduling_WebApp.Controllers
     public IActionResult UpdateSubmit(UserModel user)
     {
       // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
+
 
       var salt = user.getSalt();
       user.Salt = salt;
@@ -138,12 +151,12 @@ namespace ClassScheduling_WebApp.Controllers
     public IActionResult Delete(int UserID)
     {
       // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
 
-      // find the technology by the technologyID
+      // find the user by the userID
       UserModel user = _context.Users.Find(UserID);
 
       return View("DeleteUser", user);
@@ -153,19 +166,18 @@ namespace ClassScheduling_WebApp.Controllers
     public IActionResult DeleteSubmit(UserModel user)
     {
       // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
 
-      var existingTech = _context.Users.Find(user.Id);
-      if (existingTech == null)
+      var existingUser = _context.Users.Find(user.Id);
+      if (existingUser == null)
       {
         return RedirectToAction("Index", "Admin");
       }
-
-      // remove the program from the list of programs
-      _context.Users.Remove(existingTech);
+      // remove the user
+      _context.Users.Remove(existingUser);
       //save changes to the database
       _context.SaveChanges();
       return RedirectToAction("UserIndex", user);

@@ -22,7 +22,7 @@ namespace ClassScheduling_WebApp.Controllers
     // Displays a list of all courses
     public async Task<IActionResult> Index()
     {
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -34,7 +34,7 @@ namespace ClassScheduling_WebApp.Controllers
     // Displays details for a specific course
     public async Task<IActionResult> Details(int? id)
     {
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -60,7 +60,7 @@ namespace ClassScheduling_WebApp.Controllers
     // Shows the form to add a new course
     public IActionResult AddCourse(int programId)
     {
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -75,22 +75,24 @@ namespace ClassScheduling_WebApp.Controllers
 
       if (course90Hours != null)
       {
-          courseModel = new CourseModel
-          {
-              IdProgram = programId,
-              Hours = 60
-          };
+        courseModel = new CourseModel
+        {
+          IdProgram = programId,
+          Hours = 60
+        };
 
-          ViewBag.Block90Hours = true;
-          
-          ViewBag.Message = "There is already a course with a workload of 90 hours. The default workload has been set to 60 hours.";
-      }else{
+        ViewBag.Block90Hours = true;
+
+        ViewBag.Message = "There is already a course with a workload of 90 hours. The default workload has been set to 60 hours.";
+      }
+      else
+      {
         courseModel = new CourseModel
         {
           IdProgram = programId // Pre-select the program
         };
       }
-      
+
       return View("~/Views/Course/AddCourse.cshtml", courseModel);
     }
 
@@ -99,7 +101,7 @@ namespace ClassScheduling_WebApp.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> AddSubmit([Bind("Id,Code,Name,Hours,IdProfessor,IdProgram, SelectedTechnologyIds")] CourseModel course, List<int> SelectedTechnologyIds)
     {
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -136,7 +138,7 @@ namespace ClassScheduling_WebApp.Controllers
     // Shows the form to edit an existing course
     public async Task<IActionResult> Edit(int? id)
     {
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -153,12 +155,12 @@ namespace ClassScheduling_WebApp.Controllers
       }
 
       var course90Hours = getCourse90Hours(course.IdProgram);
-     
+
       if (course90Hours != null && course90Hours.Id != course.Id)
       {
-          ViewBag.Block90Hours = true;
-          
-          ViewBag.Message = "There is already a course with a workload of 90 hours. The default workload has been set to 60 hours.";
+        ViewBag.Block90Hours = true;
+
+        ViewBag.Message = "There is already a course with a workload of 90 hours. The default workload has been set to 60 hours.";
       }
 
       PopulateProfessorsDropDownList(course.IdProfessor);
@@ -179,7 +181,7 @@ namespace ClassScheduling_WebApp.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> EditSubmit(int id, [Bind("Id,Code,Name,Hours,IdProfessor,IdProgram, SelectedTechnologyIds")] CourseModel course, List<int> SelectedTechnologyIds)
     {
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -236,7 +238,7 @@ namespace ClassScheduling_WebApp.Controllers
     // shows confirmation page for delete course
     public async Task<IActionResult> Delete(int? id)
     {
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -261,7 +263,7 @@ namespace ClassScheduling_WebApp.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteSubmit(int id)
     {
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -303,8 +305,8 @@ namespace ClassScheduling_WebApp.Controllers
                           where p.Id == programId || programId == null // Allows for all programs if no ID is specified
                           select new
                           {
-                              Id = p.Id,
-                              Name = $"{p.Name}, year {p.Year}"
+                            Id = p.Id,
+                            Name = $"{p.Name}, year {p.Year}"
                           };
       ViewBag.IdProgram = new SelectList(programsQuery.AsNoTracking(), "Id", "Name", selectedProgram);
     }
@@ -322,6 +324,6 @@ namespace ClassScheduling_WebApp.Controllers
                                                   .Select(cp => cp.Course)
                                                   .FirstOrDefault();
     }
-    
+
   }
 }

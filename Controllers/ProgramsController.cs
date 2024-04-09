@@ -19,7 +19,7 @@ namespace ClassScheduling_WebApp.Controllers
 
     public IActionResult Index()
     {
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -46,7 +46,7 @@ namespace ClassScheduling_WebApp.Controllers
     public IActionResult AddProgram()
     {
       // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -64,7 +64,7 @@ namespace ClassScheduling_WebApp.Controllers
     public IActionResult AddSubmit(ProgramModel program)
     {
       // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -80,7 +80,7 @@ namespace ClassScheduling_WebApp.Controllers
     public IActionResult Update(int programID)
     {
       // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -94,7 +94,7 @@ namespace ClassScheduling_WebApp.Controllers
     public IActionResult UpdateSubmit(ProgramModel program)
     {
       // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -110,7 +110,7 @@ namespace ClassScheduling_WebApp.Controllers
     public IActionResult Delete(int programID)
     {
       // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -123,23 +123,31 @@ namespace ClassScheduling_WebApp.Controllers
 
     public IActionResult DeleteSubmit(ProgramModel program)
     {
-      // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      // if auth is not = true, it re-directs to the login screen.
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
-      var existingProgram = _context.Programs.Find(program.Id);
+
+      var existingProgram = _context.Programs
+                                  .Include(p => p.Courses) // Include courses associated with the program
+                                  .FirstOrDefault(p => p.Id == program.Id);
+
       if (existingProgram == null)
       {
         return RedirectToAction("Index", "Admin");
       }
 
-      // remove the program from the list of programs
-      _context.Programs.Remove(existingProgram);
-      //save changes to the database
-      _context.SaveChanges();
-      return RedirectToAction("Index", program);
+      // Delete all courses associated with the program
+      _context.Courses.RemoveRange(existingProgram.Courses);
 
+      // Remove the program from the list of programs
+      _context.Programs.Remove(existingProgram);
+
+      // Save changes to the database
+      _context.SaveChanges();
+
+      return RedirectToAction("Index", "Admin");
     }
 
     [Route("/Program/ProgramDetails/{programID:int}")]

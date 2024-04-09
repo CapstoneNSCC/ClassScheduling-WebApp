@@ -12,10 +12,12 @@ namespace ClassScheduling_WebApp.Models
 
     [Required(ErrorMessage = "Course code is required.")]
     [StringLength(10, ErrorMessage = "Course code cannot exceed 10 characters.")]
+    [RegularExpression("^[A-Z0-9]+$", ErrorMessage = "Course code can only contain uppercase letters and numbers.")]
     public string Code { get; set; }
 
     [Required(ErrorMessage = "Course name is required.")]
     [StringLength(50, ErrorMessage = "Course name cannot exceed 50 characters.")]
+    [RegularExpression(@"^[a-zA-Z]+(?:\s[a-zA-Z]+)*$", ErrorMessage = "Program name can only contain letters and must have at least one letter.")]
     public string Name { get; set; }
 
     [Required(ErrorMessage = "Hours are required.")]
