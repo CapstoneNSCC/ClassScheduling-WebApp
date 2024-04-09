@@ -35,9 +35,16 @@
         <div class="ms-4 mb-5 text-white">
             <h1>Event Dashboard.</h1>
             <div class="fs-5">Welcome @ViewBag.currentUserName</div>
+
+            <form method="post" id="eventOptionForm" action="/Events/chooseEventOption">
+                <div><input asp-for="@Model.EventOption" type="radio" name="eventOption" value="1" /> Option 1 </div>
+                <div><input asp-for="@Model.EventOption" type="radio" name="eventOption" value="2" /> Option 2 </div>
+                <div><input asp-for="@Model.EventOption" type="radio" name="eventOption" value="3" /> Option 3 </div>
+                <button type="button" class="btn btn-warning me-3" onclick="submitForm()">Submit</button>
+            </form>
+
         </div>
     </div>
-
     <div class="calendar-view d-flex flex-column">
         <div id='calendar'></div>
         <div id='calendar2'></div>
@@ -48,6 +55,42 @@
 </div>
 
 <script>
+    var chooseCalendar1;
+    var chooseCalendar2;
+    var chooseCalendar3;
+    function submitForm() {
+        var selectedOption = document.querySelector('input[name="eventOption"]:checked');
+
+        if (selectedOption) {
+            var selectedValue = selectedOption.value;
+
+
+            if (selectedValue === "1") {
+                selectedCalendar = chooseCalendar1;
+            } else if (selectedValue === "2") {
+                selectedCalendar = chooseCalendar2;
+            } else if (selectedValue === "3") {
+                selectedCalendar = chooseCalendar3;
+            }
+
+            console.log(selectedCalendar);
+
+            $.ajax({
+                type: 'POST',
+                url: '/api/Events/chooseEventOption',
+                data: JSON.stringify(selectedCalendar),
+                contentType: 'application/json',
+                success: function (response) {
+                    window.location.href = "/Admin";
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error saving events:', error);
+                }
+            })
+        } else {
+            alert('Please select an option.');
+        }
+    }
 
     document.addEventListener('DOMContentLoaded', function () {
         renderCalendar1();
@@ -134,8 +177,8 @@
 
         // Obtenha a lista de eventos da primeira opção
         var eventsOption1 = @Html.Raw(Json.Serialize(Model.EventOptions["Option1"]));
+        chooseCalendar1 = @Html.Raw(Json.Serialize(Model.EventOptions["Option1"]));
 
-        console.log(eventsOption1);
         // Itere sobre cada evento e adicione ao calendário
         eventsOption1.forEach(function (event) {
             calendar.addEvent({
@@ -148,7 +191,6 @@
                 classroom: event.classroom
             });
         });
-
 
         calendar.render()
     }
@@ -236,6 +278,7 @@
 
         // Obtenha a lista de eventos da primeira opção
         var eventsOption1 = @Html.Raw(Json.Serialize(Model.EventOptions["Option2"]));
+        chooseCalendar2 = @Html.Raw(Json.Serialize(Model.EventOptions["Option2"]));
 
         // Itere sobre cada evento e adicione ao calendário
         eventsOption1.forEach(function (event) {
@@ -337,6 +380,7 @@
 
         // Obtenha a lista de eventos da primeira opção
         var eventsOption1 = @Html.Raw(Json.Serialize(Model.EventOptions["Option3"]));
+        chooseCalendar3 = @Html.Raw(Json.Serialize(Model.EventOptions["Option3"]));
 
         // Itere sobre cada evento e adicione ao calendário
         eventsOption1.forEach(function (event) {

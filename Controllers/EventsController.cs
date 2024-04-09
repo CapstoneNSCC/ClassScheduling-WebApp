@@ -26,6 +26,16 @@ namespace ClassScheduling_WebApp.Controllers
         return RedirectToAction("Index", "Login");
       }
 
+      try
+      {
+          _context.TblEvents.RemoveRange(_context.TblEvents);
+          _context.SaveChanges();
+      }
+      catch (Exception ex)
+      {
+          Console.WriteLine($"Error to exclude the data: {ex.Message}");
+      }
+      
       var eventOptions = GetSchedule();
 
       var viewModel = new IndexViewModel
@@ -128,18 +138,48 @@ namespace ClassScheduling_WebApp.Controllers
     }
 
     [HttpPost]
+    [Route("api/[controller]/chooseEventOption")]
+    public async Task<IActionResult> chooseEventOption([FromBody]List<FullCalendarModel> fullCalendarEvents)
+    {
+      if (HttpContext.Session.GetString("admin") != "true")
+      {
+        return RedirectToAction("Index", "Login");
+      }
+
+      try
+      {
+          _context.TblEvents.RemoveRange(_context.TblEvents);
+          _context.SaveChanges();
+      }
+      catch (Exception ex)
+      {
+          Console.WriteLine($"Erro ao excluir registros: {ex.Message}");
+      }
+
+      foreach (var eventData in fullCalendarEvents){
+         var eventModel = new EventModel
+                {
+                    courseCode = eventData.courseCode,
+                    courseName = eventData.courseName,
+                    daysOfWeek = eventData.daysOfWeek,
+                    startTime = eventData.startTime,
+                    endTime = eventData.endTime,
+                    professor = eventData.professorId,
+                    classroom = eventData.classroom,
+                    program = eventData.programId,
+                };
+    
+                _context.TblEvents.Add(eventModel);
+      }
+      
+      await _context.SaveChangesAsync();
+
+      return RedirectToAction("Index", "Admin");
+    }
+
+    [HttpPost]
     public Dictionary<string, List<FullCalendarModel>> GetSchedule()
     {
-        try
-        {
-            _context.TblEvents.RemoveRange(_context.TblEvents);
-            _context.SaveChanges();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Erro ao excluir registros: {ex.Message}");
-        }
-
         var eventOptions = new Dictionary<string, List<FullCalendarModel>>
         {
             { "Option1", new List<FullCalendarModel>() },
@@ -218,15 +258,12 @@ namespace ClassScheduling_WebApp.Controllers
                 };
                 
                 _eventList.Add(eventModel);
-                //_context.TblEvents.Add(eventModel);
               }
             }
           }
 
           eventOptions[$"Option{i + 1}"].AddRange(_eventList);
         }
-
-//        await _context.SaveChangesAsync();
 
         var events = _context.TblEvents.Select(e => new
         {
