@@ -15,15 +15,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
 
 // DEPLOY VERSION
-// var connectionString = "Server=capstoneteam6db.mysql.database.azure.com;Database=dbclassschedule;Uid=DylanMac;Pwd=Wer45Tgbvf;Port=3306;SslMode=Required;SslCa=wwwroot/ssl/DigiCertGlobalRootCA.crt.pem";
+var connectionString = "Server=capstoneteam6db.mysql.database.azure.com;Database=dbclassschedule;Uid=DylanMac;Pwd=Wer45Tgbvf;Port=3306;SslMode=Required;SslCa=wwwroot/ssl/DigiCertGlobalRootCA.crt.pem";
 
 // LOCAL/DEV VERSION
-var connectionString = $"Server={builder.Configuration["DB_SERVER"]};" +
-                    $"Database={builder.Configuration["DB_DATABASE"]};" +
-                    $"Uid={builder.Configuration["DB_USER"]};" +
-                    $"Pwd={builder.Configuration["DB_PASSWORD"]};" +
-                    $"Port={builder.Configuration["DB_PORT"]};" +
-                    "SslMode=none;";
+// var connectionString = $"Server={builder.Configuration["DB_SERVER"]};" +
+//                     $"Database={builder.Configuration["DB_DATABASE"]};" +
+//                     $"Uid={builder.Configuration["DB_USER"]};" +
+//                     $"Pwd={builder.Configuration["DB_PASSWORD"]};" +
+//                     $"Port={builder.Configuration["DB_PORT"]};" +
+//                     "SslMode=none;";
 
 // Adds services to the container.
 builder.Services.AddControllersWithViews();
