@@ -28,6 +28,13 @@
   <h1>Add Faculty.</h1>
   <div style="margin-bottom:10px" class="fs-5">Enter the new faculty members data below:</div>
 
+@if (ViewData["feedback"] != null)
+{
+    <div>
+        <span class="text-warning">@ViewData["feedback"]</span>
+    </div>
+}
+
   <form method="post">
     <div class="mb-4">
       <label class="pb-2">First Name:</label>
@@ -68,5 +75,5 @@
 </div>
 
 @section scripts {
-  <script>startAutoLogout();</script>
+      <script>startAutoLogout();</script>
 }
