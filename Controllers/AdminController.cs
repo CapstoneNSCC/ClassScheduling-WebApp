@@ -19,7 +19,7 @@ namespace ClassScheduling_WebApp.Controllers
 
     public IActionResult Index()
     {
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -66,7 +66,7 @@ namespace ClassScheduling_WebApp.Controllers
 
     public IActionResult AdminFacultyDashboard()
     {
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("index", "Login");
       }

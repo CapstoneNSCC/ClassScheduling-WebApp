@@ -19,7 +19,7 @@ namespace ClassScheduling_WebApp.Controllers
 
     public IActionResult Index()
     {
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -44,7 +44,7 @@ namespace ClassScheduling_WebApp.Controllers
     public IActionResult AddRoom()
     {
       // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -68,7 +68,7 @@ namespace ClassScheduling_WebApp.Controllers
     public async Task<IActionResult> AddSubmit([Bind("Id, RoomNumber, BuildingAcronym, SelectedTechnologyIds")] ClassroomModel classroom, List<int> SelectedTechnologyIds)
     {
       // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -114,7 +114,7 @@ namespace ClassScheduling_WebApp.Controllers
     public IActionResult Update(int ClassroomID)
     {
       // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -137,7 +137,7 @@ namespace ClassScheduling_WebApp.Controllers
     public async Task<IActionResult> UpdateSubmit(int id, [Bind("Id, RoomNumber, BuildingAcronym, SelectedTechnologyIds")] ClassroomModel classroom, List<int> SelectedTechnologyIds)
     {
       // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -187,7 +187,7 @@ namespace ClassScheduling_WebApp.Controllers
     public IActionResult Delete(int ClassroomID)
     {
       // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -206,7 +206,7 @@ namespace ClassScheduling_WebApp.Controllers
     public async Task<IActionResult> DeleteSubmit(int id)
     {
       // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }

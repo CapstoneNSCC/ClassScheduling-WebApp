@@ -19,7 +19,7 @@ namespace ClassScheduling_WebApp.Controllers
 
     public IActionResult Index()
     {
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -46,7 +46,7 @@ namespace ClassScheduling_WebApp.Controllers
     public IActionResult AddProgram()
     {
       // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -64,7 +64,7 @@ namespace ClassScheduling_WebApp.Controllers
     public IActionResult AddSubmit(ProgramModel program)
     {
       // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -80,7 +80,7 @@ namespace ClassScheduling_WebApp.Controllers
     public IActionResult Update(int programID)
     {
       // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -94,7 +94,7 @@ namespace ClassScheduling_WebApp.Controllers
     public IActionResult UpdateSubmit(ProgramModel program)
     {
       // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -110,7 +110,7 @@ namespace ClassScheduling_WebApp.Controllers
     public IActionResult Delete(int programID)
     {
       // if auth is not  = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
@@ -124,7 +124,7 @@ namespace ClassScheduling_WebApp.Controllers
     public IActionResult DeleteSubmit(ProgramModel program)
     {
       // if auth is not = true, it re-directs to the login screen.
-      if (HttpContext.Session.GetString("auth") != "true")
+      if (HttpContext.Session.GetString("admin") != "true")
       {
         return RedirectToAction("Index", "Login");
       }
